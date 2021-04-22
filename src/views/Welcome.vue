@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="welcome">
     <img alt="The Daily Dilettante logo" src="../assets/logo200.gif">
     <HelloWorld msg="Welcome to Your Vue.js App"/>
   </div>
@@ -10,7 +10,7 @@
 import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
-  name: 'Home',
+  name: 'Welcome',
   components: {
     HelloWorld
   }
