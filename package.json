@@ -22,6 +22,7 @@
     "chromedriver": "89",
     "node-sass": "^4.12.0",
     "sass-loader": "^8.0.2",
+    "vue-loader": "^15.9.6",
     "vue-template-compiler": "^2.6.11",
     "wdio-chromedriver-service": "^6.0.3"
   }

@@ -1,13 +1,11 @@
 <template>
-  <!--suppress HtmlUnknownBooleanAttribute 'fluid' -->
   <b-container fluid id="app">
     <div id="banner-box">
       <b-row id="banner">
-        <!--suppress HtmlUnknownBooleanAttribute 'cols' -->
-        <b-col cols md="2">
+        <b-col cols lg="1" md="2">
           <img src="@/assets/logo200.gif" class="img-fluid" alt="The Daily Dilettante logo">
         </b-col>
-        <b-col style="padding: 0;">
+        <b-col>
           <p id="title">The Daily Dilettante</p>
           <p id="log-line">
             <img src="@/assets/yorkshire-rose.gif" alt="a Yorkshire rose" class="img-fluid">
@@ -19,15 +17,16 @@
             <b-collapse id="nav-collapse" is-nav>
               <b-navbar-nav fill>
                 <b-nav-item :active='$route.name ==="Welcome"' to="/">Welcome</b-nav-item>
-                <b-nav-item :active='$route.name ==="Novels"' to="/novels">Novels & their films</b-nav-item>
+                <b-nav-item :active='$route.name ==="Novels"' to="/novels">Period Novels & their films</b-nav-item>
                 <b-nav-item :active='$route.name ==="Adaptations"' to="/adaptations">Our Adaptations</b-nav-item>
                 <b-nav-item :active='$route.name ==="About"' to="/about">About</b-nav-item>
               </b-navbar-nav>
             </b-collapse>
           </b-navbar>
         </b-col>
-        <!--suppress HtmlUnknownBooleanAttribute 'cols' -->
-        <b-col cols md="2">&nbsp;</b-col>
+        <b-col cols lg="1" md="2">
+          &nbsp;
+        </b-col>
       </b-row>
     </div>
     <b-row id="contents">
@@ -72,6 +71,11 @@ $pin-stripe-style: solid;
   url('assets/DOMINICA.TTF') format('truetype'); /* Safari, Android, iOS */
 }
 
+.row {
+  /* the b-row element all have a -15px margin. This causes Chrome to make the page a little wider than it is */
+  margin: 0 !important;
+}
+
 body {
   background-color: $colour-page-background !important;
 }
@@ -93,6 +97,8 @@ body {
     border-top: $pin-stripe-width $pin-stripe-style;
     border-bottom: $pin-stripe-width $pin-stripe-style;
     text-align: center;
+    display: flex !important;
+    align-items: center;
 
     img {
       padding-top: $margin-furniture;
@@ -156,9 +162,20 @@ body {
   color: $colour-body-text;
   padding-top: .75em; /* just to make it look a bit bitter */
   padding-bottom: 3em; /* exceed the height of the footer */
+
+  h1 {
+    font-family: dominica, "Times New Roman", Times, serif;
+    text-shadow: 5px 5px 10px darkgray;
+  }
+
   a {
     color: $colour-dark-text;
     font-style: italic;
+  }
+
+  img {
+    border-radius: 5px;
+    box-shadow: 5px 5px 10px darkgray;
   }
 }
 
