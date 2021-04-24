@@ -11,40 +11,42 @@
             <b-navbar-nav align="center">
               <b-nav-item :active='$route.name ==="Welcome"' to="/">Welcome</b-nav-item>
               <b-nav-item :active='$route.name ==="About"' to="/about">About</b-nav-item>
-              <b-nav-item-dropdown>
-                <!-- Using 'button-content' slot -->
-                <template #button-content>Account</template>
-                <b-dropdown-item href="#">Profile</b-dropdown-item>
-                <b-dropdown-item href="#">Sign Out</b-dropdown-item>
-              </b-nav-item-dropdown>
             </b-navbar-nav>
           </b-collapse>
         </b-navbar>
       </div>
     </div>
-    <router-view/>
-    <div id="footer">
-      <b-container fluid class="p-4 bg-dark">
-        <b-row>
-          <b-col>
-            <b-img thumbnail fluid src="https://picsum.photos/250/250/?image=54" alt="Image 1"></b-img>
-          </b-col>
-          <b-col>
-            <b-img thumbnail fluid src="https://picsum.photos/250/250/?image=58" alt="Image 2"></b-img>
-          </b-col>
-          <b-col>
-            <b-img thumbnail fluid src="https://picsum.photos/250/250/?image=59" alt="Image 3"></b-img>
-          </b-col>
-        </b-row>
-      </b-container>
+    <div id="contents">
+      <router-view/>
+    </div>
+    <div id="footer-box" class="fixed-bottom">
+      <div id="footer">
+        <b-navbar>
+          <b-navbar-nav class="ml-auto">
+            <b-nav-item :active='$route.name ==="Policies"' to="/policies">Policies</b-nav-item>
+            <b-nav-item :active='$route.name ==="Contact"' to="/contact">Contact</b-nav-item>
+            <b-nav-item-dropdown dropup>
+              <!-- Using 'button-content' slot -->
+              <template #button-content>User</template>
+              <b-dropdown-item href="#">Profile</b-dropdown-item>
+              <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+            </b-nav-item-dropdown>
+          </b-navbar-nav>
+        </b-navbar>
+      </div>
     </div>
   </div>
 </template>
 
 <style lang="scss">
-$col-page-background: #E0fff0; /* eau de nil */
-$col-text: #006666; /* dark turquoise */
-$col-banner-background: #660000; /* dark maroon / dark cherry */
+$colour-page-background: #E0fff0; /* eau de nil */
+$colour-banner-background: #660000; /* dark maroon / dark cherry */
+$colour-dark-text: #006666; /* dark turquoise */
+$colour-body-text: black;
+
+$margin-furniture: 0.5rem;
+$pin-stripe-width: 1px;
+$pin-stripe-style: solid;
 
 @font-face {
   font-family: 'dominica';
@@ -55,23 +57,21 @@ $col-banner-background: #660000; /* dark maroon / dark cherry */
 }
 
 body {
-  background-color: $col-page-background !important;
+  background-color: $colour-page-background !important;
 }
 
 #banner-box {
-  background-color: $col-banner-background;
-  color: $col-page-background;
-  padding-top: .5em;
-  padding-bottom: .5em;
+  background-color: $colour-banner-background;
+  color: $colour-page-background;
+  padding-top: $margin-furniture;
+  padding-bottom: $margin-furniture;
 
   #banner {
     font-family: dominica, "Times New Roman", Times, serif;
     padding: 4px 0;
-    border-color: $col-page-background;
-    border-top-style: solid;
-    border-top-width: 1px;
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
+    border-color: $colour-page-background;
+    border-top: $pin-stripe-width $pin-stripe-style;
+    border-bottom: $pin-stripe-width $pin-stripe-style;
 
 
     p {
@@ -99,25 +99,16 @@ body {
 
       a {
         font-weight: bold;
-        color: $col-page-background;
-      }
-
-      //noinspection CssInvalidHtmlTagReference
-      .dropdown-item {
-        color: $col-banner-background !important;
+        color: $colour-page-background;
       }
 
       .nav-item > a {
-        color: $col-page-background !important;
+        color: $colour-page-background !important;
       }
 
       .nav-item > a.active {
         text-decoration: underline;
         font-style: inherit;
-      }
-
-      .dropdown-toggle::after { /*this is responsible for the arrow you see in the button*/
-        display: none;
       }
 
       #nav-collapse > ul {
@@ -127,11 +118,57 @@ body {
   }
 }
 
-#app {
+#contents {
   font-family: "Times New Roman", Times, serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: $colour-body-text;
+  padding-bottom: 3em; /* exceed the height of the footer */
+  a {
+    color: $colour-dark-text;
+    font-style: italic;
+  }
+}
+
+#footer-box {
+  font-family: dominica, "Times New Roman", Times, serif;
+  background-color: $colour-banner-background;
+
+  #footer {
+    border-top: $pin-stripe-width $pin-stripe-style $colour-page-background;
+    margin-top: $margin-furniture;
+
+    nav {
+      margin-top: 0;
+      margin-bottom: 0;
+      padding-right: 3em; /* give room for the user drop-up to show*/
+      padding-top: 0; /* these two are good for making the footer take up less vertical space*/
+      padding-bottom: 0;
+
+      //noinspection CssUnusedSymbol
+      .dropdown-toggle::after {
+        /* this is responsible for the arrow you see in the button. It looks 'modern', so hide it */
+        display: none;
+      }
+
+      //noinspection CssUnusedSymbol
+      .nav-link {
+        /* These make it possible for the footer's menu to take up less vertical space*/
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+
+      a {
+        color: $colour-page-background;
+      }
+
+      //noinspection CssUnusedSymbol
+      .dropdown-item {
+        /* these have to show up again a light background */
+        color: $colour-banner-background;
+      }
+    }
+  }
 }
 </style>
