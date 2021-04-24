@@ -1,26 +1,42 @@
 <template>
-  <div id="app">
+  <!--suppress HtmlUnknownBooleanAttribute 'fluid' -->
+  <b-container fluid id="app">
     <div id="banner-box">
-      <div id="banner">
-        <!--suppress HtmlUnknownAttribute  'fluid' -->
-        <img src="@/assets/logo200.gif" fluid alt="The Daily Dilettante logo">
-        <p>The Daily Dilettante</p>
-        <b-navbar toggleable="sm">
-          <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-          <b-collapse id="nav-collapse" is-nav>
-            <b-navbar-nav align="center">
-              <b-nav-item :active='$route.name ==="Welcome"' to="/">Welcome</b-nav-item>
-              <b-nav-item :active='$route.name ==="About"' to="/about">About</b-nav-item>
-            </b-navbar-nav>
-          </b-collapse>
-        </b-navbar>
-      </div>
+      <b-row id="banner">
+        <!--suppress HtmlUnknownBooleanAttribute 'cols' -->
+        <b-col cols md="2">
+          <img src="@/assets/logo200.gif" class="img-fluid" alt="The Daily Dilettante logo">
+        </b-col>
+        <b-col style="padding: 0;">
+          <p id="title">The Daily Dilettante</p>
+          <p id="log-line">
+            <img src="@/assets/yorkshire-rose.gif" alt="a Yorkshire rose" class="img-fluid">
+            Bringing you entertainment since 1720
+            <img src="@/assets/yorkshire-rose.gif" alt="a Yorkshire rose" class="img-fluid">
+          </p>
+          <b-navbar toggleable="sm">
+            <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+            <b-collapse id="nav-collapse" is-nav>
+              <b-navbar-nav fill>
+                <b-nav-item :active='$route.name ==="Welcome"' to="/">Welcome</b-nav-item>
+                <b-nav-item :active='$route.name ==="Novels"' to="/novels">Novels & their films</b-nav-item>
+                <b-nav-item :active='$route.name ==="Adaptations"' to="/adaptations">Our Adaptations</b-nav-item>
+                <b-nav-item :active='$route.name ==="About"' to="/about">About</b-nav-item>
+              </b-navbar-nav>
+            </b-collapse>
+          </b-navbar>
+        </b-col>
+        <!--suppress HtmlUnknownBooleanAttribute 'cols' -->
+        <b-col cols md="2">&nbsp;</b-col>
+      </b-row>
     </div>
-    <div id="contents">
-      <router-view/>
-    </div>
-    <div id="footer-box" class="fixed-bottom">
-      <div id="footer">
+    <b-row id="contents">
+      <b-col>
+        <router-view/>
+      </b-col>
+    </b-row>
+    <b-row id="footer-box" class="fixed-bottom">
+      <b-col id="footer">
         <b-navbar>
           <b-navbar-nav class="ml-auto">
             <b-nav-item :active='$route.name ==="Policies"' to="/policies">Policies</b-nav-item>
@@ -33,9 +49,9 @@
             </b-nav-item-dropdown>
           </b-navbar-nav>
         </b-navbar>
-      </div>
-    </div>
-  </div>
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <style lang="scss">
@@ -60,6 +76,10 @@ body {
   background-color: $colour-page-background !important;
 }
 
+#app {
+  padding: 0; /* despite being fluid, it is given some padding */
+}
+
 #banner-box {
   background-color: $colour-banner-background;
   color: $colour-page-background;
@@ -72,27 +92,37 @@ body {
     border-color: $colour-page-background;
     border-top: $pin-stripe-width $pin-stripe-style;
     border-bottom: $pin-stripe-width $pin-stripe-style;
+    text-align: center;
 
+    img {
+      padding-top: $margin-furniture;
+      padding-left: $margin-furniture;
+    }
 
-    p {
-      font-size: 6em;
+    #title {
+      /* With zero padding given to the col that contains this, 5em seems to give 1 line on the iPad */
+      font-size: 5em;
       font-weight: bold;
       text-align: center;
       margin: 0;
-      padding-left: 8rem; /* so it does not get obscured by the logo */
-      padding-right: 8rem; /* to balance the left padding*/
-      line-height: 1.1em;
+      line-height: 1em;
     }
 
-    img {
-      position: absolute;
-      top: 1em;
-      left: .75em;
-      height: 8em;
+    #log-line {
+      font-size: 2em;
+      line-height: 1.1em;
+
+      img {
+        position: unset;
+        height: auto;
+        width: auto;
+        margin: auto;
+        max-height: .75em;
+      }
     }
 
     nav {
-      font-size: 2em;
+      font-size: 1.5em;
       padding: 0;
       text-align: center;
       line-height: 1em;
@@ -112,7 +142,7 @@ body {
       }
 
       #nav-collapse > ul {
-        margin: auto;
+        width: 100%; /* I don't know why, but the UL making the list is not, of itself, being full width */
       }
     }
   }
@@ -124,6 +154,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: $colour-body-text;
+  padding-top: .75em; /* just to make it look a bit bitter */
   padding-bottom: 3em; /* exceed the height of the footer */
   a {
     color: $colour-dark-text;
