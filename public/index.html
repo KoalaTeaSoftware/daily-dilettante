@@ -13,5 +13,30 @@
 </noscript>
 <div id="app"></div>
 <!-- built files will be auto injected -->
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-app.js"></script>
+
+<!-- Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-analytics.js"></script>
+
+<script>
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+        apiKey: "AIzaSyBm4mMSmMw8g15ErVonc23nKDszjlEpipI",
+        authDomain: "daily-dilettante.firebaseapp.com",
+        projectId: "daily-dilettante",
+        storageBucket: "daily-dilettante.appspot.com",
+        messagingSenderId: "749678297903",
+        appId: "1:749678297903:web:2931caec98bc8fcbf057da",
+        measurementId: "G-RJK0G5SZ9Z"
+    };
+    // Initialize Firebase
+    // noinspection JSUnresolvedFunction,JSUnresolvedVariable
+    firebase.initializeApp(firebaseConfig);
+    // noinspection JSUnresolvedFunction,JSUnresolvedVariable
+    firebase.analytics();
+</script>
 </body>
 </html>

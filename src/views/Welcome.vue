@@ -15,7 +15,7 @@
           <b-carousel-slide :img-src="require('../assets/welc-caro/trollope-portrait.jpg')"></b-carousel-slide>
         </b-carousel>
       </b-col>
-      <b-col>
+      <b-col style="text-align: left">
         <ul>
           <li>We fill an need for stories set in the Britain of the 19th century, and lat 18th century that are
             dramatised
