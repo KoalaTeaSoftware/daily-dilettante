@@ -49,13 +49,13 @@
               <b-dropdown-item href="#">Profile</b-dropdown-item>
               <b-dropdown-item @click="this.logOut">Sign Out</b-dropdown-item>
             </b-nav-item-dropdown>
-            <b-nav-item @click="this.logIn" v-else>Sign-in</b-nav-item>
+            <b-nav-item @click="this.showIdModal  " v-else>Sign-in</b-nav-item>
           </b-navbar-nav>
         </b-navbar>
       </b-col>
     </b-row>
-    <b-modal id="identify" title="Please sign-in, or sign-up">
-      <section id="firebaseui-auth-container"></section>
+    <b-modal ref="identify" title="Please sign-in, or sign-up">
+      <div id="firebaseui-auth-container"></div>
     </b-modal>
   </b-container>
 </template>
@@ -229,6 +229,10 @@ body {
 </style>
 <script>
 
+// import * as firebaseUI from "core-js";
+
+import Vue from "vue";
+
 export default {
   data() {
     return {
@@ -238,18 +242,16 @@ export default {
   methods: {
     showIdModal() {
       console.log("Show the identity modal")
+      this.$refs['identify'].show();
     },
     hideIdModal() {
       console.log("Hide the identity modal")
+      this.$refs['identify'].hide();
     },
     logOut() {
       console.log("Log Out")
       this.userAddress = null
       console.log(`User address is now ${this.userAddress}`)
-    },
-    logIn() {
-      console.log("Log in")
-      this.userAddress = "WTF"
     }
   },
   computed: {
@@ -260,6 +262,15 @@ export default {
       console.log(`[isSignedIn] :${this.userAddress !== null}`)
       return this.userAddress !== null
     }
+  },
+  mounted() {
+    // When the app is mounted, watch the identity modal and start up the login.
+    // This is necessary because the b-modal does not actually exist in the DOM until it is shown.
+    // Therefore, until the modal is drawn, the div that contains the Google shite does not exist.
+    this.$root.$on('bv::modal::shown', (bvEvent, identify) => {
+      console.log('Modal is about to be shown', bvEvent, identify)
+      Vue.nextTick(firebaseUI.start('#firebaseui-auth-container', firebaseUiConfig))
+    })
   }
 }
 </script>
