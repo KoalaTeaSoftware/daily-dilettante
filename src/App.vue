@@ -1,7 +1,9 @@
 <template>
+  <!--suppress HtmlUnknownBooleanAttribute -->
   <b-container fluid id="app">
     <div id="banner-box">
       <b-row id="banner">
+        <!--suppress HtmlUnknownBooleanAttribute -->
         <b-col cols lg="1" md="2">
           <img src="@/assets/logo200.gif" class="img-fluid" alt="The Daily Dilettante logo">
         </b-col>
@@ -24,6 +26,7 @@
             </b-collapse>
           </b-navbar>
         </b-col>
+        <!--suppress HtmlUnknownBooleanAttribute -->
         <b-col cols lg="1" md="2">
           &nbsp;
         </b-col>
@@ -40,16 +43,20 @@
           <b-navbar-nav class="ml-auto">
             <b-nav-item :active='$route.name ==="Policies"' to="/policies">Policies</b-nav-item>
             <b-nav-item :active='$route.name ==="Contact"' to="/contact">Contact</b-nav-item>
-            <b-nav-item-dropdown dropup>
+            <b-nav-item-dropdown dropup v-if="amSignedIn">
               <!-- Using 'button-content' slot -->
               <template #button-content>User</template>
               <b-dropdown-item href="#">Profile</b-dropdown-item>
-              <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+              <b-dropdown-item @click="this.logOut">Sign Out</b-dropdown-item>
             </b-nav-item-dropdown>
+            <b-nav-item @click="this.logIn" v-else>Sign-in</b-nav-item>
           </b-navbar-nav>
         </b-navbar>
       </b-col>
     </b-row>
+    <b-modal id="identify" title="Please sign-in, or sign-up">
+      <section id="firebaseui-auth-container"></section>
+    </b-modal>
   </b-container>
 </template>
 
@@ -190,7 +197,7 @@ body {
     nav {
       margin-top: 0;
       margin-bottom: 0;
-      padding-right: 3em; /* give room for the user drop-up to show*/
+      padding-right: 3em; /* give room for the user drop-up to showIdModal*/
       padding-top: 0; /* these two are good for making the footer take up less vertical space*/
       padding-bottom: 0;
 
@@ -213,10 +220,46 @@ body {
 
       //noinspection CssUnusedSymbol
       .dropdown-item {
-        /* these have to show up again a light background */
+        /* these have to showIdModal up again a light background */
         color: $colour-banner-background;
       }
     }
   }
 }
 </style>
+<script>
+
+export default {
+  data() {
+    return {
+      userAddress: null
+    }
+  },
+  methods: {
+    showIdModal() {
+      console.log("Show the identity modal")
+    },
+    hideIdModal() {
+      console.log("Hide the identity modal")
+    },
+    logOut() {
+      console.log("Log Out")
+      this.userAddress = null
+      console.log(`User address is now ${this.userAddress}`)
+    },
+    logIn() {
+      console.log("Log in")
+      this.userAddress = "WTF"
+    }
+  },
+  computed: {
+    amEditor: function () {
+      return false
+    },
+    amSignedIn: function () {
+      console.log(`[isSignedIn] :${this.userAddress !== null}`)
+      return this.userAddress !== null
+    }
+  }
+}
+</script>
