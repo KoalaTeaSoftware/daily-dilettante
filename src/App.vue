@@ -46,7 +46,7 @@
             <div v-if="amLoggedIn">
               <b-nav-item-dropdown dropup>
                 <!-- Using 'button-content' slot -->
-                <template #button-content>{{ userData.displayName }}</template>
+                <template #button-content>My Account</template> <!-- {{ userData.displayName }} -->
                 <b-dropdown-item href="#">Profile</b-dropdown-item>
                 <b-dropdown-item @click="$refs.identityComponent.logOut()">Sign Out</b-dropdown-item>
               </b-nav-item-dropdown>
@@ -63,7 +63,12 @@
 </template>
 
 <style lang="scss">
-$colour-page-background: #E0fff0; /* eau de nil */
+/* Ivory is
+HSV (h, s, v): (60°, 6%, 100%)
+SRGBB (r, g, b): (255, 255, 240)
+Hex triplet: #FFFFF0
+*/
+$colour-page-background: ivory; /* #E0fff0; /* eau de nil */
 $colour-banner-background: #660000; /* dark maroon / dark cherry */
 $colour-dark-text: #006666; /* dark turquoise */
 $colour-body-text: black;
