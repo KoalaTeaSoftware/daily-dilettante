@@ -43,20 +43,22 @@
           <b-navbar-nav class="ml-auto">
             <b-nav-item :active='$route.name ==="Policies"' to="/policies">Policies</b-nav-item>
             <b-nav-item :active='$route.name ==="Contact"' to="/contact">Contact</b-nav-item>
-            <b-nav-item-dropdown dropup v-if="amSignedIn">
-              <!-- Using 'button-content' slot -->
-              <template #button-content>User</template>
-              <b-dropdown-item href="#">Profile</b-dropdown-item>
-              <b-dropdown-item @click="this.logOut">Sign Out</b-dropdown-item>
-            </b-nav-item-dropdown>
-            <b-nav-item @click="this.showIdModal  " v-else>Sign-in</b-nav-item>
+            <div v-if="amLoggedIn">
+              <b-nav-item-dropdown dropup>
+                <!-- Using 'button-content' slot -->
+                <template #button-content>{{ userData.displayName }}</template>
+                <b-dropdown-item href="#">Profile</b-dropdown-item>
+                <b-dropdown-item @click="$refs.identityComponent.logOut()">Sign Out</b-dropdown-item>
+              </b-nav-item-dropdown>
+            </div>
+            <div v-else>
+              <b-nav-item @click="$refs.identityComponent.logIn()">Sign-in</b-nav-item>
+            </div>
           </b-navbar-nav>
         </b-navbar>
       </b-col>
     </b-row>
-    <b-modal ref="identify" title="Please sign-in, or sign-up">
-      <div id="firebaseui-auth-container"></div>
-    </b-modal>
+    <UserIdentity ref="identityComponent"></UserIdentity>
   </b-container>
 </template>
 
@@ -228,49 +230,35 @@ body {
 }
 </style>
 <script>
-
-// import * as firebaseUI from "core-js";
-
-import Vue from "vue";
+import UserIdentity from "@/components/UserIdentity";
+import firebase from "firebase";
 
 export default {
+  components: {UserIdentity},
   data() {
     return {
-      userAddress: null
-    }
-  },
-  methods: {
-    showIdModal() {
-      console.log("Show the identity modal")
-      this.$refs['identify'].show();
-    },
-    hideIdModal() {
-      console.log("Hide the identity modal")
-      this.$refs['identify'].hide();
-    },
-    logOut() {
-      console.log("Log Out")
-      this.userAddress = null
-      console.log(`User address is now ${this.userAddress}`)
+      userData: null
     }
   },
   computed: {
-    amEditor: function () {
-      return false
-    },
-    amSignedIn: function () {
-      console.log(`[isSignedIn] :${this.userAddress !== null}`)
-      return this.userAddress !== null
+    amLoggedIn() {
+      console.log(`[amLoggedIn?]: ${this.userData !== null}`)
+      return (this.userData !== null)
     }
   },
   mounted() {
-    // When the app is mounted, watch the identity modal and start up the login.
-    // This is necessary because the b-modal does not actually exist in the DOM until it is shown.
-    // Therefore, until the modal is drawn, the div that contains the Google shite does not exist.
-    this.$root.$on('bv::modal::shown', (bvEvent, identify) => {
-      console.log('Modal is about to be shown', bvEvent, identify)
-      Vue.nextTick(firebaseUI.start('#firebaseui-auth-container', firebaseUiConfig))
-    })
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        console.log(`User is now ${JSON.stringify(user)}`)
+        this.userData = user
+        // use this if there were any different pages when the user is logged in
+        // this.$router.push('/success')
+      } else {
+        console.log(`User is now undefined`)
+        this.userData = null
+        // this.$router.push('/auth')
+      }
+    });
   }
 }
 </script>

@@ -5,8 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>The Daily Dilettante</title>
-    <link rel="preload" href="https://www.gstatic.com/firebasejs/ui/4.5.0/firebase-ui-auth.css"
-          as="style" onload="this.onload=null;this.rel='stylesheet'">
 </head>
 <body>
 <noscript>
@@ -14,64 +12,5 @@
         Please enable it to continue.</strong>
 </noscript>
 <div id="app"></div>
-<!-- built files will be auto injected -->
-<!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-app.js"></script>
-
-<!-- Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-<script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-analytics.js"></script>
-
-<script>
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    const firebaseConfig = {
-        apiKey: "AIzaSyBm4mMSmMw8g15ErVonc23nKDszjlEpipI",
-        authDomain: "daily-dilettante.firebaseapp.com",
-        projectId: "daily-dilettante",
-        storageBucket: "daily-dilettante.appspot.com",
-        messagingSenderId: "749678297903",
-        appId: "1:749678297903:web:2931caec98bc8fcbf057da",
-        measurementId: "G-RJK0G5SZ9Z"
-    };
-    // Initialize Firebase
-    // noinspection JSUnresolvedFunction,JSUnresolvedVariable
-    firebase.initializeApp(firebaseConfig);
-    // noinspection JSUnresolvedFunction,JSUnresolvedVariable
-    firebase.analytics();
-</script>
-
-<script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.js"></script>
-<script>
-    /**
-     * Firebase auth configuration
-     */
-    const firebaseUI = new firebaseui.auth.AuthUI(firebase.auth());
-    const firebaseUiConfig = {
-        callbacks: {
-            signInSuccessWithAuthResult: function (authResult, redirectUrl) {
-                // User successfully signed in.
-                // Prevent any change of the browser's location
-                return false;
-            },
-            uiShown: () => {
-                // document.getElementById('loader').style.display = 'none';
-            },
-        },
-        signInFlow: 'popup',
-        signInSuccessUrl: '',
-        signInOptions: [
-            firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-            firebase.auth.EmailAuthProvider.PROVIDER_ID,
-        ],
-        credentialHelper: firebaseui.auth.CredentialHelper.NONE,
-        // Your terms of service url.
-        tosUrl: 'policies',
-        // Your privacy policy url.
-        privacyPolicyUrl: 'policies',
-    };
-</script>
-
 </body>
 </html>
