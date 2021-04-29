@@ -88,6 +88,7 @@
 
 body {
   background-color: $colour-page-background !important;
+  //noinspection CssUnknownTarget
   background-image: url("/assets/paper.jpg");
   background-repeat: repeat;
 }
