@@ -11,14 +11,14 @@
           <p id="title">The Daily Dilettante</p>
           <b-row id="log-line">
             <b-col cols="2">
-              <img src="@/assets/medalion.gif" alt="a medallion" class="img-fluid"
+              <img src="@/assets/medallion.gif" alt="a medallion" class="img-fluid"
                    style="min-height: 1.5em; padding-right: 0;">
             </b-col>
             <b-col>
               Bringing you entertainment since 1720
             </b-col>
             <b-col cols="2">
-              <img src="@/assets/medalion.gif" alt="a medallion" class="img-fluid"
+              <img src="@/assets/medallion.gif" alt="a medallion" class="img-fluid"
                    style="min-height: 1.5em; padding-left: 0;">
             </b-col>
           </b-row>
