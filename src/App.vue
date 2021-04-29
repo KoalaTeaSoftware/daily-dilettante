@@ -183,8 +183,9 @@ body {
   }
 
   a {
-    color: $colour-dark-text;
+    color: $colour-body-text;
     font-style: italic;
+    font-weight: bold;
   }
 
   img {
