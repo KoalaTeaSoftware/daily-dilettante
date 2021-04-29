@@ -4,22 +4,30 @@
     <div id="banner-box">
       <b-row id="banner">
         <!--suppress HtmlUnknownBooleanAttribute -->
-        <b-col cols lg="1" md="2">
+        <b-col cols lg="2" md="3">
           <img src="@/assets/logo200.gif" class="img-fluid" alt="The Daily Dilettante logo">
         </b-col>
         <b-col>
           <p id="title">The Daily Dilettante</p>
-          <p id="log-line">
-            <img src="@/assets/yorkshire-rose.gif" alt="a Yorkshire rose" class="img-fluid">
-            Bringing you entertainment since 1720
-            <img src="@/assets/yorkshire-rose.gif" alt="a Yorkshire rose" class="img-fluid">
-          </p>
+          <b-row id="log-line">
+            <b-col cols="2">
+              <img src="@/assets/medalion.gif" alt="a medallion" class="img-fluid"
+                   style="min-height: 1.5em; padding-right: 0;">
+            </b-col>
+            <b-col>
+              Bringing you entertainment since 1720
+            </b-col>
+            <b-col cols="2">
+              <img src="@/assets/medalion.gif" alt="a medallion" class="img-fluid"
+                   style="min-height: 1.5em; padding-left: 0;">
+            </b-col>
+          </b-row>
           <b-navbar toggleable="sm">
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
             <b-collapse id="nav-collapse" is-nav>
               <b-navbar-nav fill>
                 <b-nav-item :active='$route.name ==="Welcome"' to="/">Welcome</b-nav-item>
-                <b-nav-item :active='$route.name ==="Novels"' to="/novels">Period Novels & their films</b-nav-item>
+                <b-nav-item :active='$route.name ==="Novels"' to="/novels">Period Novels & their Films</b-nav-item>
                 <b-nav-item :active='$route.name ==="Adaptations"' to="/adaptations">Our Adaptations</b-nav-item>
                 <b-nav-item :active='$route.name ==="About"' to="/about">About</b-nav-item>
               </b-navbar-nav>
@@ -27,7 +35,7 @@
           </b-navbar>
         </b-col>
         <!--suppress HtmlUnknownBooleanAttribute -->
-        <b-col cols lg="1" md="2">
+        <b-col cols lg="2" md="3">
           &nbsp;
         </b-col>
       </b-row>
@@ -63,26 +71,14 @@
 </template>
 
 <style lang="scss">
-/* Ivory is
-HSV (h, s, v): (60°, 6%, 100%)
-SRGBB (r, g, b): (255, 255, 240)
-Hex triplet: #FFFFF0
-*/
-$colour-page-background: ivory; /* #E0fff0; /* eau de nil */
-$colour-banner-background: #660000; /* dark maroon / dark cherry */
-$colour-dark-text: #006666; /* dark turquoise */
-$colour-body-text: black;
-
-$margin-furniture: 0.5rem;
-$pin-stripe-width: 1px;
-$pin-stripe-style: solid;
+@import "/assets/livery";
 
 @font-face {
   font-family: 'dominica';
-  src: url('/assets/DOMINICA.eot');
-  src: url('/assets/DOMINICA.woff') format('woff'), /* Modern Browsers */
-  url('/assets/DOMINICA.woff2') format('woff2'), /* Modern Browsers */
-  url('assets/DOMINICA.TTF') format('truetype'); /* Safari, Android, iOS */
+  src: url('/public/assets/DOMINICA.eot');
+  src: url('/public/assets/DOMINICA.woff') format('woff'), /* Modern Browsers */
+  url('/public/assets/DOMINICA.woff2') format('woff2'), /* Modern Browsers */
+  url('../public/assets/DOMINICA.TTF') format('truetype'); /* Safari, Android, iOS */
 }
 
 .row {
@@ -92,6 +88,8 @@ $pin-stripe-style: solid;
 
 body {
   background-color: $colour-page-background !important;
+  background-image: url("/assets/paper.jpg");
+  background-repeat: repeat;
 }
 
 #app {
@@ -100,7 +98,7 @@ body {
 
 #banner-box {
   background-color: $colour-banner-background;
-  color: $colour-page-background;
+  color: $colour-banner-primary-text;
   padding-top: $margin-furniture;
   padding-bottom: $margin-furniture;
 
@@ -131,6 +129,7 @@ body {
     #log-line {
       font-size: 2em;
       line-height: 1.1em;
+      color: $colour-banner-secondary-text;
 
       img {
         position: unset;
@@ -147,10 +146,10 @@ body {
       text-align: center;
       line-height: 1em;
 
-      a {
-        font-weight: bold;
-        color: $colour-page-background;
-      }
+      //a {
+      //  font-weight: bold;
+      //  color: $colour-page-background;
+      //}
 
       .nav-item > a {
         color: $colour-page-background !important;
@@ -179,7 +178,8 @@ body {
 
   h1 {
     font-family: dominica, "Times New Roman", Times, serif;
-    text-shadow: 5px 5px 10px darkgray;
+    font-weight: bolder;
+    //text-shadow: 5px 5px 10px $colour-body-text-shadow;
   }
 
   a {
@@ -190,7 +190,7 @@ body {
 
   img {
     border-radius: 5px;
-    box-shadow: 5px 5px 10px darkgray;
+    box-shadow: 5px 5px 10px $colour-body-text-shadow;
   }
 }
 
@@ -235,6 +235,7 @@ body {
   }
 }
 </style>
+
 <script>
 import UserIdentity from "@/components/UserIdentity";
 import firebase from "firebase";

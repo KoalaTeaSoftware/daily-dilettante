@@ -39,7 +39,7 @@
         <b-img :src="require('../assets/welc-caro/trollope-portrait.jpg')" class="m-auto"></b-img>
         <h2>Some old guff</h2>
         <p>Pellentesque euismod sem tortor, quis mattis neque imperdiet ut. Maecenas eleifend est in semper solli
-          <b-link to="/blog"> more ...</b-link>
+          <b-link id="more" to="/blog"></b-link>
         </p>
       </b-col>
     </b-row>
@@ -47,10 +47,12 @@
 </template>
 
 <style lang="scss">
+@import "src/assets/livery";
+
 /* As the inner is tightly around the image, you will not be able to see the inherited shadow. Therefore put it in here too*/
 .carousel-inner {
   border-radius: 5px;
-  box-shadow: 5px 5px 10px darkgray;
+  box-shadow: 5px 5px 10px $colour-body-text-shadow;
 }
 
 #blog-viewer {
@@ -59,6 +61,7 @@
   img {
     width: 100%; /* Force the image to be sized by the column width, not from the source */
   }
+
 }
 </style>
 
