@@ -9,3 +9,12 @@ $colour-body-text-shadow: black;
 $margin-furniture: 0.5rem;
 $pin-stripe-width: 1px;
 $pin-stripe-style: solid;
+
+//noinspection CssUnknownTarget
+@font-face {
+  font-family: 'branded-font';
+  src: url('/assets/DOMINICA.eot');
+  src: url('/assets/DOMINICA.woff') format('woff'), /* Modern Browsers */
+  url('/assets/DOMINICA.woff2') format('woff2'), /* Modern Browsers */
+  url('/assets/DOMINICA.TTF') format('truetype'); /* Safari, Android, iOS */
+}

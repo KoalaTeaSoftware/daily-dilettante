@@ -73,14 +73,6 @@
 <style lang="scss">
 @import "/assets/livery";
 
-@font-face {
-  font-family: 'dominica';
-  src: url('/public/assets/DOMINICA.eot');
-  src: url('/public/assets/DOMINICA.woff') format('woff'), /* Modern Browsers */
-  url('/public/assets/DOMINICA.woff2') format('woff2'), /* Modern Browsers */
-  url('../public/assets/DOMINICA.TTF') format('truetype'); /* Safari, Android, iOS */
-}
-
 .row {
   /* the b-row element all have a -15px margin. This causes Chrome to make the page a little wider than it is */
   margin: 0 !important;
@@ -104,7 +96,7 @@ body {
   padding-bottom: $margin-furniture;
 
   #banner {
-    font-family: dominica, "Times New Roman", Times, serif;
+    font-family: branded-font, "Times New Roman", Times, serif;
     padding: 4px 0;
     border-color: $colour-page-background;
     border-top: $pin-stripe-width $pin-stripe-style;
@@ -147,11 +139,6 @@ body {
       text-align: center;
       line-height: 1em;
 
-      //a {
-      //  font-weight: bold;
-      //  color: $colour-page-background;
-      //}
-
       .nav-item > a {
         color: $colour-page-background !important;
       }
@@ -178,7 +165,7 @@ body {
   padding-bottom: 3em; /* exceed the height of the footer */
 
   h1 {
-    font-family: dominica, "Times New Roman", Times, serif;
+    font-family: branded-font, "Times New Roman", Times, serif;
     font-weight: bolder;
     //text-shadow: 5px 5px 10px $colour-body-text-shadow;
   }
@@ -196,7 +183,7 @@ body {
 }
 
 #footer-box {
-  font-family: dominica, "Times New Roman", Times, serif;
+  font-family: branded-font, "Times New Roman", Times, serif;
   background-color: $colour-banner-background;
 
   #footer {
