@@ -1,6 +1,7 @@
 <template>
   <div class="welcome">
-    <img alt="The Daily Dilettante logo" src="../assets/logo200.gif">
+    <!--suppress HtmlUnknownTarget -->
+    <img alt="The Daily Dilettante logo" src="/assets/logo200.gif">
     <HelloWorld msg="Welcome to Your Vue.js App"/>
   </div>
 </template>

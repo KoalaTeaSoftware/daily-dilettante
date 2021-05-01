@@ -5,22 +5,25 @@
       <b-row id="banner">
         <!--suppress HtmlUnknownBooleanAttribute -->
         <b-col cols lg="2" md="3">
-          <img src="@/assets/logo200.gif" class="img-fluid" alt="The Daily Dilettante logo">
+          <!--suppress HtmlUnknownTarget -->
+          <img src="/assets/logo200.gif" class="img-fluid" alt="The Daily Dilettante logo">
         </b-col>
         <b-col>
           <p id="title">The Daily Dilettante</p>
           <b-row id="log-line">
+            <b-col cols="1">&nbsp;</b-col>
             <b-col cols="2">
-              <img src="@/assets/medallion.gif" alt="a medallion" class="img-fluid"
-                   style="min-height: 1.5em; padding-right: 0;">
+              <!--suppress HtmlUnknownTarget -->
+              <img src="/assets/medallion.png" alt="a medallion" class="img-fluid" style="padding-right: 0;">
             </b-col>
             <b-col>
               Bringing you entertainment since 1720
             </b-col>
             <b-col cols="2">
-              <img src="@/assets/medallion.gif" alt="a medallion" class="img-fluid"
-                   style="min-height: 1.5em; padding-left: 0;">
+              <!--suppress HtmlUnknownTarget -->
+              <img src="/assets/medallion.png" alt="a medallion" class="img-fluid" style="padding-left: 0;">
             </b-col>
+            <b-col cols="1">&nbsp;</b-col>
           </b-row>
           <b-navbar toggleable="sm">
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -120,16 +123,15 @@ body {
     }
 
     #log-line {
-      font-size: 2em;
+      font-size: 1.5em;
       line-height: 1.1em;
       color: $colour-banner-secondary-text;
 
       img {
         position: unset;
-        height: auto;
         width: auto;
         margin: auto;
-        max-height: .75em;
+        height: 1.25em;
       }
     }
 
