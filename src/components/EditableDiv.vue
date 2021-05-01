@@ -1,5 +1,8 @@
-This component uses a name _Property_ that gives the div that wraps it in a div an ID attribute. This could be used by CSS.
-It depends on previous setting-up of the Firebase firestore stuff.
+This component uses a 'identity' _Property_ that gives the div (that wraps it) an HTML ID attribute. This could be used by CSS.
+It depends on previous, external setting-up of the Firebase firestore stuff.
+It depends on a firestore collection called pages. Each item in that collection must have:
+1) A string attribute called pageName which must match to the identity property's value
+2) A string attribute called contents
 
 ToDo: Currently, it is not clever enough to create a page if it does not already exist
 
@@ -124,9 +127,8 @@ export default {
 }
 </script>
 
-<!--suppress CssUnknownTarget -->
 <style scoped>
-/*noinspection CssUnusedSymbol*/
+/* noinspection CssUnknownTarget, CssUnusedSymbol */
 .isEditable {
   background-image: url("/assets/pencil.svg");
   background-repeat: no-repeat;
