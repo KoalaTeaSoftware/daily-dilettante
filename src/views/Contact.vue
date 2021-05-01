@@ -1,6 +1,8 @@
 <template>
-  <h1>Contact</h1>
-  <p>Noooo touchy!</p>
+  <div>
+    <h1>Contact</h1>
+    <p>Noooo touchy!</p>
+  </div>
 </template>
 
 <script>

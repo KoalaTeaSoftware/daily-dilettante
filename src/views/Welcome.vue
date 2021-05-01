@@ -16,24 +16,10 @@
         </b-carousel>
       </b-col>
       <b-col style="text-align: left">
-        <ul>
-          <li>We fill an need for stories set in the Britain of the 19th century, and lat 18th century that are
-            dramatised
-            in costumer and characteristic colour
-          </li>
-          <li>You get ...</li>
-        </ul>
+        <EditableDiv identity="welcome-1"></EditableDiv>
       </b-col>
       <b-col>
-        <ul>
-          <li>We make adaptations of original old British novels for podcasts, websites, and then, feature films. We
-            will run period balls to celebrate our premieres, and to distribute our films. We will provide here and on
-            social media, an ongoing period drama competition and an 18th century cooking exploration
-          </li>
-          <li>Unlike other period story / fil sites, you can join in with us, from entering into competitions, through
-            acting / helping in our podcasts to dressing up and dancing at our balls.
-          </li>
-        </ul>
+        <EditableDiv identity="welcome-2"></EditableDiv>
       </b-col>
       <b-col id="blog-viewer">
         <b-img :src="require('../assets/welc-caro/trollope-portrait.jpg')" class="m-auto"></b-img>
@@ -66,7 +52,10 @@
 </style>
 
 <script>
+import EditableDiv from "@/components/EditableDiv";
+
 export default {
-  name: 'Welcome'
+  name: 'Welcome',
+  components: {EditableDiv},
 }
 </script>

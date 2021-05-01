@@ -1,6 +1,8 @@
 <template>
-  <h1>Policies</h1>
-  <p>There are no policies, yet</p>
+  <div>
+    <h1>Policies</h1>
+    <p>There are no policies, yet</p>
+  </div>
 </template>
 
 <script>
