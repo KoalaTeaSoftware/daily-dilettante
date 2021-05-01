@@ -47,6 +47,7 @@ export default {
   mounted() {
     // Initialize Firebase
     const firebaseUI = new firebaseui.auth.AuthUI(firebase.auth());
+    // noinspection JSUnusedLocalSymbols
     const firebaseUiConfig = {
       callbacks: {
         signInSuccessWithAuthResult: function (authResult, redirectUrl) {
@@ -75,8 +76,10 @@ export default {
     // This is necessary because the b-modal does not actually exist in the DOM until it is shown.
     // Therefore, until the modal is drawn, the div that is to contain the Google shite does not exist.
     this.$root.$on('bv::modal::shown', (bvEvent, modalID) => {
-      console.log('Modal is about to be shown', bvEvent, modalID)
-      firebaseUI.start('#firebaseui-auth-container', firebaseUiConfig)
+      if (modalID === "identify") {
+        console.log('Going to show the identity modal', bvEvent, modalID)
+        firebaseUI.start('#firebaseui-auth-container', firebaseUiConfig)
+      }
     })
   }
 }
