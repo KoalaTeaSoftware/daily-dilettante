@@ -23,7 +23,7 @@ The markDownPanel that the user sees within the page takes in MarkDown and inter
 * If you don't like ti, just refresh the page
 
 <template>
-  <div :id="this.identity" @dblclick="editMe">
+  <div :id="this.identity" @click="editMe">
     <b-spinner small v-show="busy" class="loadingSpinner"></b-spinner>
     <span class="sr-only" v-show="busy">Loading...</span>
     <markDownPanel
@@ -46,7 +46,12 @@ The markDownPanel that the user sees within the page takes in MarkDown and inter
 
 <script>
 import firebase from "firebase";
+// noinspection ES6CheckImport
 import {VueShowdown} from 'vue-showdown';
+
+//ToDo: base this on a custom claim or some such secure thing
+const eddie = "admin@koalatea-software.com"
+
 
 export default {
   props: {identity: String},
@@ -94,7 +99,8 @@ export default {
           })
     },
     editMe() {
-      if (firebase.auth().currentUser) {
+      console.log("Detected a double-click")
+      if (firebase.auth().currentUser && firebase.auth().currentUser.email === eddie) {
         this.trialVersion = this.displayVersion.slice(0) // deep copy from shown to the editor
         this.$bvModal.show(this.modalId)
       } else
@@ -102,13 +108,18 @@ export default {
     }
   },
   mounted() {
-    if (firebase.auth().currentUser) {
-      // This has to be done the hard way because we are in the 'mounted' function.
-      // If you make the presence of the class conditional (in the template) on an exported attribute,
-      // you make it remount and get a stack overflow
-      console.log(`Element ${this.identity} is editable`)
-      document.getElementById(this.identity).classList.add('isEditable')
-    }
+    // register a callback for if the auth state changes
+    firebase.auth().onAuthStateChanged((user) => {
+      console.log(`An editable div (${this.identity}) has detected that the user-state has changed`)
+      if (user && (user.email === eddie)) {
+        console.log(`Element ${this.identity} is editable by user ${user.email}`)
+        document.getElementById(this.identity).classList.add('isEditable')
+      } else {
+        console.log(`Element ${this.identity} is NOT editable by the anonymous user `)
+        document.getElementById(this.identity).classList.remove('isEditable')
+      }
+    })
+
     console.log(`Going to try to get page ${this.identity}`)
     firebase.firestore()
         .collection("pages")
