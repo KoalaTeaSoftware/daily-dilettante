@@ -23,4 +23,4 @@ pnpm-debug.log*
 *.sw?
 
 # firebase creates these, they are probably not fit for storage
-*.cache
+/.firebase/*

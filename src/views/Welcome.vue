@@ -1,4 +1,5 @@
 <template>
+  <!--suppress HtmlUnknownBooleanAttribute -->
   <b-container fluid class="welcome">
     <b-row>
       <b-col><h1>Welcome</h1></b-col>
@@ -6,19 +7,14 @@
     <b-row style="display: flex !important; align-items: center;">
       <b-col>
         <b-carousel id="welc-caro" fade class="m-auto">
-          <b-carousel-slide
-              :img-src="require('../assets/welc-caro/silverville-principle-women.jpg')"></b-carousel-slide>
-          <b-carousel-slide :img-src="require('../assets/welc-caro/thackeray-books.jpg')"></b-carousel-slide>
-          <b-carousel-slide
-              :img-src="require('../assets/welc-caro/Maria_Edgeworth_by_John_Downman_1807.jpg')"></b-carousel-slide>
-          <b-carousel-slide :img-src="require('../assets/welc-caro/trollope-books.jpg')"></b-carousel-slide>
-          <b-carousel-slide :img-src="require('../assets/welc-caro/trollope-portrait.jpg')"></b-carousel-slide>
+          <b-carousel-slide v-for="pic in caroImgList"
+                            :img-src="require('@/assets/welc-caro/' + pic)"></b-carousel-slide>
         </b-carousel>
       </b-col>
-      <b-col style="text-align: left">
+      <b-col style="text-align: center" class="mainText">
         <EditableDiv identity="welcome-1"></EditableDiv>
       </b-col>
-      <b-col>
+      <b-col style="text-align: center" class="mainText">
         <EditableDiv identity="welcome-2"></EditableDiv>
       </b-col>
       <b-col id="blog-viewer">
@@ -41,6 +37,10 @@
   box-shadow: 5px 5px 10px $colour-body-text-shadow;
 }
 
+.mainText P {
+  text-align: center;
+}
+
 #blog-viewer {
   margin: auto;
 
@@ -57,5 +57,16 @@ import EditableDiv from "@/components/EditableDiv";
 export default {
   name: 'Welcome',
   components: {EditableDiv},
+  data() {
+    return {
+      caroImgList: [
+        "silverville-principle-women.jpg",
+        "thackeray-books.jpg",
+        "Maria_Edgeworth_by_John_Downman_1807.jpg",
+        "trollope-books.jpg",
+        "trollope-portrait.jpg"
+      ]
+    }
+  }
 }
 </script>
