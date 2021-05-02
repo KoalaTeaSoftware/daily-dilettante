@@ -26,6 +26,7 @@ The markDownPanel that the user sees within the page takes in MarkDown and inter
   <div :id="this.identity" @click="editMe">
     <b-spinner small v-show="busy" class="loadingSpinner"></b-spinner>
     <span class="sr-only" v-show="busy">Loading...</span>
+    <!--suppress SpellCheckingInspection taskLists-->
     <markDownPanel
         class="container"
         flavor="github"
@@ -60,7 +61,7 @@ export default {
     return {
       busy: true,
       // currentUser: null,
-      displayVersion: "", // this is read from the store, shown on the screen and initialised the edit panel
+      displayVersion: "Loading ....", // this is read from the store, shown on the screen and initialised the edit panel
       trialVersion: "Loading ....", // this is what is in the edit panel, directly editable by the user
       docId: null, // shared between the reading and writing actions
       serverError: "",
@@ -83,20 +84,37 @@ export default {
        * making the change permanent
        */
       this.busy = true
-      firebase.firestore()
-          .collection("pages")
-          .doc(this.docId)
-          .update({contents: this.displayVersion})
-          .then(() => {
-            this.busy = false
-            console.log("Document Saved")
-            this.$bvModal.hide(this.modalId)
-          })
-          .catch(e => {
-            this.busy = false
-            this.serverError = e.message
-            console.log("Unable to store the new data for page " + this.identity + ":" + e.message + ".");
-          })
+      if (this.docId) {
+        // this is indicative of it having read an existing document at load-time
+        firebase.firestore()
+            .collection("pages")
+            .doc(this.docId)
+            .set({contents: this.displayVersion})
+            .then(() => {
+              this.busy = false
+              console.log("Document Saved")
+              this.$bvModal.hide(this.modalId)
+            })
+            .catch(e => {
+              this.busy = false
+              this.serverError = e.message
+              console.log("Unable to update the data for page " + this.identity + ":" + e.message + ".");
+            })
+      } else {
+        // therefore it failed to read a doc at load time. So it has to make one
+        firebase.firestore().collection("pages").doc()
+            .set({pageName: this.identity, contents: this.displayVersion})
+            .then(() => {
+              this.busy = false
+              console.log("Document created")
+              this.$bvModal.hide(this.modalId)
+            })
+            .catch(e => {
+              this.busy = false
+              this.serverError = e.message
+              console.log("Unable to store the data for page " + this.identity + ":" + e.message + ".");
+            })
+      }
     },
     editMe() {
       console.log("Detected a double-click")
@@ -109,6 +127,7 @@ export default {
   },
   mounted() {
     // register a callback for if the auth state changes
+    // thus the editability of the div will be up-to-date with the user state
     firebase.auth().onAuthStateChanged((user) => {
       console.log(`An editable div (${this.identity}) has detected that the user-state has changed`)
       if (user && (user.email === eddie)) {
@@ -119,7 +138,7 @@ export default {
         document.getElementById(this.identity).classList.remove('isEditable')
       }
     })
-
+    // try to read the required document
     console.log(`Going to try to get page ${this.identity}`)
     firebase.firestore()
         .collection("pages")
@@ -132,6 +151,7 @@ export default {
           this.trialVersion = this.displayVersion
         })
         .catch(function (e) {
+          // If it fails, it doesn't really matter - a doc will be created at publish-time
           console.log(`Unable to get, or show the page: ${e.message}.`);
         })
   }
