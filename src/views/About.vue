@@ -1,0 +1,112 @@
+<template>
+  <div>
+    <h1>About The Daily Dilettante</h1>
+    <!--suppress HtmlUnknownBooleanAttribute -->
+    <b-container fluid class="bio">
+      <b-row id="roseBio">
+        <b-col cols="2">
+          <b-img :src="require('@/assets/about/rose.jpg')" fluid></b-img>
+        </b-col>
+        <b-col>
+          <EditableDiv identity="rose-bio"></EditableDiv>
+        </b-col>
+      </b-row>
+      <b-row style="display: flex !important; align-items: center;">
+        <b-col>
+          <b-card-group deck>
+            <b-card
+                v-for="data in caroDataList"
+                :header="data.caption">
+              <b-card-text>
+                <b-img v-if="data.img" fluid :src="require('@/assets/about/' + data.img)"></b-img>
+                <EditableDiv v-if="data.body" :identity="data.body"></EditableDiv>
+              </b-card-text>
+              <template #footer>
+                <a v-if="data.link" target="_blank" :href="data.link">{{ data.footNote }}</a>
+                <p v-else>{{ data.footNote }}</p>
+              </template>
+            </b-card>
+          </b-card-group>
+          <!--b-carousel id="bio-caro" fade controls indicators class="m-auto w-50">
+            <b-carousel-slide
+                v-for="data in caroDataList"
+                :img-src="require('@/assets/about/' + data.img)"
+                :caption="data.caption"
+            ></b-carousel-slide>
+          </b-carousel-->
+        </b-col>
+      </b-row>
+    </b-container>
+  </div>
+</template>
+
+<script>
+import EditableDiv from "@/components/EditableDiv";
+
+export default {
+  name: "About",
+  components: {EditableDiv},
+  data() {
+    return {
+      caroDataList: [
+        {
+          img: "caro-on-release.jpg",
+          caption: "Rose as Film Maker",
+          body: false,
+          footNote: "Click here to see more about the feature films that I have made",
+          link: "https://rosegoldthorp.com/released-features"
+        },
+        {
+          img: "caro-stories.jpg",
+          caption: "Rose as Podcaster",
+          body: false,
+          footNote: "Click here to see the podcasts that I have made so far for The Greenlands",
+          link: "https://the-greenlands.com/stories"
+        },
+        {
+          img: "caro-instagram.jpg",
+          caption: "Rose as Artist",
+          body: false,
+          footNote: "Click here to see my Instagram for The Greenlands",
+          link: "https://www.instagram.com/the_greenlands/"
+        },
+        {
+          img: "",
+          caption: "Rose as Writer",
+          body: "rose-as-writer",
+          footNote: "Contact me for further details",
+          link: "/contact"
+        }
+      ]
+    }
+  }
+}
+</script>
+
+<style lang="scss">
+@import "src/assets/livery";
+
+#roseBio {
+  padding: 1em;
+}
+
+.card {
+  border-radius: 5px;
+  box-shadow: 5px 5px 10px $colour-body-text-shadow;
+
+  .card-header {
+    font-family: branded-font, "Times New Roman", Times, serif;
+    font-weight: bold;
+  }
+}
+
+//.carousel-item > img {
+//  max-height: 100em !important;
+//}
+//
+//.carousel-indicators, .carousel-control-prev, .carousel-control-next, .carousel-caption {
+//  background-color: $colour-banner-background;
+//  opacity: 75%;
+//}
+
+</style>
