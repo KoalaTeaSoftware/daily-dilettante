@@ -164,11 +164,12 @@ body {
   text-align: center;
   color: $colour-body-text;
   padding-top: .75em; /* just to make it look a bit bitter */
-  padding-bottom: 3em; /* exceed the height of the footer */
+  padding-bottom: 5em; /* exceed the height of the footer */
 
-  h1 {
+  h1, h2, h3 {
     font-family: branded-font, "Times New Roman", Times, serif;
     font-weight: bolder;
+    text-align: center;
     //text-shadow: 5px 5px 10px $colour-body-text-shadow;
   }
 
