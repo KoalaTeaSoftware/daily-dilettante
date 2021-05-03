@@ -95,10 +95,11 @@ export default {
       this.busy = true
       if (this.docId) {
         // this is indicative of it having read an existing document at load-time
+        console.log(`Updating a document with pageName:${this.identity} (id:${this.docId})`)
         firebase.firestore()
             .collection("pages")
             .doc(this.docId)
-            .set({contents: this.displayVersion})
+            .set({"pageName": this.identity, "contents": this.displayVersion})
             .then(() => {
               this.busy = false
               console.log("Document Saved")
@@ -111,8 +112,9 @@ export default {
             })
       } else {
         // therefore it failed to read a doc at load time. So it has to make one
+        console.log(`Creating a document with pageName:${this.identity}`)
         firebase.firestore().collection("pages").doc()
-            .set({pageName: this.identity, contents: this.displayVersion})
+            .set({"pageName": this.identity, "contents": this.displayVersion})
             .then(() => {
               this.busy = false
               console.log("Document created")
