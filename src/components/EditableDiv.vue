@@ -37,6 +37,15 @@ The markDownPanel that the user sees within the page takes in MarkDown and inter
     <b-modal :id="this.identity + '-editor'" size="xl" title="Editing the panel">
       <div v-show="this.serverError" class="bg-warning">{{ serverError }}</div>
       <pre :id="this.identity + '-markdown-area'" contenteditable="true">{{ trialVersion }}</pre>
+      <hr>
+      <em class="small">Here are some useful links to help with formatting:
+        1)
+        <b-link target="_blank"
+                href="https://github.com/showdownjs/showdown/wiki/Showdown's-Markdown-syntax">Showdown's Markdown Syntax
+        </b-link>
+        2)
+        <b-link target="_blank" href="https://vue-showdown.js.org/">Showdown's Web Page</b-link>
+      </em>
       <template #modal-footer="{ ok, cancel }">
         <b-button size="lg" variant="outline-primary" @click="preview()">Preview</b-button>
         <b-button size="sm" variant="warning" @click="publish()">Publish</b-button>
