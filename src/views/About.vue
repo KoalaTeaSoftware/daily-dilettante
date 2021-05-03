@@ -27,13 +27,6 @@
               </template>
             </b-card>
           </b-card-group>
-          <!--b-carousel id="bio-caro" fade controls indicators class="m-auto w-50">
-            <b-carousel-slide
-                v-for="data in caroDataList"
-                :img-src="require('@/assets/about/' + data.img)"
-                :caption="data.caption"
-            ></b-carousel-slide>
-          </b-carousel-->
         </b-col>
       </b-row>
     </b-container>
@@ -99,14 +92,4 @@ export default {
     font-weight: bold;
   }
 }
-
-//.carousel-item > img {
-//  max-height: 100em !important;
-//}
-//
-//.carousel-indicators, .carousel-control-prev, .carousel-control-next, .carousel-caption {
-//  background-color: $colour-banner-background;
-//  opacity: 75%;
-//}
-
 </style>
