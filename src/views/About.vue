@@ -15,7 +15,7 @@
         <b-col>
           <b-card-group deck>
             <b-card
-                v-for="data in caroDataList"
+                v-for="data in caroDataList" :key="data.link"
                 :header="data.caption">
               <b-card-text>
                 <b-img v-if="data.img" fluid :src="require('@/assets/about/' + data.img)"></b-img>
@@ -83,10 +83,11 @@ export default {
   padding: 1em;
 }
 
-.card {
-  border-radius: 5px;
-  box-shadow: 5px 5px 10px $colour-body-text-shadow;
+.card, .card-header, .card-footer {
+  border: none;
+  background-color: transparent;
 
+  /* done this way, the header is not given a h? class, so make it seem that way */
   .card-header {
     font-family: branded-font, "Times New Roman", Times, serif;
     font-weight: bold;
