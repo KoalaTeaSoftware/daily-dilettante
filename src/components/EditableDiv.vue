@@ -28,7 +28,7 @@ The markDownPanel that the user sees within the page takes in MarkDown and inter
     <span class="sr-only" v-show="busy">Loading...</span>
     <!--suppress SpellCheckingInspection taskLists-->
     <markDownPanel
-        class="container-fluid"
+        class="container-fluid editedContent"
         flavor="github"
         :options="{ emoji: false, tasklists : true }"
         :markdown=this.displayVersion
