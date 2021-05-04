@@ -17,11 +17,11 @@
       <b-col style="text-align: center" class="mainText">
         <EditableDiv identity="welcome-2"></EditableDiv>
       </b-col>
-      <b-col id="blog-viewer">
+      <b-col id="blog-role">
         <b-img :src="require('../assets/welc-caro/trollope-portrait.jpg')" class="m-auto"></b-img>
         <h2>Some old guff</h2>
         <p>Pellentesque euismod sem tortor, quis mattis neque imperdiet ut. Maecenas eleifend est in semper solli
-          <b-link id="more" to="/blog"></b-link>
+          <b-link id="more" to="/blog"> more ...</b-link>
         </p>
       </b-col>
     </b-row>
@@ -41,7 +41,7 @@
   text-align: center;
 }
 
-#blog-viewer {
+#blog-role {
   margin: auto;
 
   img {
