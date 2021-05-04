@@ -1,28 +1,7 @@
 'use strict';
 
 const functions = require("firebase-functions");
-const admin = require('firebase-admin');
-admin.initializeApp();
-const {Logging} = require('@google-cloud/logging');
-const logging = new Logging({
-    projectId: process.env.GCLOUD_PROJECT,
-});
 
-/**
- *
- * @type {CloudFunction<UserRecord>}
- */
-exports.createCustomer = functions.auth.user().onCreate(async (user) => {
-    // const customer = await stripe.customers.create({email: user.email});
-    // const intent = await stripe.setupIntents.create({
-    //     customer: customer.id,
-    //     setup_secret: intent.client_secret,
-    // });
-    await admin.firestore().collection('site-users').doc(user.uid).set({
-        user_address: user.email
-    });
-    return;
-});
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //
@@ -31,4 +10,58 @@ exports.createCustomer = functions.auth.user().onCreate(async (user) => {
 //   response.send("Hello from Firebase!");
 // });
 
+const nodemailer = require('nodemailer');
+const rp = require('request-promise');
 
+//google account credentials used to send email
+const mailTransport = nodemailer.createTransport(
+    `smtps://user@domain.com:password@smtp.gmail.com`);
+
+exports.sendEmailCF = functions.https.onRequest((req, res) => {
+
+    //recaptcha validation
+    rp({
+        uri: 'https://recaptcha.google.com/recaptcha/api/siteverify',
+        method: 'POST',
+        formData: {
+            secret: 'your_secret_key',
+            response: req.body['g-recaptcha-response']
+        },
+        json: true
+    }).then(result => {
+        if (result.success) {
+            sendEmail('recipient@gmail.com', req.body).then(() => {
+                res.status(200).send(true);
+            });
+        } else {
+            res.status(500).send("Recaptcha failed.")
+        }
+    }).catch(reason => {
+        res.status(500).send("Recaptcha req failed.")
+    })
+
+});
+
+// Send email function
+function sendEmail(email, body) {
+    const mailOptions = {
+        from: `<noreply@domain.com>`,
+        to: email
+    };
+    // hmtl message constructions
+    mailOptions.subject = 'contact form message';
+    mailOptions.html = `<p><b>Name: </b>${body.rsName}</p>
+                      <p><b>Email: </b>${body.rsEmail}</p>
+                      <p><b>Subject: </b>${body.rsSubject}</p>
+                      <p><b>Message: </b>${body.rsMessage}</p>`;
+    return mailTransport.sendMail(mailOptions);
+}
+
+Update
+including
+contact
+form
+and
+scripts:
+
+    <for

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>About The Daily Dilettante</h1>
+    <EditableDiv identity="about-editor-title"></EditableDiv>
     <!--suppress HtmlUnknownBooleanAttribute -->
     <b-container fluid class="bio">
       <b-row id="roseBio">
@@ -92,5 +92,11 @@ export default {
     font-family: branded-font, "Times New Roman", Times, serif;
     font-weight: bold;
   }
+
+  .card-body {
+    padding-top: 0px
+  }
+
+
 }
 </style>

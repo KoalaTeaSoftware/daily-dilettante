@@ -38,6 +38,7 @@ The markDownPanel that the user sees within the page takes in MarkDown and inter
       <div v-show="this.serverError" class="bg-warning">{{ serverError }}</div>
       <pre :id="this.identity + '-markdown-area'" contenteditable="true">{{ trialVersion }}</pre>
       <hr>
+      <p class="bg-warning">Remember: always preview your changes before you publish</p>
       <em class="small">Here are some useful links to help with formatting:
         1)
         <b-link target="_blank"

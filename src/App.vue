@@ -31,6 +31,7 @@
               <b-navbar-nav fill>
                 <b-nav-item :active='$route.name ==="Welcome"' to="/">Welcome</b-nav-item>
                 <b-nav-item :active='$route.name ==="Novels"' to="/novels">Period Novels & their Films</b-nav-item>
+                <b-nav-item :active='$route.name ==="Projects"' to="/projects">Projects</b-nav-item>
                 <b-nav-item :active='$route.name ==="About"' to="/about">About</b-nav-item>
               </b-navbar-nav>
             </b-collapse>
@@ -165,11 +166,13 @@ body {
   padding-top: .75em; /* just to make it look a bit bitter */
   padding-bottom: 5em; /* exceed the height of the footer */
 
-  h1, h2, h3 {
+  h1, h2, h3, h4 {
     font-family: branded-font, "Times New Roman", Times, serif;
-    font-weight: bolder;
     text-align: center;
-    //text-shadow: 5px 5px 10px $colour-body-text-shadow;
+  }
+
+  h4 {
+    text-align: left;
   }
 
   a {
