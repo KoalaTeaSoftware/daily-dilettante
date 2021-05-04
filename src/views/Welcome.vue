@@ -2,7 +2,10 @@
   <!--suppress HtmlUnknownBooleanAttribute -->
   <b-container fluid class="welcome">
     <b-row>
-      <b-col><h1>Welcome</h1></b-col>
+      <b-col>
+        <h1>Welcome</h1>
+        <EditableDiv identity="welcome-1"></EditableDiv>
+      </b-col>
     </b-row>
     <b-row style="display: flex !important; align-items: center;">
       <b-col>
@@ -12,19 +15,21 @@
         </b-carousel>
       </b-col>
       <b-col style="text-align: center" class="mainText">
-        <EditableDiv identity="welcome-1"></EditableDiv>
-      </b-col>
-      <b-col style="text-align: center" class="mainText">
         <EditableDiv identity="welcome-2"></EditableDiv>
       </b-col>
       <b-col id="blog-role">
-        <b-img :src="require('../assets/welc-caro/trollope-portrait.jpg')" class="m-auto"></b-img>
+        <b-img :src="require('../assets/welc-caro/trollope-portrait.jpg')" class=" img-fluid"></b-img>
         <h2>Some old guff</h2>
         <p>Pellentesque euismod sem tortor, quis mattis neque imperdiet ut. Maecenas eleifend est in semper solli
           <b-link id="more" to="/blog"> more ...</b-link>
         </p>
       </b-col>
     </b-row>
+    <!--b-row>
+      <b-col style="text-align: center" class="mainText">
+        <EditableDiv identity="welcome-3"></EditableDiv>
+      </b-col>
+    </b-row-->
   </b-container>
 </template>
 
@@ -37,7 +42,15 @@
   box-shadow: 5px 5px 10px $colour-body-text-shadow;
 }
 
-.mainText P {
+#welcome-1 {
+  .editedContent {
+    font-size: larger;
+    font-weight: bolder;
+    text-align: center !important;
+  }
+}
+
+.mainText p {
   text-align: center;
 }
 
@@ -45,7 +58,8 @@
   margin: auto;
 
   img {
-    width: 100%; /* Force the image to be sized by the column width, not from the source */
+    //width: 100%; /* Force the image to be sized by the column width, not from the source */
+    margin: 0.5em;
   }
 
 }
