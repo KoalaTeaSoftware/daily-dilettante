@@ -1,14 +1,31 @@
 <template>
   <div>
-    <EditableDiv identity="hardyAdap-1"></EditableDiv>
-    <div id="podBox">
-      <EditableDiv identity="hardyAdap-2"></EditableDiv>
-      <audio src="" controls class="w-75"></audio>
-    </div>
-    <EditableDiv identity="hardyAdap-3"></EditableDiv>
-    <EditableDiv identity="hardyAdap-4"></EditableDiv>
-    <EditableDiv identity="hardyAdap-5"></EditableDiv>
+    <!--suppress HtmlUnknownBooleanAttribute -->
+    <b-container fluid>
+      <EditableDiv identity="hardyAdap-1"></EditableDiv>
+      <div id="podBox">
+        <EditableDiv identity="hardyAdap-2"></EditableDiv>
+        <audio src="" controls class="w-75"></audio>
+      </div>
+      <b-row>
+        <b-col>
+          <EditableDiv identity="hardyBiog"></EditableDiv>
+        </b-col>
+        <b-col>
+          <b-img fluid :src="require('../assets/welc-caro/trollope-portrait.jpg')"></b-img>
+          <EditableDiv identity="hardyWessex"></EditableDiv>
+        </b-col>
+      </b-row>
+      <b-row>
+        <EditableDiv identity="hardyAdap-4"></EditableDiv>
+      </b-row>
+      <b-row>
+        <EditableDiv identity="hardyAdap-5"></EditableDiv>
+      </b-row>
+    </b-container>
+
   </div>
+
 </template>
 
 <script>
@@ -23,13 +40,6 @@ export default {
 <style lang="scss">
 @import "src/assets/livery";
 
-td {
-  // a table is used in the markup to give you two columns
-  // this is thought to be simpler for the user to handle than writing more conventional set-up tags
-  // this makes it look a little more pretty
-  padding: 1.5em;
-}
-
 #podBox {
   background-color: $colour-banner-background;
   color: $colour-banner-primary-text;
@@ -41,5 +51,9 @@ td {
     text-align: center;
     margin: .5em; // force the lettering to be vertically tidy
   }
+}
+
+img {
+  margin: 1em;
 }
 </style>
