@@ -127,13 +127,19 @@ form {
 </style>
 
 <script>
-/*
-maxNameLength: 40,
-maxEmailLength: 50,
-maxSubjectLength: 50,
-msgMaxLen: 5000,
-msgMinLen: 10,
- */
+
+const nameLengthMin = 5
+const nameLengthMax = 40
+const nameRegexp = /^[a-z0-9., -]+$/i
+const emailLengthMin = 1
+const emailLengthMax = 50
+const subjectLengthMin = nameLengthMin
+const subjectLengthMax = 50
+const subjectRegexp = /^[£a-z0-9., -]+$/i
+const msgLengthMin = 10
+const msgLengthMax = 5000
+const msgRegexp = /^[£a-z0-9., -/?/)(]+$/i
+
 export default {
   name: "Contact",
   data() {
@@ -156,7 +162,7 @@ export default {
     onReset: function (event) {
       console.log("Resetting")
       event.preventDefault()
-      this.formData.name = this.formData.address1 = this.formData.address2 = this.subject = this.message = ""
+      this.formData.name = this.formData.address1 = this.formData.address2 = this.formData.subject = this.formData.message = ""
     },
     setFieldHighlight: function (element) {
       element.classList.add("erroneousField");
@@ -172,24 +178,31 @@ export default {
   computed: {
     checkName: function () {
       return (
-          (this.formData.name.length > 5) &&
-          (this.formData.name.length < 51) && (this.formData.name.match(/^[a-z0-9., -]+$/i) != null)
+          (this.formData.name.length > nameLengthMin) &&
+          (this.formData.name.length <= nameLengthMax) &&
+          (this.formData.name.match(nameRegexp) != null)
       )
     },
     checkEmails: function () {
       // rely on the browser to validate the email formats
-      return (this.formData.address1.length > 4 && this.formData.address1 === this.formData.address2)
+      return (
+          (this.formData.address1.length > emailLengthMin) &&
+          (this.formData.address1.length <= emailLengthMax) &&
+          (this.formData.address1 === this.formData.address2)
+      )
     },
     checkSubject: function () {
       return (
-          (this.formData.subject.length > 5) &&
-          (this.formData.subject.length < 51) && (this.formData.subject.match(/^[£a-z0-9., -]+$/i) != null)
+          (this.formData.subject.length > subjectLengthMin) &&
+          (this.formData.subject.length <= subjectLengthMax) &&
+          (this.formData.subject.match(subjectRegexp) != null)
       )
     },
     checkMessage: function () {
       return (
-          (this.formData.message.length > 10) &&
-          (this.formData.message.length < 5001) && (this.formData.message.match(/^[£a-z0-9., -/?/)(]+$/i) != null)
+          (this.formData.message.length > msgLengthMin) &&
+          (this.formData.message.length <= msgLengthMax) &&
+          (this.formData.message.match(msgRegexp) != null)
       )
     }
   }
