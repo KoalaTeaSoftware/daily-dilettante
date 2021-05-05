@@ -18,13 +18,10 @@
                 v-for="data in caroDataList" :key="data.link"
                 :header="data.caption">
               <b-card-text>
-                <b-img v-if="data.img" fluid :src="require('@/assets/about/' + data.img)"></b-img>
-                <EditableDiv v-if="data.body" :identity="data.body"></EditableDiv>
-              </b-card-text>
-              <template #footer>
+                <EditableDiv v-if="data.body" :identity="data.body" class="card-text"></EditableDiv>
                 <a v-if="data.link" target="_blank" :href="data.link">{{ data.footNote }}</a>
                 <p v-else>{{ data.footNote }}</p>
-              </template>
+              </b-card-text>
             </b-card>
           </b-card-group>
         </b-col>
@@ -45,21 +42,21 @@ export default {
         {
           img: "caro-on-release.jpg",
           caption: "Rose as Film Maker",
-          body: false,
+          body: "rose-as-film-maker",
           footNote: "Click here to see more about the feature films that I have made",
           link: "https://rosegoldthorp.com/released-features"
         },
         {
           img: "caro-stories.jpg",
           caption: "Rose as Podcaster",
-          body: false,
+          body: "rose-as-podcaster",
           footNote: "Click here to see the podcasts that I have made so far for The Greenlands",
           link: "https://the-greenlands.com/stories"
         },
         {
           img: "caro-instagram.jpg",
           caption: "Rose as Artist",
-          body: false,
+          body: "rose-as-artist",
           footNote: "Click here to see my Instagram for The Greenlands",
           link: "https://www.instagram.com/the_greenlands/"
         },
@@ -96,6 +93,10 @@ export default {
   .card-body {
     padding-top: 0;
     padding-bottom: 0; // there is tool large a gap
+    .card-text {
+      font-size: small;
+    }
+  ;
   }
 
 
