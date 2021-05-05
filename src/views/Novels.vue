@@ -70,7 +70,7 @@ export default {
               "      "
         },
         {
-          title: "More Crap",
+          title: "More Stuff",
           imgSrc: "https://daily-dilettante.web.app/img/trollope-portrait.a0e4187c.jpg",
           text: "<p>Nulla bibendum quam eget vestibulum interdum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aenean ullamcorper vulputate enim quis pretium. Phasellus gravida, quam sit amet blandit porta, massa nulla gravida nulla, quis auctor erat libero sed lacus. In molestie metus massa, vel euismod mi ullamcorper et. Pellentesque elementum lectus nec scelerisque dignissim. Praesent eget tincidunt sem. Nulla sapien quam, semper non fermentum id, suscipit eu arcu. Pellentesque gravida consectetur vestibulum. Praesent in vestibulum lorem, ut tristique diam. Nulla tincidunt aliquet quam vitae maximus.</p>" +
               "<p>Suspendisse potenti. Suspendisse tempor velit at dui tempor, quis viverra turpis porttitor. In non gravida sem. Nulla fermentum consequat vulputate. Suspendisse gravida cursus est eu mollis. Fusce consectetur velit sed ex tincidunt, non ornare augue auctor. In in consectetur risus, at tincidunt neque. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin tempus leo id lorem condimentum consectetur. Maecenas vel iaculis ligula, et blandit tellus. Donec vitae cursus sem.</p>" +
