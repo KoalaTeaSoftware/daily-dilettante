@@ -61,7 +61,7 @@ import firebase from "firebase";
 import {VueShowdown} from 'vue-showdown';
 
 //ToDo: base this on a custom claim or some such secure thing
-const eddie = "admin@koalatea-software.com"
+const eddie = "editor@thedailydilettante.com"
 
 
 export default {
