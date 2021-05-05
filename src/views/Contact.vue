@@ -10,7 +10,6 @@
       <b-form-input
           v-model="formData.name"
           :state="checkName"
-          pattern="[A-Za-z0-9 .-]+"
           required
           id="name"
           name="name"
@@ -53,7 +52,6 @@
       <b-form-input
           v-model="formData.subject"
           :state="checkSubject"
-          pattern="[A-Za-z0-9 .-]+"
           required
           id="subject"
           name="subject"
@@ -69,7 +67,6 @@
           v-model="formData.message"
           :state="checkMessage"
           @keyup="showCount"
-          pattern="[A-Za-z0-9 .-]+"
           required
           id="message"
           name="message"
@@ -79,7 +76,7 @@
         This must be between 10 and 5,000 chars long, and be only letters, numbers, and similar ordinary characters.
       </b-form-invalid-feedback>
 
-      <span id="counter">(Chars left: <span id="letterCount">500</span>)</span>
+      <span id="counter">(Chars left: <span id="letterCount">{{ remainingMsgChars }}</span>)</span>
       <b-button type="submit" id="submitButton">Submit</b-button>
       <b-button type="reset" id="resetButton">Reset</b-button>
     </b-form>
@@ -127,7 +124,8 @@ form {
 </style>
 
 <script>
-
+// this needs to correspond with the data in ~/functions/config.json
+// todo: make it use that file instead of these local constants
 const nameLengthMin = 5
 const nameLengthMax = 40
 const nameRegexp = /^[a-z0-9., -]+$/i
@@ -139,11 +137,13 @@ const subjectRegexp = /^[£a-z0-9., -]+$/i
 const msgLengthMin = 10
 const msgLengthMax = 5000
 const msgRegexp = /^[£a-z0-9., -/?/)(]+$/i
+const mailService = "https://us-central1-daily-dilettante.cloudfunctions.net/sendMail"
 
 export default {
   name: "Contact",
   data() {
     return {
+      remainingMsgChars: msgLengthMax,
       formData: {
         name: "",
         address1: "",
@@ -156,8 +156,45 @@ export default {
   methods: {
     onSubmit: function (event) {
       event.preventDefault()
-      if (this.checkEmails && this.checkName)
-        alert(JSON.stringify(this.formData))
+      if (this.checkAll) {
+        // const data = new FormData(event.target);
+        const formData = this.formData //Object.fromEntries(data.entries());
+        console.log(`form data ${JSON.stringify(formData)}`)
+        console.log(`Sending to ${mailService}`)
+
+        fetch(
+            mailService,
+            {
+              method: 'POST',
+              mode: "no-cors",
+              headers: {"content-type": "application/json"},
+              body: JSON.stringify(formData)
+            })
+            .then(response => {
+              /*
+              There is a basic problem here, because there are are two domains involved,
+              https://daily-dilettante.web.app & the one above, we get back almost no information,
+              not even useful success / failure flags.
+              Therefore response.type - "opaque" we assume that it worked
+               */
+              console.log("Back in the Contact form. Type value is :" + response.type);
+              if (response.type === "opaque" || ((response.type !== "opaque") && response.ok)) {
+                console.log("Back in the Contact form, Sending email appears to have succeeded:" + JSON.stringify(response));
+                // cwMessageBlock.innerHTML = "";
+                // messageWidget.show("Thank you. We will reply as soon as possible.");
+                // contactWidget.hide();
+              } else {
+                console.log("Back in the Contact form, Sending email appears to have failed. Unable to say why." + JSON.stringify(response));
+                // cwMessageBlock.innerHTML = "There appear to have been a problem, please try again later";
+              }
+            })
+            .catch(reason => {
+              console.log("Back in the Contact form, Sending email appears to have failed:" + reason);
+              // cwMessageBlock.innerHTML = "There was a problem, please try again later";
+            })
+      } else {
+        console.log("There is some sort of validation failure")
+      }
     },
     onReset: function (event) {
       console.log("Resetting")
@@ -171,11 +208,14 @@ export default {
       element.classList.remove("erroneousField");
     },
     showCount: function () {
-      document.getElementById("letterCount").innerText =
-          (500 - document.getElementById('message').value.length).toString()
+      const len = document.getElementById('message').value.length
+      this.remainingMsgChars = (msgLengthMax - len).toLocaleString()
     }
   },
   computed: {
+    checkAll: function () {
+      return (this.checkName && this.checkEmails && this.checkSubject && this.checkMessage)
+    },
     checkName: function () {
       return (
           (this.formData.name.length > nameLengthMin) &&
@@ -199,6 +239,14 @@ export default {
       )
     },
     checkMessage: function () {
+      if (this.formData.message.length > msgLengthMin)
+        console.log("Message is long enough")
+      if (this.formData.message.length <= msgLengthMax)
+        console.log("Message is short enough")
+      if (this.formData.message.match(msgRegexp) != null)
+        console.log("message is well formed")
+
+
       return (
           (this.formData.message.length > msgLengthMin) &&
           (this.formData.message.length <= msgLengthMax) &&
