@@ -94,7 +94,8 @@ export default {
   }
 
   .card-body {
-    padding-top: 0px
+    padding-top: 0;
+    padding-bottom: 0; // there is tool large a gap
   }
 
 
