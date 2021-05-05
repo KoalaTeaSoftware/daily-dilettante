@@ -109,8 +109,10 @@ body {
     align-items: center;
 
     img {
-      padding-top: $margin-furniture;
-      padding-left: $margin-furniture;
+      //padding-top: $margin-furniture;
+      //padding-left: $margin-furniture;
+      padding: 0;
+      max-height: 9em;
     }
 
     #title {
@@ -143,6 +145,7 @@ body {
 
       .nav-item > a {
         color: $colour-page-background !important;
+        padding-bottom: 0;
       }
 
       .nav-item > a.active {
