@@ -12,7 +12,7 @@
           <EditableDiv identity="hardyBiog"></EditableDiv>
         </b-col>
         <b-col>
-          <b-img fluid :src="require('../assets/welc-caro/trollope-portrait.jpg')"></b-img>
+          <b-img fluid :src="require('../assets/thomas-hardy.jpg')"></b-img>
           <EditableDiv identity="hardyWessex"></EditableDiv>
         </b-col>
       </b-row>
