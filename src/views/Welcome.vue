@@ -18,11 +18,7 @@
         <EditableDiv identity="welcome-2"></EditableDiv>
       </b-col>
       <b-col id="blog-role">
-        <b-img :src="require('../assets/welc-caro/trollope-portrait.jpg')" class=" img-fluid"></b-img>
-        <h2>Some old guff</h2>
-        <p>Pellentesque euismod sem tortor, quis mattis neque imperdiet ut. Maecenas eleifend est in semper solli
-          <b-link id="more" to="/blog"> more ...</b-link>
-        </p>
+        <TumblrBlock trimLength="500" redirect-location="/novels"></TumblrBlock>
       </b-col>
     </b-row>
     <!--b-row>
@@ -67,10 +63,11 @@
 
 <script>
 import EditableDiv from "@/components/EditableDiv";
+import TumblrBlock from "@/components/TumblrBlock";
 
 export default {
   name: 'Welcome',
-  components: {EditableDiv},
+  components: {TumblrBlock, EditableDiv},
   data() {
     return {
       caroImgList: [
