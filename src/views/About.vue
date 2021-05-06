@@ -43,28 +43,28 @@ export default {
           img: "caro-on-release.jpg",
           caption: "Rose as Film Maker",
           body: "rose-as-film-maker",
-          footNote: "Click here to see more about the feature films that I have made",
+          footNote: "Click here to see more about the feature films that Rose has made",
           link: "https://rosegoldthorp.com/released-features"
         },
         {
           img: "caro-stories.jpg",
           caption: "Rose as Podcaster",
           body: "rose-as-podcaster",
-          footNote: "Click here to see the podcasts that I have made so far for The Greenlands",
+          footNote: "Click here to see the podcasts that Rose has made so far for The Greenlands",
           link: "https://the-greenlands.com/stories"
         },
         {
           img: "caro-instagram.jpg",
           caption: "Rose as Artist",
           body: "rose-as-artist",
-          footNote: "Click here to see my Instagram for The Greenlands",
+          footNote: "Click here to Rose's Instagram for The Greenlands",
           link: "https://www.instagram.com/the_greenlands/"
         },
         {
           img: "",
           caption: "Rose as Writer",
           body: "rose-as-writer",
-          footNote: "Contact me for further details",
+          footNote: "Contact Rose for further details",
           link: "/contact"
         }
       ]
