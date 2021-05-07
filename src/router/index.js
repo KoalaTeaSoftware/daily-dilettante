@@ -15,27 +15,27 @@ const routes = [
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+        component: () => import(/* webpackChunkName: "chapters" */ '../views/About')
     },
     {
         path: '/novels',
         name: 'Novels',
-        component: () => import(/* webpackChunkName: "novels" */ '../views/Novels')
+        component: () => import(/* webpackChunkName: "chapters" */ '../views/Novels')
     },
     {
         path: '/projects',
         name: 'Projects',
-        component: () => import(/* webpackChunkName: "projects" */ '../views/Projects.vue')
+        component: () => import(/* webpackChunkName: "chapters" */ '../views/Projects')
     },
     {
         path: '/policies',
         name: 'Policies',
-        component: () => import(/* webpackChunkName: "policies" */ '../views/Policies')
+        component: () => import(/* webpackChunkName: "chapters" */ '../views/Policies.vue')
     },
     {
         path: '/contact',
         name: 'Contact',
-        component: () => import(/* webpackChunkName: "contact" */ '../views/Contact')
+        component: () => import(/* webpackChunkName: "chapters" */ '../views/Contact.vue')
     },
     {
         // deal with a 404 (assuming that ths will be the same as 'unknown' to this set of routes)
