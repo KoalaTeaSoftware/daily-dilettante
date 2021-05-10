@@ -18,7 +18,7 @@
         <EditableDiv identity="welcome-2"></EditableDiv>
       </b-col>
       <b-col id="blog-role">
-        <TumblrBlock trimLength="500" redirect-location="/novels"></TumblrBlock>
+        <TumblrBlock trimLength=500 redirect-location="/novels"></TumblrBlock>
       </b-col>
     </b-row>
     <!--b-row>

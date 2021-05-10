@@ -10,7 +10,7 @@ Notice that the v-html attribute of the article text does not start with a colon
     </b-row>
     <b-row>
       <b-col>
-        <TumblrBlock trimLength="0" redirect-location="" id="blog-role"></TumblrBlock>
+        <TumblrBlock trimLength=0 redirect-location="" id="blog-role"></TumblrBlock>
       </b-col>
       <b-col>
         <div id="vid-role" v-for="video in videos">

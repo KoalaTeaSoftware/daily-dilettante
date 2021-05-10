@@ -8,6 +8,7 @@
     "public": "dist",
     "ignore": [
       "firebase.json",
+      "firebase-json.md",
       "**/.*",
       "**/node_modules/**"
     ],
@@ -27,7 +28,7 @@
           },
           {
             "key": "Cache-Control",
-            "value": "max-age=7200"
+            "value": "max-age=26000"
           }
         ]
       },
@@ -36,7 +37,7 @@
         "headers": [
           {
             "key": "Cache-Control",
-            "value": "max-age=7200"
+            "value": "max-age=26000"
           }
         ]
       },
