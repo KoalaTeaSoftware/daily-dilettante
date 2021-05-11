@@ -13,8 +13,8 @@ This is a work in progress - it now needs to read the xml file from some remote 
 </template>
 
 <script>
-/* readXML is defined, although it does not seem necessary for it to persist (compared to the interpreted data)
- * Its main use it to force coercion of the response, when it is being processed, into a string
+/* readXML is defined, although it does not seem necessary for it to persist (compared to the interpreted data),
+ * so as to force coercion of the response, when it is being processed, into a string
  */
 export default {
   name: "TumblrBlock",
@@ -75,11 +75,13 @@ export default {
           }
         })
         .then(response => {
-          // this is processing the data supplied by the capture of the result from the Tumblr proxy
-          this.readXML = response;
+          // sadly, some of the bits of html in the response are encoded.
+          // This has to be undone before we parse it into structured data
+          this.readXML = this.decodeHtml(response)
 
+          // This should be a cross-browser piece to parse the response into structured data
           if (typeof window.DOMParser != "undefined") {
-            this.parsedXML = (new window.DOMParser()).parseFromString(this.readXML, "text/xml")
+            this.parsedXML = (new window.DOMParser()).parseFromString(this.readXML, "text/html")
           } else if (typeof window.ActiveXObject != "undefined" && new window.ActiveXObject("Microsoft.XMLDOM")) {
             let xmlDoc = new window.ActiveXObject("Microsoft.XMLDOM");
             xmlDoc.async = "false";
@@ -92,7 +94,7 @@ export default {
             const allPosts = this.parsedXML.getElementsByTagName("post")
             let maxNumPosts = allPosts.length
             if (this.trimLength > 0) {
-              // this means that the screen should show only 1 item, and that should be trimmed and tailed
+              // this means that the screen should show only 1 item (and that should be trimmed and tailed)
               maxNumPosts = 1
             }
             for (let i = 0; i < maxNumPosts; i++) {
@@ -109,8 +111,6 @@ export default {
                 case "Photo":
                   let allCaption = thisXmlObj.getElementsByTagName('photo-caption')[0] // there should be only 1 and that is what we want
                   // it is going be wrapped in P tags, and we want rid of them
-                  let caption = this.xmlToString(allCaption.childNodes[0]) || ""
-                  thisPost.title = caption.replace(/(<([^>]+)>)/gi, "")
                   // Now shove the rest of the nodes into the text field
                   let captionNodeCount = allCaption.childNodes.length
                   for (let j = 1; j < captionNodeCount; j++) {
@@ -118,7 +118,12 @@ export default {
                     console.log(`node${j}: ${this.xmlToString(node)}`)
                     thisPost.text += this.xmlToString(node)
                   }
+
+                  let caption = this.xmlToString(allCaption.childNodes[0]) || ""
+                  thisPost.title = caption.replace(/(<([^>]+)>)/gi, "")
+
                   // Now grab the photo itself
+                  // ToDo: turn this into a srcset array
                   thisPost.image = thisXmlObj.getElementsByTagName('photo-url')[0].childNodes[0].nodeValue
                   break
                 case "Regular":
@@ -129,9 +134,9 @@ export default {
                 default:
                   console.log(`Unknown blog item type ${thisXmlObj.getAttribute("type")}`)
               }
-              // now see if it needs to be trimmed - this is going to be a waste if not trimming is required
+              // If the output has to be trimmed, we are currently within the iteration of the loop where this has to be done
               if (this.trimLength > 0) {
-                // this means that the screen should show only 1 item, and that should be trimmed
+                // noinspection JSCheckFunctionSignatures
                 thisPost.text = thisPost.text.substr(0, this.trimLength)
                 thisPost.text += ` <a href="${this.redirectLocation}" class="more" target="_self"> more ...</a>`
               }
@@ -161,6 +166,18 @@ export default {
         xmlString = (new XMLSerializer()).serializeToString(xmlData);
       }
       return xmlString;
+    },
+    /**
+     * A quick-ish and apparently robust way of un-encoding html
+     * Interestingly enough, this element never becomes visible.
+     *
+     * @param html
+     * @returns {string}
+     */
+    decodeHtml: function (html) {
+      let txt = document.createElement("textarea");
+      txt.innerHTML = html;
+      return txt.value;
     }
   }
 }
