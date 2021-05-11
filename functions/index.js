@@ -27,7 +27,6 @@ const rp = require('request-promise');
 
 admin.initializeApp();
 
-const config = require('./config.json');
 const logger = require("firebase-functions/lib/logger");
 
 exports.readTumblr = functions.https.onRequest((inputRequest, outputResponse) => {
@@ -50,82 +49,62 @@ exports.readTumblr = functions.https.onRequest((inputRequest, outputResponse) =>
         })
 })
 
+//when this cloud function is already deployed, change the origin to 'https://your-deployed-app-url
+const cors = require('cors')({origin: true});
+const config = require('./config.json');
+const transporter = nodemailer.createTransport({
+    host: config.host,
+    port: config.port,
+    secure: true, // true for 465, false for other ports
+    auth: {
+        user: config.user,
+        pass: config.pass
+    },
+});
+
 exports.sendMail = functions.https.onRequest((inputRequest, outputResponse) => {
-    /*
-    The outputResponse has the type of express.response. This is documented at https://expressjs.com/en/5x/api.html#res
-    An example of a good way of sending a response is
-        res.status(404).send('Sorry, we cannot find that!')
-    send()  actually sends the HTTP response.
-    For send, when the parameter is a String, the method sets the Content-Type to “text/html”:
-    If you are wanting to send a different response, here is an example:
-        res.set('Content-Type', 'text/html')
-        res.send(Buffer.from('<p>some html</p>'))
-    Also there is res.type(type). You have to give this a good mime type eg: text/xml, which is almost identical to application/xml
-    logger.info("Starting to send an email")
-    */
+    return cors(inputRequest, outputResponse, () => {
+        outputResponse.set('Access-Control-Allow-Origin', '*');
 
-    let transporter = nodemailer.createTransport({
-        host: config.host,
-        port: config.port,
-        secure: true, // true for 465, false for other ports
-        auth: {
-            user: config.user,
-            pass: config.pass
-        },
-    });
-
-    // verify connection configuration
-    // noinspection JSUnusedLocalSymbols
-    transporter.verify(function (error, success) {
-        if (error) {
-            logger.debug(error);
-            outputResponse.status(500).send(error)
-            // return
+        if (!Object.keys(inputRequest.body).length) {
+            // it is likely that this has been called from a browser's address line
+            logger.log("No data found")
+            return outputResponse.status(400).send("No data found")
         } else {
-            logger.info("Server is ready to take our messages");
-        }
-    });
+            let params = JSON.parse(inputRequest.body)
 
-    logger.debug(`Input: ${inputRequest}`)
-    logger.debug(`Config: ${JSON.stringify(config)}`)
+            if ((typeof params.name === 'undefined') || (params.name === null) || !verifyName(params.name)) {
+                logger.log("Name  is either inadequate, or contains bad characters");
+                outputResponse.status(400).send("Name  is either inadequate, or contains bad characters")
+            } else if ((typeof params.address1 === 'undefined') || (params.address1 === null) || !verifyEmails(params.address1, params.address2)) {
+                logger.log("Emails don't match, or are not valid");
+                outputResponse.status(400).send("Emails don't match, or are not valid")
+            } else if ((typeof params.subject === 'undefined') || (params.subject === null) || !verifySubject(params.subject)) {
+                logger.log("Subject is either inadequate, or contains bad characters");
+                outputResponse.status(400).send("Subject is either inadequate, or contains bad characters")
+            } else if ((typeof params.message === 'undefined') || (params.message === null) || !verifyMessage(params.message)) {
+                logger.log("Message is either inadequate, or contains bad characters");
+                outputResponse.status(400).send("Message is either inadequate, or contains bad characters")
+            } else {
 
-    if (!Object.keys(inputRequest.body).length)
-        // it is likely that this has been called from a browser's address line
-        outputResponse.status(400).send("No data found")
-    else {
-        let params = JSON.parse(inputRequest.body)
-        logger.log(`The message body received is ${params}`)
-
-        if ((typeof params.name === 'undefined') || (params.name === null) || !verifyName(params.name)) {
-            logger.log("Name  is either inadequate, or contains bad characters");
-            outputResponse.status(400).send("Name  is either inadequate, or contains bad characters")
-        } else if ((typeof params.address1 === 'undefined') || (params.address1 === null) || !verifyEmails(params.address1, params.address2)) {
-            logger.log("Emails don't match, or are not valid");
-            outputResponse.status(400).send("Emails don't match, or are not valid")
-        } else if ((typeof params.subject === 'undefined') || (params.subject === null) || !verifySubject(params.subject)) {
-            logger.log("Subject is either inadequate, or contains bad characters");
-            outputResponse.status(400).send("Subject is either inadequate, or contains bad characters")
-        } else if ((typeof params.message === 'undefined') || (params.message === null) || !verifyMessage(params.message)) {
-            logger.log("Message is either inadequate, or contains bad characters");
-            outputResponse.status(400).send("Message is either inadequate, or contains bad characters")
-        } else {
-            logger.info("Passed all of the constraints")
-            // send mail with defined transport object
-            transporter.sendMail({
-                from: `"${params.name}" <${params.address1}>`, // sender address
-                to: config.user,
-                subject: params.subject, // Subject line is optional for this transport, but I want it
-                text: params.message     // plain text body
-            }).then(sendingResult => {
-                logger.log("Message sent:", sendingResult)
-                outputResponse.status(200).send("Success")
-            }).catch(reason => {
-                logger.log("Sending failed: %s", reason.toString())
-                outputResponse.status(500).send(reason.toString())
-            })
-        }
-    }
-})
+                logger.log(`The message body received is ${params}`)
+                const data = {
+                    from: `"${params.name}" <${params.address1}>`, // sender address
+                    to: config.user,
+                    subject: params.subject, // Subject line is optional for this transport, but I want it
+                    text: params.message     // plain text body
+                }
+                transporter.sendMail(data)
+                    .then(r => {
+                        return outputResponse.status(200).send('Success');
+                    })
+                    .catch(e => {
+                        return outputResponse.status(500).send(`Failed: ${e.toString()}`);
+                    })
+            }
+        } // end else got some data
+    }) // end cors
+}) // end exported function
 
 function verifyEmails(address1, address2) {
     return (address1 === address2) && verifyEmailSyntax(address1)

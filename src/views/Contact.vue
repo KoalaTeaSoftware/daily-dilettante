@@ -4,9 +4,11 @@
     <b-form
         @submit="onSubmit"
         @reset="onReset"
+        id="contactForm"
     >
       <!--suppress HtmlFormInputWithoutLabel -->
       <input hidden id="whadyano" value="<?= $timeNow ?>">
+      <p id="server-feedback" v-show="this.serverMessage">{{ serverMessage }}</p>
       <b-form-input
           v-model="formData.name"
           :state="checkName"
@@ -143,6 +145,7 @@ export default {
   name: "Contact",
   data() {
     return {
+      serverMessage: null,
       remainingMsgChars: msgLengthMax,
       formData: {
         name: "",
@@ -156,7 +159,13 @@ export default {
   methods: {
     onSubmit: function (event) {
       event.preventDefault()
+      const fields = document.getElementById("contactForm").getElementsByTagName('*');
       if (this.checkAll) {
+
+        for (let i = 0; i < fields.length; i++) {
+          fields[i].disabled = true;
+        }
+
         // const data = new FormData(event.target);
         const formData = this.formData //Object.fromEntries(data.entries());
         console.log(`form data ${JSON.stringify(formData)}`)
@@ -180,17 +189,18 @@ export default {
               console.log("Back in the Contact form. Type value is :" + response.type);
               if (response.type === "opaque" || ((response.type !== "opaque") && response.ok)) {
                 console.log("Back in the Contact form, Sending email appears to have succeeded:" + JSON.stringify(response));
+                this.serverMessage = "Thank you for you message. We will try to reply as soon as possible."
                 // cwMessageBlock.innerHTML = "";
                 // messageWidget.show("Thank you. We will reply as soon as possible.");
                 // contactWidget.hide();
               } else {
                 console.log("Back in the Contact form, Sending email appears to have failed. Unable to say why." + JSON.stringify(response));
-                // cwMessageBlock.innerHTML = "There appear to have been a problem, please try again later";
+                this.serverMessage = "Unfortunately, your message could not be sent. Please try again later."
               }
             })
             .catch(reason => {
               console.log("Back in the Contact form, Sending email appears to have failed:" + reason);
-              // cwMessageBlock.innerHTML = "There was a problem, please try again later";
+              this.serverMessage = "Unfortunately, your message could not be sent. Please try again later."
             })
       } else {
         console.log("There is some sort of validation failure")
@@ -200,29 +210,36 @@ export default {
       console.log("Resetting")
       event.preventDefault()
       this.formData.name = this.formData.address1 = this.formData.address2 = this.formData.subject = this.formData.message = ""
-    },
+    }
+
+    ,
     setFieldHighlight: function (element) {
       element.classList.add("erroneousField");
-    },
+    }
+    ,
     clearFieldHighlight: function (element) {
       element.classList.remove("erroneousField");
-    },
+    }
+    ,
     showCount: function () {
       const len = document.getElementById('message').value.length
       this.remainingMsgChars = (msgLengthMax - len).toLocaleString()
     }
-  },
+  }
+  ,
   computed: {
     checkAll: function () {
       return (this.checkName && this.checkEmails && this.checkSubject && this.checkMessage)
-    },
+    }
+    ,
     checkName: function () {
       return (
           (this.formData.name.length > nameLengthMin) &&
           (this.formData.name.length <= nameLengthMax) &&
           (this.formData.name.match(nameRegexp) != null)
       )
-    },
+    }
+    ,
     checkEmails: function () {
       // rely on the browser to validate the email formats
       return (
@@ -230,14 +247,16 @@ export default {
           (this.formData.address1.length <= emailLengthMax) &&
           (this.formData.address1 === this.formData.address2)
       )
-    },
+    }
+    ,
     checkSubject: function () {
       return (
           (this.formData.subject.length > subjectLengthMin) &&
           (this.formData.subject.length <= subjectLengthMax) &&
           (this.formData.subject.match(subjectRegexp) != null)
       )
-    },
+    }
+    ,
     checkMessage: function () {
       if (this.formData.message.length > msgLengthMin)
         console.log("Message is long enough")
