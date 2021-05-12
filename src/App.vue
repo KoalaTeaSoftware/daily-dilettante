@@ -184,7 +184,7 @@ body {
     font-weight: bold;
   }
 
-  img {
+  img, iframe, audio {
     border-radius: 5px;
     box-shadow: 5px 5px 10px $colour-body-text-shadow;
   }

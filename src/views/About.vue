@@ -18,8 +18,9 @@
                 v-for="data in caroDataList" :key="data.link"
                 :header="data.caption">
               <b-card-text>
+                <b-img v-if="data.img" fluid :src="require('@/assets/about/' + data.img)"></b-img>
                 <EditableDiv v-if="data.body" :identity="data.body" class="card-text"></EditableDiv>
-                <a v-if="data.link" target="_blank" :href="data.link">{{ data.footNote }}</a>
+                <!--a v-if="data.link" target="_blank" :href="data.link">{{ data.footNote }}</a-->
                 <p v-else>{{ data.footNote }}</p>
               </b-card-text>
             </b-card>
@@ -42,30 +43,22 @@ export default {
         {
           img: "caro-on-release.jpg",
           caption: "Rose as Film Maker",
-          body: "rose-as-film-maker",
-          footNote: "Click here to see more about the feature films that Rose has made",
-          link: "https://rosegoldthorp.com/released-features"
+          body: "rose-as-film-maker"
         },
         {
           img: "caro-stories.jpg",
           caption: "Rose as Podcaster",
-          body: "rose-as-podcaster",
-          footNote: "Click here to see the podcasts that Rose has made so far for The Greenlands",
-          link: "https://the-greenlands.com/stories"
+          body: "rose-as-podcaster"
         },
         {
           img: "caro-instagram.jpg",
           caption: "Rose as Artist",
-          body: "rose-as-artist",
-          footNote: "Click here to Rose's Instagram for The Greenlands",
-          link: "https://www.instagram.com/the_greenlands/"
+          body: "rose-as-artist"
         },
         {
           img: "",
           caption: "Rose as Writer",
-          body: "rose-as-writer",
-          footNote: "Contact Rose for further details",
-          link: "/contact"
+          body: "rose-as-writer"
         }
       ]
     }
@@ -95,10 +88,15 @@ export default {
     padding-bottom: 0; // there is tool large a gap
     .card-text {
       font-size: small;
+      margin-top: 1.5em;
+
+      p {
+        text-align: center;
+        // this is required because the nice shadow around the iframe makes the caption below it look cramped
+        // sadly, I can't target that caption any better than this, but collateral damage seems negligible
+        margin-top: 0.5em;
+      }
     }
-  ;
   }
-
-
 }
 </style>
