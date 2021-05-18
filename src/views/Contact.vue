@@ -32,7 +32,7 @@
           maxlength="50"
           type="email"
           placeholder="Please tell me your email address"
-          autofocus></b-form-input>
+      ></b-form-input>
       <b-form-invalid-feedback :state="checkEmails">
         Please ensure that a valid email address is provided
       </b-form-invalid-feedback>
@@ -46,7 +46,7 @@
           maxlength="50"
           type="email"
           placeholder="Please tell confirm your email address"
-          autofocus></b-form-input>
+      ></b-form-input>
       <b-form-invalid-feedback :state="checkEmails">
         Please ensure that both email address fields contain identical data
       </b-form-invalid-feedback>
@@ -60,7 +60,7 @@
           maxlength="50"
           type="text"
           placeholder="Please provide some subject for this message"
-          autofocus></b-form-input>
+      ></b-form-input>
       <b-form-invalid-feedback :state="checkSubject">
         This must be between 5 and 50 chars long, and be only letters, numbers, and similar ordinary characters.
       </b-form-invalid-feedback>

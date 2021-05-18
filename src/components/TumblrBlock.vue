@@ -4,9 +4,18 @@ This is a work in progress - it now needs to read the xml file from some remote 
 
 <template>
   <div class="tumblrBlogRoll">
-    <div class="post" v-for="(post) in fullPostList" key="index">
-      <h2>{{ post.title }}</h2>
-      <img v-if="post.image" :src="post.image" alt="post.title">
+    <div class="post" v-for="(post) in fullPostList">
+      <h2 v-if="post.title">{{ post.title }}</h2>
+      <img v-if="post.imgLink" :src="post.imgLink" alt="'Image to go with '+post.title">
+      <p v-if="post.vidLink">
+        <iframe
+            class="vid-viewer"
+            width="560" height="315"
+            :src="post.vidLink + '?showinfo=0&modestbranding=0'"
+            title="A video from our channel"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+        </iframe>
       <div v-if="post.text" v-html="post.text"></div>
     </div>
   </div>
@@ -29,7 +38,15 @@ export default {
      * Something like /novels is most likely, but I don't see why it shouldn't be an entire URL
      * The target is going to be _self
      */
-    redirectLocation: String
+    redirectLocation: String,
+    /**
+     * Us this in order to get a block that contains only posts of a certain type.
+     * The type that you give has to correspond to some tag that you give some posts in the target blog
+     * If you don't give a value to this, it will come through as "undefined", and the product will be the entire blog
+     * (well, actually, just the default max number of entries)
+     * If you give a value that does not match any of your tags, then you risk getting nothing back
+     */
+    blogType: String
   },
   data() {
     return {
@@ -39,7 +56,16 @@ export default {
     }
   },
   mounted: function () {
-    const tumblrProxy = "https://us-central1-daily-dilettante.cloudfunctions.net/readTumblr"
+    console.log("--------- A tumblr blog is mounted --------------------------")
+    console.log("The type of blog is going to be determined by:" + this.blogType + ":")
+    console.log("The length of blog is going to be determined by:" + this.trimLength + ":")
+    console.log("The type of redirect (if trimmed) locations is:" + this.redirectLocation + ":")
+
+    let tumblrProxy = "https://us-central1-daily-dilettante.cloudfunctions.net/readTumblr"
+    if (this.blogType)
+      tumblrProxy += `?tag=${this.blogType}`
+    console.log("This is the query:" + tumblrProxy + ":")
+
     let dummyText =
         "'<tumblr version=\"1.0\">\\n' +\n" +
         "          '<tumblelog name=\"dailydilettante\" timezone=\"US/Eastern\" title=\"The Daily Dilettante\"> </tumblelog>\\n' +\n" +
@@ -104,32 +130,45 @@ export default {
                 type: thisXmlObj.getAttribute("type"),
                 title: "",
                 text: "",
-                image: ""
+                imgLink: "",
+                vidLink: ""
               }
+              console.log(`Processing a ${thisXmlObj.getAttribute("type")} of blog`)
               // depending on the type of the blog, we will have to do different processing
               switch (thisXmlObj.getAttribute("type")) {
                 case "Photo":
-                  let allCaption = thisXmlObj.getElementsByTagName('photo-caption')[0] // there should be only 1 and that is what we want
+                  let allCaption = thisXmlObj.getElementsByTagName('photo-caption')[0]
+                  // there should be only 1 and that is what we want for the caption
                   // it is going be wrapped in P tags, and we want rid of them
+                  let caption = this.xmlToString(allCaption.childNodes[0]) || ""
+                  thisPost.title = caption.replace(/(<([^>]+)>)/gi, "")
+
                   // Now shove the rest of the nodes into the text field
                   let captionNodeCount = allCaption.childNodes.length
                   for (let j = 1; j < captionNodeCount; j++) {
                     let node = allCaption.childNodes[j]
-                    console.log(`node${j}: ${this.xmlToString(node)}`)
+                    // console.log(`node${j}: ${this.xmlToString(node)}`)
                     thisPost.text += this.xmlToString(node)
                   }
 
-                  let caption = this.xmlToString(allCaption.childNodes[0]) || ""
-                  thisPost.title = caption.replace(/(<([^>]+)>)/gi, "")
-
-                  // Now grab the photo itself
+                  // Now grab the photo itself - there is, in fact an array of tags with this name, so, at first, just grab the first one
                   // ToDo: turn this into a srcset array
-                  thisPost.image = thisXmlObj.getElementsByTagName('photo-url')[0].childNodes[0].nodeValue
+                  thisPost.imgLink = thisXmlObj.getElementsByTagName('photo-url')[0].childNodes[0].nodeValue
                   break
                 case "Regular":
                   thisPost.title = this.xmlToString(thisXmlObj.getElementsByTagName('regular-title')[0].childNodes[0])
                   thisPost.text = this.xmlToString(thisXmlObj.getElementsByTagName('regular-body')[0])
-                  thisPost.image = null
+                  thisPost.imgLink = null
+                  break
+                case "Video":
+                  // this sort of post does not have a title, and we don't seem to want one
+                  thisPost.title = null
+                  // This node is actually a bag of HTML, including P tags, so we should be able to simply dum it out
+                  thisPost.text = this.xmlToString(thisXmlObj.getElementsByTagName('video-caption')[0])
+
+                  // there will be only one such node, but this will be in an array (because it is a getElement_s_
+                  // This child node is a https://developer.mozilla.org/en-US/docs/Web/API/HTMLIFrameElement
+                  thisPost.vidLink = thisXmlObj.getElementsByTagName('video-player')[0].childNodes[0].src
                   break
                 default:
                   console.log(`Unknown blog item type ${thisXmlObj.getAttribute("type")}`)

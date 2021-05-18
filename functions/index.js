@@ -29,16 +29,30 @@ admin.initializeApp();
 
 const logger = require("firebase-functions/lib/logger");
 
+/**
+ *
+ * This reads the 'built in' tumblr feed and returns what is read as a string that contains XML.
+ * example call http://localhost:5001/daily-dilettante/us-central1/readTumblr?tag=article
+ * If you provide a tag=... query parameter, this will be used to filter the reading, based on that tag
+ * Clearly, you will have to coordinate your posting to go with your tagging, but as tumblr posts can contain many tags,
+ * this should not be a headache
+ * If you provide no query parameter (or one not called tag) you get them all
+ */
 exports.readTumblr = functions.https.onRequest((inputRequest, outputResponse) => {
+    logger.info(`Requested tag: ${inputRequest.query.tag}`)
+    let url = "https://dailydilettante.tumblr.com/api/read/xml"
+    if (inputRequest.query.tag) {
+        url += `?tagged=${inputRequest.query.tag}`
+    }
     // This is the vital statement
     // It tells the requesting browser that I do not care who is calling this function
     outputResponse.set('Access-Control-Allow-Origin', '*');
 
     // logger.info("-------------------------------------------------------------------------")
-    // logger.info("Preparing to read the tumblr feed")
+    logger.info("Preparing to read the tumblr feed:" + url + ":")
 
     // xml is the default language of this feed, so adding the xml on the end is not really vital
-    rp({uri: "https://dailydilettante.tumblr.com/api/read/xml"})
+    rp({uri: url})
         .then(result => {
             // logger.info('here is response: ' + result);
             outputResponse.status(200).type("text/xml").send(result)
@@ -94,6 +108,7 @@ exports.sendMail = functions.https.onRequest((inputRequest, outputResponse) => {
                     subject: params.subject, // Subject line is optional for this transport, but I want it
                     text: params.message     // plain text body
                 }
+                // noinspection JSUnusedLocalSymbols
                 transporter.sendMail(data)
                     .then(r => {
                         return outputResponse.status(200).send('Success');

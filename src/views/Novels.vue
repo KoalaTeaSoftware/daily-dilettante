@@ -10,20 +10,10 @@ Notice that the v-html attribute of the article text does not start with a colon
     </b-row>
     <b-row>
       <b-col>
-        <TumblrBlock trimLength=0 redirect-location="" id="blog-role"></TumblrBlock>
+        <TumblrBlock trimLength=0 redirect-location="" id="blog-roll" blogType="article"></TumblrBlock>
       </b-col>
       <b-col>
-        <div id="vid-role" v-for="video in videos">
-          <!--suppress SpellCheckingInspection -->
-          <iframe
-              class="vid-viewer"
-              width="560" height="315"
-              :src="video.vidSrc + '?showinfo=0&modestbranding=0'"
-              title="A video from out channel"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen>
-          </iframe>
-        </div>
+        <TumblrBlock trimLength=0 redirect-location="" id="vid-roll" blogType="video"></TumblrBlock>
       </b-col>
     </b-row>
   </b-container>
@@ -53,7 +43,7 @@ export default {
 //noinspection CssUnknownTarget
 @import "@/assets/livery";
 
-#blog-role {
+#blog-roll {
   .article-img {
     margin-right: 1.75em;
     margin-bottom: 1.5em;
@@ -65,7 +55,8 @@ export default {
   }
 }
 
-#vid-role {
+#vid-roll {
+  //noinspection SassScssResolvedByNameOnly
   .vid-viewer {
     border-radius: 5px;
     box-shadow: 5px 5px 10px $colour-body-text-shadow;
