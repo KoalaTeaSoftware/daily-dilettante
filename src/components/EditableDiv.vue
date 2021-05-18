@@ -133,8 +133,7 @@ export default {
       if (firebase.auth().currentUser && firebase.auth().currentUser.email === eddie) {
         this.trialVersion = this.displayVersion.slice(0) // deep copy from shown to the editor
         this.$bvModal.show(this.modalId)
-      } else
-        alert("You can't edit me")
+      }
     }
   },
   mounted() {
