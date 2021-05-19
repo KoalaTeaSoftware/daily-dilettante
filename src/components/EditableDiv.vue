@@ -176,9 +176,9 @@ export default {
   background-repeat: no-repeat;
   background-size: .75em;
   background-position: .5rem .5rem;
-  border-style: dotted;
-  border-width: 2px;
-  border-color: #5AB59B;
+  border-style: dashed;
+  border-width: 1px;
+  border-color: darkgray;
 }
 
 h1 {

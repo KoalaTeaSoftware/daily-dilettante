@@ -5,7 +5,7 @@
       <EditableDiv identity="hardyAdap-1"></EditableDiv>
       <div id="podBox">
         <EditableDiv identity="hardyAdap-2"></EditableDiv>
-        <audio src="" controls class="w-75"></audio>
+        <audio src="@/assets/dd-intro.mp3/" controls class="w-75"></audio>
       </div>
       <b-row>
         <b-col>
