@@ -8,24 +8,21 @@
       </b-col>
     </b-row>
     <b-row style="display: flex !important; align-items: center;">
-      <b-col>
-        <b-carousel id="welc-caro" fade class="m-auto">
-          <b-carousel-slide v-for="pic in caroImgList"
-                            :img-src="require('@/assets/welc-caro/' + pic)"></b-carousel-slide>
+      <b-col md="12" lg="4">
+        <b-carousel id="welc-caro" fade class="m-auto" style="margin-bottom: 1em">
+          <b-carousel-slide
+              v-for="pic in caroImgList"
+              :img-src="require('@/assets/welc-caro/' + pic)">
+          </b-carousel-slide>
         </b-carousel>
       </b-col>
-      <b-col style="text-align: center" class="mainText">
+      <b-col md="12" lg="4" style="text-align: center; margin-top: 1em" class="mainText">
         <EditableDiv identity="welcome-2"></EditableDiv>
       </b-col>
-      <b-col id="blog-role">
+      <b-col md="12" lg="4" id="blog-role">
         <TumblrBlock trimLength=500 redirect-location="/novels"></TumblrBlock>
       </b-col>
     </b-row>
-    <!--b-row>
-      <b-col style="text-align: center" class="mainText">
-        <EditableDiv identity="welcome-3"></EditableDiv>
-      </b-col>
-    </b-row-->
   </b-container>
 </template>
 
