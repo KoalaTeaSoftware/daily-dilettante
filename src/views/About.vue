@@ -42,7 +42,7 @@ export default {
           body: "rose-as-podcaster"
         },
         {
-          img: "caro-instagram.jpg",
+          img: "caro-instagram2.jpg",
           caption: "Rose as Artist",
           body: "rose-as-artist"
         },
