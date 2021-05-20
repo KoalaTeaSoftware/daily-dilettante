@@ -188,7 +188,20 @@ body {
     border-radius: 5px;
     box-shadow: 5px 5px 10px $colour-body-text-shadow;
   }
+
+  /* As the inner is tightly around its images, you will not be able to see the shadow tht the image has.
+   * Therefore give the inner (not the image) the attributes that provide the shadow */
+  .carousel-inner {
+    border-radius: 5px;
+    box-shadow: 5px 5px 10px $colour-body-text-shadow;
+    /* This also means that we have to prevent the image in the carousel from having the shadow (otherwise it can look wrong) */
+    img {
+      margin: 0;
+      box-shadow: none;
+    }
+  }
 }
+
 
 #footer-box {
   font-family: branded-font, "Times New Roman", Times, serif;

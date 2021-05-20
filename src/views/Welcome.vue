@@ -29,18 +29,6 @@
 <style lang="scss">
 @import "src/assets/livery";
 
-/* As the inner is tightly around the image, you will not be able to see the inherited shadow from app.vue.
- Therefore give the inner (not the image) the same attributes */
-.carousel-inner {
-  border-radius: 5px;
-  box-shadow: 5px 5px 10px $colour-body-text-shadow;
-  /* This also means that we have to prevent the image in the carousel from having the shadow (otherwise it can look wrong) */
-  img {
-    margin-top: 0;
-    box-shadow: none;
-  }
-}
-
 #welcome-1 {
   .editedContent {
     font-size: larger;
