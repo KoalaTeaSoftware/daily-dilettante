@@ -1,21 +1,24 @@
-The best way to read a tumblr blog is like this  blog https://dailydilettante.tumblr.com/api/read give acceptable XML
+This uses the straight Bootstrap 3 embedding, rather than the bootstrap-vue one, because the bootstrap-vue version does not
+appear to want to play. Rather than spend any longer trying to find out why, I use the first effective solution.
 
-This is a work in progress - it now needs to read the xml file from some remote Tumblr blog
+See the comments in the props section to see how to use this component.
+
+It depends on a proxy to a Tumblr blog, which returns a bag of XML. It processes that XML and draws a div containing
+appropriate elements for different types of post. For the moment, the range of types supported is rather narrow.
 
 <template>
   <div class="tumblrBlogRoll">
     <div class="post" v-for="(post) in fullPostList">
       <h2 v-if="post.title">{{ post.title }}</h2>
       <img v-if="post.imgLink" :src="post.imgLink" alt="'Image to go with '+post.title">
-      <p v-if="post.vidLink">
+      <div v-if="post.vidLink" class="embed-responsive embed-responsive-16by9">
         <iframe
-            class="vid-viewer"
-            width="560" height="315"
+            class="embed-responsive-item vid-viewer"
             :src="post.vidLink + '?showinfo=0&modestbranding=0'"
-            title="A video from our channel"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen>
         </iframe>
+      </div>
       <div v-if="post.text" v-html="post.text"></div>
     </div>
   </div>
@@ -56,15 +59,15 @@ export default {
     }
   },
   mounted: function () {
-    console.log("--------- A tumblr blog is mounted --------------------------")
-    console.log("The type of blog is going to be determined by:" + this.blogType + ":")
-    console.log("The length of blog is going to be determined by:" + this.trimLength + ":")
-    console.log("The type of redirect (if trimmed) locations is:" + this.redirectLocation + ":")
+    // console.log("--------- A tumblr blog is mounted --------------------------")
+    // console.log("The type of blog is going to be determined by:" + this.blogType + ":")
+    // console.log("The length of blog is going to be determined by:" + this.trimLength + ":")
+    // console.log("The type of redirect (if trimmed) locations is:" + this.redirectLocation + ":")
 
     let tumblrProxy = "https://us-central1-daily-dilettante.cloudfunctions.net/readTumblr"
     if (this.blogType)
       tumblrProxy += `?tag=${this.blogType}`
-    console.log("This is the query:" + tumblrProxy + ":")
+    // console.log("This is the query:" + tumblrProxy + ":")
 
     let dummyText =
         "'<tumblr version=\"1.0\">\\n' +\n" +
@@ -133,7 +136,7 @@ export default {
                 imgLink: "",
                 vidLink: ""
               }
-              console.log(`Processing a ${thisXmlObj.getAttribute("type")} of blog`)
+              // console.log(`Processing a ${thisXmlObj.getAttribute("type")} of blog`)
               // depending on the type of the blog, we will have to do different processing
               switch (thisXmlObj.getAttribute("type")) {
                 case "Photo":
@@ -221,7 +224,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>
