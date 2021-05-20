@@ -10,7 +10,7 @@ appropriate elements for different types of post. For the moment, the range of t
   <div class="tumblrBlogRoll">
     <div class="post" v-for="(post) in fullPostList">
       <h2 v-if="post.title">{{ post.title }}</h2>
-      <img v-if="post.imgLink" :src="post.imgLink" alt="'Image to go with '+post.title">
+      <b-img v-if="post.imgLink" :src="post.imgLink" alt="'Image to go with '+post.title" fluid></b-img>
       <div v-if="post.vidLink" class="embed-responsive embed-responsive-16by9">
         <iframe
             class="embed-responsive-item vid-viewer"
