@@ -3,10 +3,15 @@
     <!--suppress HtmlUnknownBooleanAttribute -->
     <b-container fluid>
       <EditableDiv identity="hardyAdap-1"></EditableDiv>
-      <div id="podBox">
+      <div class="subProjectBox">
         <EditableDiv identity="hardyAdap-2"></EditableDiv>
         <audio src="@/assets/dd-intro.mp3/" controls class="w-75"></audio>
       </div>
+      <b-row>
+        <b-col class="subProjectBox">
+          <EditableDiv identity="hardyAdap-shorts"></EditableDiv>
+        </b-col>
+      </b-row>
       <b-row>
         <b-col>
           <EditableDiv identity="hardyBiog"></EditableDiv>
@@ -39,7 +44,7 @@ export default {
 @import "src/assets/livery";
 
 #projects {
-  #podBox {
+  .subProjectBox {
     background-color: $colour-banner-background;
     color: $colour-banner-primary-text;
     padding: $margin-furniture; // allows the margin around the child to be visible
@@ -50,6 +55,10 @@ export default {
       font-size: larger;
       text-align: center;
       margin: .5em; // force the lettering to be vertically tidy
+    }
+
+    a {
+      color: $colour-banner-secondary-text;
     }
   }
 
