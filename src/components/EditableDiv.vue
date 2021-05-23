@@ -56,13 +56,13 @@ The markDownPanel that the user sees within the page takes in MarkDown and inter
 </template>
 
 <script>
-import firebase from "firebase";
-// noinspection ES6CheckImport
+import firebase from "firebase/app";
+import "firebase/firestore"
+
 import {VueShowdown} from 'vue-showdown';
 
 //ToDo: base this on a custom claim or some such secure thing
 const eddie = "editor@thedailydilettante.com"
-
 
 export default {
   props: {identity: String},

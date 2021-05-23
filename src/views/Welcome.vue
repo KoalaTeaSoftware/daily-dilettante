@@ -29,26 +29,27 @@
 <style lang="scss">
 @import "src/assets/livery";
 
-#welcome-1 {
-  .editedContent {
-    font-size: larger;
-    font-weight: bolder;
-    text-align: center !important;
-  }
-}
-
-.mainText p {
-  text-align: center;
-}
-
-#blog-role {
-  margin: auto;
-
-  img {
-    //width: 100%; /* Force the image to be sized by the column width, not from the source */
-    margin: 0.5em;
+#welcome {
+  #welcome-1 {
+    .editedContent {
+      font-size: larger;
+      font-weight: bolder;
+      text-align: center !important;
+    }
   }
 
+  .mainText p {
+    text-align: center;
+  }
+
+  #blog-role {
+    margin: auto;
+
+    img {
+      //width: 100%; /* Force the image to be sized by the column width, not from the source */
+      margin: 0.5em;
+    }
+  }
 }
 </style>
 

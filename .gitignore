@@ -22,6 +22,6 @@ pnpm-debug.log*
 *.sln
 *.sw?
 
-# firebase creates these, they are probably not fit for storage
+# auth creates these, they are probably not fit for storage
 .firebase/*
 /raw-assets/email-secrets/config.json

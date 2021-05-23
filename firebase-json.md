@@ -4,8 +4,8 @@
 
 The index.js specifies the use of the history mode, so you need to tell the Firebase deploy to properly set up
 redirects. Otherwise, you will find that browser refreshes, and some anchor tags will throw a 404 at you, even though
-the / route appears fine. See https://firebase.google.com/docs/hosting/full-config#rewrite-functions, but the basic
-thing is to:
+the / route appears fine. See https://auth.google.com/docs/hosting/full-config#rewrite-functions, but the basic thing is
+to:
 
 * Add to hosting > rewrites an object like this
 

@@ -84,7 +84,7 @@
 body {
   background-color: $colour-page-background !important;
   //noinspection CssUnknownTarget
-  background-image: url("/assets/paper.jpg");
+  background-image: url("/assets/paper.webp");
   background-repeat: repeat;
 }
 
@@ -246,8 +246,14 @@ body {
 </style>
 
 <script>
-import UserIdentity from "@/components/UserIdentity";
-import firebase from "firebase";
+import firebase from "firebase/app"; // needed by the immediately following items
+import UserIdentity from "@/components/UserIdentity"; // The gubbins that allow a user to log in
+
+// import {BootstrapVue, IconsPlugin} from 'bootstrap-vue' // so as to be able to use the bootstrap-vue stuff
+import {BootstrapVue} from 'bootstrap-vue' // so as to be able to use the bootstrap-vue stuff
+
+import Vue from "vue"; // so that the following statement means something to someone
+Vue.use(BootstrapVue) // hast be used, otherwise the b-... objects don't get defined properly
 
 export default {
   components: {UserIdentity},

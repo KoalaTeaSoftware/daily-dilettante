@@ -15,7 +15,7 @@
         <b-col v-for="data in caroDataList" :key="data.link" sm="12" md="6" lg="3">
           <h2>{{ data.caption }}</h2>
           <b-img v-if="data.img" fluid :src="require('@/assets/about/' + data.img)"></b-img>
-          <EditableDiv v-if="data.body" :identity="data.body" class="card-text"></EditableDiv>
+          <EditableDiv v-if="data.body" :identity="data.body" class="about-caro-text"></EditableDiv>
         </b-col>
       </b-row>
     </b-container>
@@ -66,7 +66,7 @@ export default {
   }
 }
 
-.card-text {
+.about-caro-text {
   p {
     text-align: center;
     // this is required because the nice shadow around the iframe makes the caption below it look cramped

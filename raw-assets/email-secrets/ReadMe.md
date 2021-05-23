@@ -5,8 +5,8 @@
 # Getting them out separately
 
 ```
-const secretKey  = firebase.config().config.key;
-const secretPass = firebase.config().config.pass;
+const secretKey  = auth.config().config.key;
+const secretPass = auth.config().config.pass;
 ```
 
 https://nodemailer.com/smtp/

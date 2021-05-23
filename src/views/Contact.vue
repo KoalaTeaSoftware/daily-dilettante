@@ -85,10 +85,10 @@
   </div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import "src/assets/livery.scss";
 
-form {
+#contactForm {
   width: 75%;
   margin: auto;
 
@@ -120,9 +120,7 @@ form {
     margin: 1em;
     float: left;
   }
-
 }
-
 </style>
 
 <script>

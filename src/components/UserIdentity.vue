@@ -1,6 +1,6 @@
-Depends on >npm install --save firebase firebaseui vue-router
+Depends on >npm install --save auth firebaseui vue-router
 
-It will change the firebase user, to take notice of that fact, it will be necessary to set up watchers that do whatever is important
+It will change the auth user, to take notice of that fact, it will be necessary to set up watchers that do whatever is important
 
 <template>
   <b-modal id="identify" title="Please sign-in, or sign-up">
@@ -9,9 +9,11 @@ It will change the firebase user, to take notice of that fact, it will be necess
 </template>
 
 <script>
-import * as firebaseui from "firebaseui"
-import 'firebaseui/dist/firebaseui.css';
-import firebase from "firebase";
+import 'firebaseui/dist/firebaseui.css'; // otherwise it looks crap
+import * as firebaseui from "firebaseui" // all the interactivity
+
+import firebase from "firebase/app"; // have to have this before you ask for the auth bit
+import "firebase/auth"; // have to have the auth bit because this is handling sign-in and out
 
 export default {
   name: "UserIdentity",
@@ -45,8 +47,6 @@ export default {
     }
   },
   mounted() {
-    // Initialize Firebase
-    const firebaseUI = new firebaseui.auth.AuthUI(firebase.auth());
     // noinspection JSUnusedLocalSymbols
     const firebaseUiConfig = {
       callbacks: {
@@ -72,8 +72,11 @@ export default {
       privacyPolicyUrl: 'policies',
     }
 
-    // When the app is mounted, watch the identity modal and start up the login.
-    // This is necessary because the b-modal does not actually exist in the DOM until it is shown.
+    // Initialize the Firebase UI mechanism
+    const firebaseUI = new firebaseui.auth.AuthUI(firebase.auth());
+
+    // When the app is mounted, watch the _identity_ modal and start up the login.
+    // This is necessary because this sort of modal does not even exist in the DOM until it is needed.
     // Therefore, until the modal is drawn, the div that is to contain the Google shite does not exist.
     this.$root.$on('bv::modal::shown', (bvEvent, modalID) => {
       if (modalID === "identify") {
@@ -86,5 +89,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>
