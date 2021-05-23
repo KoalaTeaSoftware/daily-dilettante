@@ -270,6 +270,11 @@ export default {
           (this.formData.message.match(msgRegexp) != null)
       )
     }
+  },
+  mounted() {
+    const subj = new URLSearchParams(window.location.search).get('subject')
+    if (subj.length > 0)
+      this.formData.subject = subj.substr(0, (subjectLengthMax - 1))
   }
 }
 </script>
