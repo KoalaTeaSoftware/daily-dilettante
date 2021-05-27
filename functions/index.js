@@ -16,18 +16,16 @@
 'use strict';
 
 const functions = require('firebase-functions');
+const logger = require("firebase-functions/lib/logger");
 const admin = require('firebase-admin');
 const nodemailer = require('nodemailer');
 const emailValidator = require('email-validator')
 
-const rp = require('request-promise');
+// const rp = require('request-promise');
 // the above has a dependency which is not automatically installed, so also run `npm install request --save`
-
-// const cors = require('cors')({origin: true});
 
 admin.initializeApp();
 
-const logger = require("firebase-functions/lib/logger");
 
 /**
  *
