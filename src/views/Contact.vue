@@ -7,7 +7,7 @@
         id="contactForm"
     >
       <!--suppress HtmlFormInputWithoutLabel -->
-      <input hidden id="whadyano" value="<?= $timeNow ?>">
+      <input hidden id="whadyano">
       <p id="server-feedback" v-show="this.serverMessage">{{ serverMessage }}</p>
       <b-form-input
           v-model="formData.name"
@@ -79,7 +79,7 @@
       </b-form-invalid-feedback>
 
       <span id="counter">(Chars left: <span id="letterCount">{{ remainingMsgChars }}</span>)</span>
-      <b-button type="submit" id="submitButton">Submit</b-button>
+      <b-button type="submit" id="submitButton" :disabled="!this.checkAll">Submit</b-button>
       <b-button type="reset" id="resetButton">Reset</b-button>
     </b-form>
   </div>
@@ -136,7 +136,7 @@ const subjectLengthMax = 50
 const subjectRegexp = /^[£a-z0-9., -]+$/i
 const msgLengthMin = 10
 const msgLengthMax = 5000
-const msgRegexp = /^[£a-z0-9., -/?/)(]+$/i
+const msgRegexp = /^[£a-z0-9., -/?/)(\n]+$/i
 const mailService = "https://us-central1-daily-dilettante.cloudfunctions.net/sendMail"
 
 export default {
@@ -187,7 +187,7 @@ export default {
               console.log("Back in the Contact form. Type value is :" + response.type);
               if (response.type === "opaque" || ((response.type !== "opaque") && response.ok)) {
                 console.log("Back in the Contact form, Sending email appears to have succeeded:" + JSON.stringify(response));
-                this.serverMessage = "Thank you for you message. We will try to reply as soon as possible."
+                this.serverMessage = "Thank you for your message. We will try to reply as soon as possible."
                 // cwMessageBlock.innerHTML = "";
                 // messageWidget.show("Thank you. We will reply as soon as possible.");
                 // contactWidget.hide();
@@ -208,36 +208,29 @@ export default {
       console.log("Resetting")
       event.preventDefault()
       this.formData.name = this.formData.address1 = this.formData.address2 = this.formData.subject = this.formData.message = ""
-    }
-
-    ,
+    },
     setFieldHighlight: function (element) {
       element.classList.add("erroneousField");
-    }
-    ,
+    },
     clearFieldHighlight: function (element) {
       element.classList.remove("erroneousField");
-    }
-    ,
+    },
     showCount: function () {
       const len = document.getElementById('message').value.length
       this.remainingMsgChars = (msgLengthMax - len).toLocaleString()
     }
-  }
-  ,
+  },
   computed: {
     checkAll: function () {
       return (this.checkName && this.checkEmails && this.checkSubject && this.checkMessage)
-    }
-    ,
+    },
     checkName: function () {
       return (
           (this.formData.name.length > nameLengthMin) &&
           (this.formData.name.length <= nameLengthMax) &&
           (this.formData.name.match(nameRegexp) != null)
       )
-    }
-    ,
+    },
     checkEmails: function () {
       // rely on the browser to validate the email formats
       return (
@@ -245,16 +238,14 @@ export default {
           (this.formData.address1.length <= emailLengthMax) &&
           (this.formData.address1 === this.formData.address2)
       )
-    }
-    ,
+    },
     checkSubject: function () {
       return (
           (this.formData.subject.length > subjectLengthMin) &&
           (this.formData.subject.length <= subjectLengthMax) &&
           (this.formData.subject.match(subjectRegexp) != null)
       )
-    }
-    ,
+    },
     checkMessage: function () {
       if (this.formData.message.length > msgLengthMin)
         console.log("Message is long enough")
@@ -262,8 +253,6 @@ export default {
         console.log("Message is short enough")
       if (this.formData.message.match(msgRegexp) != null)
         console.log("message is well formed")
-
-
       return (
           (this.formData.message.length > msgLengthMin) &&
           (this.formData.message.length <= msgLengthMax) &&
@@ -272,8 +261,15 @@ export default {
     }
   },
   mounted() {
+    document.getElementById("name").setAttribute("maxlength", nameLengthMax.toString())
+    document.getElementById("address1").setAttribute("maxlength", emailLengthMax.toString())
+    document.getElementById("address2").setAttribute("maxlength", emailLengthMax.toString())
+    document.getElementById("subject").setAttribute("maxlength", subjectLengthMax.toString())
+    document.getElementById("message").setAttribute("maxlength", msgLengthMax.toString())
+    const currentDate = new Date();
+    document.getElementById("whadyano").setAttribute("value", currentDate.getTime().toString())
     const subj = new URLSearchParams(window.location.search).get('subject')
-    if (subj.length > 0)
+    if (subj && subj.length > 0)
       this.formData.subject = subj.substr(0, (subjectLengthMax - 1))
   }
 }
