@@ -44,7 +44,7 @@ export default {
 @import "@/assets/livery";
 
 #blog-roll {
-  .article-img {
+  img {
     margin-right: 1.75em;
     margin-bottom: 1.5em;
     float: left;
