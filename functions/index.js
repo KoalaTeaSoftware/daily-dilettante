@@ -21,7 +21,7 @@ const admin = require('firebase-admin');
 const nodemailer = require('nodemailer');
 const emailValidator = require('email-validator')
 
-// const rp = require('request-promise');
+const rp = require('request-promise');
 // the above has a dependency which is not automatically installed, so also run `npm install request --save`
 
 admin.initializeApp();
@@ -45,6 +45,10 @@ exports.readTumblr = functions.https.onRequest((inputRequest, outputResponse) =>
     // This is the vital statement
     // It tells the requesting browser that I do not care who is calling this function
     outputResponse.set('Access-Control-Allow-Origin', '*');
+    // really, this is fast enough so that caching is dispensable, and you probably want the latest,anyway
+    // you may still find that tumblr's feed is only refreshed every now and again
+    outputResponse.set('Cache-Control', 'no-store');
+    outputResponse.set('Cache-Control', 'max-age=0');
 
     // logger.info("-------------------------------------------------------------------------")
     logger.info("Preparing to read the tumblr feed:" + url + ":")
