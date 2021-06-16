@@ -8,6 +8,7 @@ appropriate elements for different types of post. For the moment, the range of t
 
 <template>
   <div class="tumblrBlogRoll">
+    <b-spinner small v-show="busy" class="loadingSpinner"></b-spinner>
     <div class="post" v-for="(post) in fullPostList">
       <h2 v-if="post.title">{{ post.title }}</h2>
       <b-img v-if="post.imgLink" :src="post.imgLink" alt="'Image to go with '+post.title" fluid></b-img>
@@ -53,6 +54,7 @@ export default {
   },
   data() {
     return {
+      busy: true,
       readXML: "",
       parsedXML: null,
       fullPostList: []
@@ -189,6 +191,7 @@ export default {
         .catch(function (err) {
           console.log('Fetch Error :%s', err);
         });
+    this.busy = false
   },
   methods: {
     /**
