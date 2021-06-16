@@ -1,6 +1,6 @@
 <template>
   <!--suppress HtmlUnknownBooleanAttribute -->
-  <b-container fluid class="welcome">
+  <b-container fluid id="welcome">
     <b-row>
       <b-col>
         <h1>Welcome</h1>
@@ -20,7 +20,11 @@
         <EditableDiv identity="welcome-2"></EditableDiv>
       </b-col>
       <b-col md="12" lg="4" id="blog-role">
-        <TumblrBlock trimLength=500 redirect-location="/novels"></TumblrBlock>
+        <TumblrBlock
+            trimLength=500
+            redirect-location="/novels"
+            blogType="article"
+        ></TumblrBlock>
       </b-col>
     </b-row>
   </b-container>
@@ -30,16 +34,16 @@
 @import "src/assets/livery";
 
 #welcome {
+  p {
+    text-align: center;
+  }
+
   #welcome-1 {
     .editedContent {
       font-size: larger;
       font-weight: bolder;
       text-align: center !important;
     }
-  }
-
-  .mainText p {
-    text-align: center;
   }
 
   #blog-role {
