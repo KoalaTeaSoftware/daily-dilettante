@@ -161,8 +161,14 @@ export default {
                   thisPost.imgLink = thisXmlObj.getElementsByTagName('photo-url')[0].childNodes[0].nodeValue
                   break
                 case "Regular":
-                  thisPost.title = this.xmlToString(thisXmlObj.getElementsByTagName('regular-title')[0].childNodes[0])
+                  const titleList = thisXmlObj.getElementsByTagName('regular-title')
+                  if (titleList.length > 1) {
+                    thisPost.title = this.xmlToString(titleList[0].childNodes[0])
+                  }
                   thisPost.text = this.xmlToString(thisXmlObj.getElementsByTagName('regular-body')[0])
+                  //   console.log('-------------------------------')
+                  //   console.log(thisPost.text)
+                  // console.log('-------------------------------')
                   thisPost.imgLink = null
                   break
                 case "Video":
