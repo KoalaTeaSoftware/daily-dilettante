@@ -166,9 +166,6 @@ export default {
                     thisPost.title = this.xmlToString(titleList[0].childNodes[0])
                   }
                   thisPost.text = this.xmlToString(thisXmlObj.getElementsByTagName('regular-body')[0])
-                  //   console.log('-------------------------------')
-                  //   console.log(thisPost.text)
-                  // console.log('-------------------------------')
                   thisPost.imgLink = null
                   break
                 case "Video":
