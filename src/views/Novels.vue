@@ -50,6 +50,10 @@ export default {
     float: left;
   }
 
+  .post {
+    clear: both;
+  }
+
   .article-text {
     text-align: left;
   }
