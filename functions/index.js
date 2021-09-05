@@ -103,19 +103,22 @@ exports.sendMail = functions.https.onRequest((inputRequest, outputResponse) => {
                 outputResponse.status(400).send("Message is either inadequate, or contains bad characters")
             } else {
 
-                logger.log(`The message body received is ${params}`)
+                logger.log(`The message body received is ${JSON.stringify(params)}`)
                 const data = {
                     from: `"${params.name}" <${params.address1}>`, // sender address
                     to: config.user,
                     subject: params.subject, // Subject line is optional for this transport, but I want it
                     text: params.message     // plain text body
                 }
+                logger.log(`Sending ${JSON.stringify(data)}`)
                 // noinspection JSUnusedLocalSymbols
                 transporter.sendMail(data)
                     .then(r => {
+                        logger.log("Message sent");
                         return outputResponse.status(200).send('Success');
                     })
                     .catch(e => {
+                        logger.log(`Sending failed ${e.toString()}`)
                         return outputResponse.status(500).send(`Failed: ${e.toString()}`);
                     })
             }

@@ -1,0 +1,13 @@
+{
+  "nameLengthMin": 5,
+  "nameLengthMax": 40,
+  "nameRegexp": "/^[a-z0-9., -]+$/i",
+  "emailLengthMin": 1,
+  "emailLengthMax": 50,
+  "subjectLengthMin": 5,
+  "subjectLengthMax": 50,
+  "subjectRegexp": "/^[£a-z0-9., -]+$/i",
+  "msgLengthMin": 10,
+  "msgLengthMax": 5000,
+  "msgRegexp": "/^[£a-z0-9., -/?/)(]+$/i"
+}
