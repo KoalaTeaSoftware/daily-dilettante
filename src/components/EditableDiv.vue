@@ -30,7 +30,7 @@ The markDownPanel that the user sees within the page takes in MarkDown and inter
     <markDownPanel
         class="container-fluid editedContent"
         flavor="github"
-        :options="{ emoji: false, tasklists : true }"
+        :options="{ emoji: false, tasklists : false }"
         :markdown=this.displayVersion
         style="text-align: left"
     />
