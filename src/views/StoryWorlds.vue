@@ -1,5 +1,5 @@
 <template>
-  <div id="projects">
+  <div id="storyWorlds">
     <!--suppress HtmlUnknownBooleanAttribute -->
     <b-container fluid>
       <EditableDiv identity="hardyAdap-1"></EditableDiv>
@@ -35,7 +35,7 @@
 import EditableDiv from "@/components/EditableDiv";
 
 export default {
-  name: "Projects",
+  name: "StoryWorlds",
   components: {EditableDiv}
 }
 </script>
@@ -43,7 +43,7 @@ export default {
 <style lang="scss">
 @import "src/assets/livery";
 
-#projects {
+#storyWorlds {
   .subProjectBox {
     background-color: $colour-banner-background;
     color: $colour-banner-primary-text;

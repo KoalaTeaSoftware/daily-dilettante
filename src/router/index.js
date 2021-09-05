@@ -23,9 +23,9 @@ const routes = [
         component: () => import(/* webpackChunkName: "chapters" */ '../views/Novels')
     },
     {
-        path: '/projects',
-        name: 'Projects',
-        component: () => import(/* webpackChunkName: "chapters" */ '../views/Projects')
+        path: '/story-worlds',
+        name: 'StoryWorlds',
+        component: () => import(/* webpackChunkName: "chapters" */ '../views/StoryWorlds')
     },
     {
         path: '/policies',
