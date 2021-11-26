@@ -2,14 +2,16 @@
   <div id="storyWorlds">
     <!--suppress HtmlUnknownBooleanAttribute -->
     <b-container fluid>
-      <EditableDiv identity="hardyAdap-1"></EditableDiv>
+      <EditableDiv identity="hardyAdaptation-1"></EditableDiv>
       <div class="subProjectBox">
-        <EditableDiv identity="hardyAdap-2"></EditableDiv>
-        <audio src="@/assets/dd-intro.mp3/" controls class="w-75"></audio>
+        <EditableDiv identity="hardyAdaptation-2"></EditableDiv>
+        <audio  controls class="w-75">
+          <source src="@/assets/dd-intro.mp3/" type="audio/mpeg">There's a surprise, your browser does not support the audio tag
+        </audio>
       </div>
       <b-row>
         <b-col class="subProjectBox">
-          <EditableDiv identity="hardyAdap-shorts"></EditableDiv>
+          <EditableDiv identity="hardyAdaptation-shorts"></EditableDiv>
         </b-col>
       </b-row>
       <b-row>
@@ -22,10 +24,10 @@
         </b-col>
       </b-row>
       <b-row>
-        <EditableDiv identity="hardyAdap-4"></EditableDiv>
+        <EditableDiv identity="hardyAdaptation-4"></EditableDiv>
       </b-row>
       <b-row>
-        <EditableDiv identity="hardyAdap-5"></EditableDiv>
+        <EditableDiv identity="hardyAdaptation-5"></EditableDiv>
       </b-row>
     </b-container>
   </div>
