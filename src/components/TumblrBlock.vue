@@ -3,6 +3,11 @@ appear to want to play. Rather than spend any longer trying to find out why, I u
 
 See the comments in the props section to see how to use this component.
 
+Note:
+* Rose creates her posts using the app, which creates all items as regular
+Therefore, it is imperative that she use the right hash tags.
+* Also, this does not creat item-titles, but shoves h2 elements into the regular-body
+
 It depends on a proxy to a Tumblr blog, which returns a bag of XML. It processes that XML and draws a div containing
 appropriate elements for different types of post. For the moment, the range of types supported is rather narrow.
 
@@ -10,17 +15,26 @@ appropriate elements for different types of post. For the moment, the range of t
   <div class="tumblrBlogRoll">
     <b-spinner small v-show="busy" class="loadingSpinner"></b-spinner>
     <div class="post" v-for="(post) in fullPostList">
-      <h2 v-if="post.title">{{ post.title }}</h2>
-      <b-img v-if="post.imgLink" :src="post.imgLink" alt="'Image to go with '+post.title" fluid></b-img>
-      <div v-if="post.vidLink" class="embed-responsive embed-responsive-16by9">
-        <iframe
-            class="embed-responsive-item vid-viewer"
-            :src="post.vidLink + '?showinfo=0&modestbranding=0'"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen>
-        </iframe>
+      <div class="postHolder">
+        <h2 v-if="post.title">{{ post.title }}</h2>
+        <b-img v-if="post.imgLink" :src="post.imgLink" alt="'Image to go with '+post.title" fluid></b-img>
+        <div v-if="post.vidLink" class="embed-responsive embed-responsive-16by9">
+          <iframe
+              :title="post.title"
+              class="embed-responsive-item vid-viewer"
+              :src="post.vidLink + '?showinfo=0&modestbranding=0'"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen>
+          </iframe>
+        </div>
+        <div v-if="post.text" v-html="post.text"></div>
       </div>
-      <div v-if="post.text" v-html="post.text"></div>
+    </div>
+    <div v-if="busy">
+      <b-spinner small class="loadingSpinner"></b-spinner>
+    </div>
+    <div v-else class="postListTail">
+      <a v-if="redirectLocation" :href="redirectLocation" class="more ext-link" target="_blank"> read more ... </a>
     </div>
   </div>
 </template>
@@ -37,27 +51,36 @@ export default {
      * To this length, plus an anchor tag using the next property
      */
     trimLength: String,
+
     /**
      * Used (if the trimLength is anything other than zero) in the trailing anchor tag
      * Something like /novels is most likely, but I don't see why it shouldn't be an entire URL
      * The target is going to be _self
      */
     redirectLocation: String,
+
     /**
-     * Us this in order to get a block that contains only posts of a certain type.
+     * Use this in order to get a block that contains only posts of a certain type.
      * The type that you give has to correspond to some tag that you give some posts in the target blog
      * If you don't give a value to this, it will come through as "undefined", and the product will be the entire blog
      * (well, actually, just the default max number of entries)
      * If you give a value that does not match any of your tags, then you risk getting nothing back
      */
-    blogType: String
+    blogType: String,
+
+    /**
+     * It should output no more than this number of posts
+     * Has to be a string because (it seems) the builder makes it into one, but it should be a number
+     */
+    maxNumPosts: String
   },
   data() {
     return {
       busy: true,
       readXML: "",
       parsedXML: null,
-      fullPostList: []
+      fullPostList: [],
+      mutableMax: 1
     }
   },
   mounted: function () {
@@ -65,6 +88,10 @@ export default {
     // console.log("The type of blog is going to be determined by:" + this.blogType + ":")
     // console.log("The length of blog is going to be determined by:" + this.trimLength + ":")
     // console.log("The type of redirect (if trimmed) locations is:" + this.redirectLocation + ":")
+    if (this.maxNumPosts > 0)
+      this.mutableMax = this.maxNumPosts
+    else
+      this.mutableMax = 100 // an arbitrary number tha should prevent it from breaking the bank, but otherwise not noticable
 
     let tumblrProxy = "https://us-central1-daily-dilettante.cloudfunctions.net/readTumblr"
     if (this.blogType)
@@ -101,7 +128,7 @@ export default {
             // This will create a promise carrying the relevant data  - Despite best efforts, it will be the text of the message
             return response.text()
           } else {
-            console.log(`Failed to read Tumblr. Server returned ${response.status}: ${response.statusText}`)
+            console.error(`Failed to read Tumblr. Server returned ${response.status}: ${response.statusText}. Therefore using the dummy text`)
             return dummyText
           }
         })
@@ -123,12 +150,11 @@ export default {
           }
           if (this.parsedXML != null) {
             const allPosts = this.parsedXML.getElementsByTagName("post")
-            let maxNumPosts = allPosts.length
             if (this.trimLength > 0) {
               // this means that the screen should show only 1 item (and that should be trimmed and tailed)
-              maxNumPosts = 1
+              this.mutableMax = 1
             }
-            for (let i = 0; i < maxNumPosts; i++) {
+            for (let i = 0; i < this.mutableMax; i++) {
               let thisXmlObj = allPosts[i]
               // make a working stub object
               let thisPost = {
@@ -160,6 +186,7 @@ export default {
                   // ToDo: turn this into a srcset array
                   thisPost.imgLink = thisXmlObj.getElementsByTagName('photo-url')[0].childNodes[0].nodeValue
                   break
+
                 case "Regular":
                   const titleList = thisXmlObj.getElementsByTagName('regular-title')
                   if (titleList.length > 1) {
@@ -215,6 +242,7 @@ export default {
       }
       return xmlString;
     },
+
     /**
      * A quick-ish and apparently robust way of un-encoding html
      * Interestingly enough, this element never becomes visible.
