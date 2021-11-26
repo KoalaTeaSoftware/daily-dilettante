@@ -12,7 +12,8 @@
         <b-carousel id="welc-caro" fade class="m-auto" style="margin-bottom: 1em">
           <b-carousel-slide
               v-for="pic in caroImgList"
-              :img-src="require('@/assets/welc-caro/' + pic)">
+              :img-src="require('@/assets/welc-caro/' + pic)"
+              v-bind:key="pic">
           </b-carousel-slide>
         </b-carousel>
       </b-col>
@@ -22,9 +23,12 @@
       <b-col md="12" lg="4" id="blog-role">
         <TumblrBlock
             trimLength=500
-            redirect-location="/novels"
-            blogType="article"
+            redirect-location=""
+            blogType="video"
+            maxNumPosts="1"
         ></TumblrBlock>
+        <!--suppress HtmlUnknownTarget -->
+        <a href="/novels" class="more"> read more ... </a>
       </b-col>
     </b-row>
   </b-container>
