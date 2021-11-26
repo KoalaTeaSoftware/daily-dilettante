@@ -200,8 +200,19 @@ body {
       box-shadow: none;
     }
   }
-}
 
+  //ToDo: have slight padding to the left of the symbol
+  .ext-link::after {
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    width: 1em;
+    height: 1em;
+    //noinspection CssUnknownTarget
+    background: url('/assets/external-link.svg') 0 0 no-repeat;
+    background-size: contain;
+  }
+}
 
 #footer-box {
   font-family: branded-font, "Times New Roman", Times, serif;
@@ -247,7 +258,7 @@ body {
 
 <script>
 import firebase from "firebase/app"; // needed by the immediately following items
-import UserIdentity from "@/components/UserIdentity"; // The gubbins that allow a user to log in
+import UserIdentity from "@/components/UserIdentity"; // The stuff that allow a user to log in
 
 // import {BootstrapVue, IconsPlugin} from 'bootstrap-vue' // so as to be able to use the bootstrap-vue stuff
 import {BootstrapVue} from 'bootstrap-vue' // so as to be able to use the bootstrap-vue stuff
