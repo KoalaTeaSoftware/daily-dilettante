@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test:e2e": "vue-cli-service test:e2e"
+    "test:e2e": "vue-cli-service test:e2e",
+    "cypress:open": "cypress open"
   },
   "dependencies": {
     "bootstrap-vue": "^2.21.2",
@@ -23,6 +24,7 @@
     "@vue/cli-plugin-router": "^4.5.13",
     "@vue/cli-service": "^4.5.13",
     "chromedriver": "89",
+    "cypress": "^9.2.0",
     "node-sass": "^4.12.0",
     "sass-loader": "^8.0.2",
     "vue-loader": "^15.9.7",
