@@ -23,7 +23,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "chapters" */ '../views/Novels')
     },
     {
-        path: '/story-worlds',
+        path: '/storyworlds',
         name: 'StoryWorlds',
         component: () => import(/* webpackChunkName: "chapters" */ '../views/StoryWorlds')
     },
@@ -36,6 +36,11 @@ const routes = [
         path: '/contact',
         name: 'Contact',
         component: () => import(/* webpackChunkName: "chapters" */ '../views/Contact.vue')
+    },
+    {
+        path: '/hardy/desperate-remedies',
+        name: 'DesperateRemedies',
+        component: () => import(/* webpackChunkName: "chapters" */ '../views/hardy/DesperateRemedies.vue')
     },
     {
         // deal with a 404 (assuming that ths will be the same as 'unknown' to this set of routes)
