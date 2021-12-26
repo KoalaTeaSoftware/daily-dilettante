@@ -31,7 +31,7 @@
               <b-navbar-nav fill>
                 <b-nav-item :active='$route.name ==="Welcome"' to="/">Welcome</b-nav-item>
                 <b-nav-item :active='$route.name ==="Novels"' to="/novels">Period Novels & their Films</b-nav-item>
-                <b-nav-item :active='$route.name ==="StoryWorlds"' to="/story-worlds">Storyworlds</b-nav-item>
+                <b-nav-item :active='$route.name ==="StoryWorlds"' to="/storyworlds">Storyworlds</b-nav-item>
                 <b-nav-item :active='$route.name ==="About"' to="/about">About</b-nav-item>
               </b-navbar-nav>
             </b-collapse>
