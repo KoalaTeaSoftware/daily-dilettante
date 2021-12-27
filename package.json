@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "bootstrap-vue": "^2.21.2",
+    "chance": "^1.1.8",
     "core-js": "^3.12.1",
     "firebase": "^8.6.2",
     "firebaseui": "^4.8.0",

@@ -8,6 +8,6 @@
   "subjectLengthMax": 50,
   "subjectRegexp": "/^[£a-z0-9., -]+$/i",
   "msgLengthMin": 10,
-  "msgLengthMax": 5000,
+  "msgLengthMax": 500,
   "msgRegexp": "/^[£a-z0-9., -/?/)(]+$/i"
 }

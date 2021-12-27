@@ -9,75 +9,105 @@
       <!--suppress HtmlFormInputWithoutLabel -->
       <input hidden id="whadyano">
       <p id="server-feedback" v-show="this.serverMessage">{{ serverMessage }}</p>
-      <b-form-input
-          v-model="formData.name"
-          :state="checkName"
-          required
-          id="name"
-          name="name"
-          maxlength="50"
-          type="text"
-          placeholder="Please tell me your name"
-          autofocus></b-form-input>
-      <b-form-invalid-feedback :state="checkName">
-        This must be between 5 and 50 chars long, and be only letters, numbers, similar sensible characters.
-      </b-form-invalid-feedback>
+      <b-form-group
+          id="name-group"
+          label="Your Name:"
+          label-for="name"
+      >
+        <b-form-invalid-feedback :state="checkName">
+          This must be between 5 and 50 chars long, and be only letters, numbers, similar sensible characters.
+        </b-form-invalid-feedback>
+        <b-form-input
+            v-model="formData.name"
+            :state="checkName"
+            required
+            id="name"
+            name="name"
+            maxlength="50"
+            type="text"
+            placeholder="Please tell me your name"
+            autofocus></b-form-input>
+      </b-form-group>
 
-      <b-form-input
-          v-model="formData.address1"
-          :state="checkEmails"
-          required
-          id="address1"
-          name="address1"
-          maxlength="50"
-          type="email"
-          placeholder="Please tell me your email address"
-      ></b-form-input>
-      <b-form-invalid-feedback :state="checkEmails">
-        Please ensure that a valid email address is provided
-      </b-form-invalid-feedback>
+      <b-form-group
+          id="address-group-1"
+          label="Your Email Address:"
+          label-for="address1"
+      >
+        <b-form-invalid-feedback :state="checkEmails">
+          Please provide a valid email address, and that both fields are identical
+        </b-form-invalid-feedback>
+        <b-form-input
+            v-model="formData.address1"
+            :state="checkEmails"
+            required
+            id="address1"
+            name="address1"
+            maxlength="50"
+            type="email"
+            placeholder="Please tell me your email address"
+        ></b-form-input>
+      </b-form-group>
 
-      <b-form-input
-          v-model="formData.address2"
-          :state="checkEmails"
-          required
-          id="address2"
-          name="address2"
-          maxlength="50"
-          type="email"
-          placeholder="Please tell confirm your email address"
-      ></b-form-input>
-      <b-form-invalid-feedback :state="checkEmails">
-        Please ensure that both email address fields contain identical data
-      </b-form-invalid-feedback>
+      <b-form-group
+          id="address-group-2"
+          label="Please Confirm Your Email Address:"
+          label-for="address2"
+      >
+        <b-form-invalid-feedback :state="checkEmails">
+          Please provide a valid email address, and that both fields are identical
+        </b-form-invalid-feedback>
+        <b-form-input
+            v-model="formData.address2"
+            :state="checkEmails"
+            required
+            id="address2"
+            name="address2"
+            maxlength="50"
+            type="email"
+            placeholder="Please tell confirm your email address"
+        ></b-form-input>
+      </b-form-group>
 
-      <b-form-input
-          v-model="formData.subject"
-          :state="checkSubject"
-          required
-          id="subject"
-          name="subject"
-          maxlength="50"
-          type="text"
-          placeholder="Please provide some subject for this message"
-      ></b-form-input>
-      <b-form-invalid-feedback :state="checkSubject">
-        This must be between 5 and 50 chars long, and be only letters, numbers, and similar ordinary characters.
-      </b-form-invalid-feedback>
+      <b-form-group
+          id="subject-group"
+          label="Subject:"
+          label-for="subject"
+      >
+        <b-form-invalid-feedback :state="checkSubject">
+          This must be between 5 and 50 chars long, and be only letters, numbers, and similar ordinary characters.
+        </b-form-invalid-feedback>
+        <b-form-input
+            v-model="formData.subject"
+            :state="checkSubject"
+            required
+            id="subject"
+            name="subject"
+            maxlength="50"
+            type="text"
+            placeholder="Please provide some subject for this message"
+        ></b-form-input>
+      </b-form-group>
 
-      <b-form-textarea
-          v-model="formData.message"
-          :state="checkMessage"
-          @keyup="showCount"
-          required
-          id="message"
-          name="message"
-          placeholder="Enter something..."
-          rows="10"></b-form-textarea>
-      <b-form-invalid-feedback :state="checkMessage">
-        This must be between 10 and 5,000 chars long, and be only letters, numbers, and similar ordinary characters.
-      </b-form-invalid-feedback>
-
+      <b-form-group
+          id="message-group"
+          label="Your Message:"
+          label-for="message"
+      >
+        <b-form-invalid-feedback :state="checkMessage">
+          This must be between 10 and 1000 chars long, and be only letters, numbers, and similar ordinary characters.
+        </b-form-invalid-feedback>
+        <b-form-textarea
+            v-model="formData.message"
+            :state="checkMessage"
+            @keyup="showCount"
+            required
+            id="message"
+            name="message"
+            placeholder="Enter something..."
+            rows="10"
+            maxlength ="1000"></b-form-textarea>
+      </b-form-group>
       <span id="counter">(Chars left: <span id="letterCount">{{ remainingMsgChars }}</span>)</span>
       <b-button type="submit" id="submitButton" :disabled="!this.checkAll">Submit</b-button>
       <b-button type="reset" id="resetButton">Reset</b-button>
@@ -92,8 +122,17 @@
   width: 75%;
   margin: auto;
 
+  label {
+    float: left;
+    font-weight: bold;
+  }
+
   input, textarea {
     margin: 1em;
+  }
+
+  .invalid-feedback {
+    text-align: right;
   }
 
   .erroneousField {
@@ -135,8 +174,8 @@ const subjectLengthMin = nameLengthMin
 const subjectLengthMax = 50
 const subjectRegexp = /^[£a-z0-9., -]+$/i
 const msgLengthMin = 10
-const msgLengthMax = 5000
-const msgRegexp = /^[£a-z0-9., -/?/)(\n]+$/i
+const msgLengthMax = 1000
+const msgRegexp = /^[£a-z0-9., -?/)(\n]+$/i
 const mailService = "https://us-central1-daily-dilettante.cloudfunctions.net/sendMail"
 
 export default {
@@ -232,12 +271,16 @@ export default {
       )
     },
     checkEmails: function () {
-      // rely on the browser to validate the email formats
-      return (
+      if (
           (this.formData.address1.length > emailLengthMin) &&
           (this.formData.address1.length <= emailLengthMax) &&
           (this.formData.address1 === this.formData.address2)
-      )
+      ) {
+        // can't rely on the browser to validate the email formats, so put it in there
+        const exp = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/
+        return exp.test(this.formData.address1)
+      } else
+        return false;
     },
     checkSubject: function () {
       return (

@@ -43,6 +43,11 @@ const routes = [
         component: () => import(/* webpackChunkName: "chapters" */ '../views/hardy/DesperateRemedies.vue')
     },
     {
+        path: '/hardy/the-hand-of-ethelberta',
+        name: 'TheHandOfEthelberta',
+        component: () => import(/* webpackChunkName: "chapters" */ '../views/hardy/TheHandOfEthelBerta')
+    },
+    {
         // deal with a 404 (assuming that ths will be the same as 'unknown' to this set of routes)
         // by sending the user back to the welcome page
         path: '*',
