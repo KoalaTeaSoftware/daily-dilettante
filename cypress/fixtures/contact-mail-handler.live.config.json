@@ -1,0 +1,5 @@
+{
+  "url": "https://us-central1-daily-dilettante.cloudfunctions.net/sendMail",
+  "invalid_pool": "<>{}[]^|\\",
+  "valid_pool": "abcdefghijklmnopqrtsuvwxyz ABCDERGHIJKLMNONQRSTUVWXYZ1234567890.,-"
+}

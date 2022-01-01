@@ -15,15 +15,16 @@
           label-for="name"
       >
         <b-form-invalid-feedback :state="checkName">
-          This must be between 5 and 50 chars long, and be only letters, numbers, similar sensible characters.
+          This must be between {{ this.config.nameLengthMin }} and {{ this.config.nameLengthMax }} chars long, and be
+          only letters, numbers, or similar sensible characters.
         </b-form-invalid-feedback>
         <b-form-input
             v-model="formData.name"
             :state="checkName"
+            :maxlength=this.config.nameLengthMax
             required
             id="name"
             name="name"
-            maxlength="50"
             type="text"
             placeholder="Please tell me your name"
             autofocus></b-form-input>
@@ -43,7 +44,6 @@
             required
             id="address1"
             name="address1"
-            maxlength="50"
             type="email"
             placeholder="Please tell me your email address"
         ></b-form-input>
@@ -75,15 +75,16 @@
           label-for="subject"
       >
         <b-form-invalid-feedback :state="checkSubject">
-          This must be between 5 and 50 chars long, and be only letters, numbers, and similar ordinary characters.
+          This must be between {{ config.subjectLengthMin }} and {{ config.subjectLengthMax }} chars long, and be only
+          letters, numbers, and similar ordinary characters.
         </b-form-invalid-feedback>
         <b-form-input
             v-model="formData.subject"
             :state="checkSubject"
+            :maxlength=this.config.subjectLengthMax
             required
             id="subject"
             name="subject"
-            maxlength="50"
             type="text"
             placeholder="Please provide some subject for this message"
         ></b-form-input>
@@ -95,18 +96,20 @@
           label-for="message"
       >
         <b-form-invalid-feedback :state="checkMessage">
-          This must be between 10 and 1000 chars long, and be only letters, numbers, and similar ordinary characters.
+          This must be between {{ this.config.msgLengthMin }} and {{ this.config.msgLengthMax }} chars long, and be only
+          letters, numbers, and similar ordinary characters.
         </b-form-invalid-feedback>
         <b-form-textarea
             v-model="formData.message"
             :state="checkMessage"
+            :maxlength=this.config.msgLengthMax
             @keyup="showCount"
             required
             id="message"
             name="message"
             placeholder="Enter something..."
             rows="10"
-            maxlength ="1000"></b-form-textarea>
+        ></b-form-textarea>
       </b-form-group>
       <span id="counter">(Chars left: <span id="letterCount">{{ remainingMsgChars }}</span>)</span>
       <b-button type="submit" id="submitButton" :disabled="!this.checkAll">Submit</b-button>
@@ -163,34 +166,25 @@
 </style>
 
 <script>
-// this needs to correspond with the data in ~/functions/config.json
-// todo: make it use that file instead of these local constants
-const nameLengthMin = 5
-const nameLengthMax = 40
-const nameRegexp = /^[a-z0-9., -]+$/i
-const emailLengthMin = 1
-const emailLengthMax = 50
-const subjectLengthMin = nameLengthMin
-const subjectLengthMax = 50
-const subjectRegexp = /^[£a-z0-9., -]+$/i
-const msgLengthMin = 10
-const msgLengthMax = 1000
-const msgRegexp = /^[£a-z0-9., -?/)(\n]+$/i
-const mailService = "https://us-central1-daily-dilettante.cloudfunctions.net/sendMail"
+
+const config = require('../../functions/email.config.json')
+
+const mailService =  "https://us-central1-daily-dilettante.cloudfunctions.net/sendMail"
 
 export default {
   name: "Contact",
   data() {
     return {
       serverMessage: null,
-      remainingMsgChars: msgLengthMax,
+      remainingMsgChars: 1,
       formData: {
         name: "",
         address1: "",
         address2: "",
         subject: "",
         message: ""
-      }
+      },
+      config
     }
   },
   methods: {
@@ -199,12 +193,11 @@ export default {
       const fields = document.getElementById("contactForm").getElementsByTagName('*');
       if (this.checkAll) {
 
-        for (let i = 0; i < fields.length; i++) {
-          fields[i].disabled = true;
-        }
+        fields.forEach(item => {
+          item.disabled = true
+        })
 
-        // const data = new FormData(event.target);
-        const formData = this.formData //Object.fromEntries(data.entries());
+        const formData = this.formData
         console.log(`form data ${JSON.stringify(formData)}`)
         console.log(`Sending to ${mailService}`)
 
@@ -212,27 +205,18 @@ export default {
             mailService,
             {
               method: 'POST',
-              mode: "no-cors",
+              mode: "cors",
               headers: {"content-type": "application/json"},
               body: JSON.stringify(formData)
             })
             .then(response => {
-              /*
-              There is a basic problem here, because there are are two domains involved,
-              https://daily-dilettante.web.app & the one above, we get back almost no information,
-              not even useful success / failure flags.
-              Therefore response.type - "opaque" we assume that it worked
-               */
-              console.log("Back in the Contact form. Type value is :" + response.type);
-              if (response.type === "opaque" || ((response.type !== "opaque") && response.ok)) {
-                console.log("Back in the Contact form, Sending email appears to have succeeded:" + JSON.stringify(response));
-                this.serverMessage = "Thank you for your message. We will try to reply as soon as possible."
-                // cwMessageBlock.innerHTML = "";
-                // messageWidget.show("Thank you. We will reply as soon as possible.");
-                // contactWidget.hide();
+              if (response.ok) {
+                this.serverMessage = "Thank you for your message. We will get back to you as soon as possible."
               } else {
-                console.log("Back in the Contact form, Sending email appears to have failed. Unable to say why." + JSON.stringify(response));
                 this.serverMessage = "Unfortunately, your message could not be sent. Please try again later."
+                response.text().then(text => {
+                  console.log(`Sending email has failed because:${text}:`);
+                })
               }
             })
             .catch(reason => {
@@ -242,21 +226,21 @@ export default {
       } else {
         console.log("There is some sort of validation failure")
       }
-    },
+    }
+    ,
     onReset: function (event) {
       console.log("Resetting")
       event.preventDefault()
       this.formData.name = this.formData.address1 = this.formData.address2 = this.formData.subject = this.formData.message = ""
-    },
+    }
+    ,
     setFieldHighlight: function (element) {
       element.classList.add("erroneousField");
-    },
-    clearFieldHighlight: function (element) {
-      element.classList.remove("erroneousField");
-    },
+    }
+    ,
     showCount: function () {
       const len = document.getElementById('message').value.length
-      this.remainingMsgChars = (msgLengthMax - len).toLocaleString()
+      this.remainingMsgChars = (this.config.msgLengthMax - len).toLocaleString()
     }
   },
   computed: {
@@ -265,15 +249,15 @@ export default {
     },
     checkName: function () {
       return (
-          (this.formData.name.length > nameLengthMin) &&
-          (this.formData.name.length <= nameLengthMax) &&
-          (this.formData.name.match(nameRegexp) != null)
+          (this.formData.name.length > this.config.nameLengthMin) &&
+          (this.formData.name.length <= this.config.nameLengthMax) &&
+          (this.formData.name.match(this.config.nameRegexp) != null)
       )
     },
     checkEmails: function () {
       if (
-          (this.formData.address1.length > emailLengthMin) &&
-          (this.formData.address1.length <= emailLengthMax) &&
+          (this.formData.address1.length > this.config.emailLengthMin) &&
+          (this.formData.address1.length <= this.config.emailLengthMax) &&
           (this.formData.address1 === this.formData.address2)
       ) {
         // can't rely on the browser to validate the email formats, so put it in there
@@ -284,36 +268,33 @@ export default {
     },
     checkSubject: function () {
       return (
-          (this.formData.subject.length > subjectLengthMin) &&
-          (this.formData.subject.length <= subjectLengthMax) &&
-          (this.formData.subject.match(subjectRegexp) != null)
+          (this.formData.subject.length > this.config.subjectLengthMin) &&
+          (this.formData.subject.length <= this.config.subjectLengthMax) &&
+          (this.formData.subject.match(this.config.subjectRegexp) != null)
       )
     },
     checkMessage: function () {
-      if (this.formData.message.length > msgLengthMin)
-        console.log("Message is long enough")
-      if (this.formData.message.length <= msgLengthMax)
-        console.log("Message is short enough")
-      if (this.formData.message.match(msgRegexp) != null)
-        console.log("message is well formed")
       return (
-          (this.formData.message.length > msgLengthMin) &&
-          (this.formData.message.length <= msgLengthMax) &&
-          (this.formData.message.match(msgRegexp) != null)
+          (this.formData.message.length > this.config.msgLengthMin) &&
+          (this.formData.message.length <= this.config.msgLengthMax) &&
+          (this.formData.message.match(this.config.msgRegexp) != null)
       )
     }
   },
   mounted() {
-    document.getElementById("name").setAttribute("maxlength", nameLengthMax.toString())
-    document.getElementById("address1").setAttribute("maxlength", emailLengthMax.toString())
-    document.getElementById("address2").setAttribute("maxlength", emailLengthMax.toString())
-    document.getElementById("subject").setAttribute("maxlength", subjectLengthMax.toString())
-    document.getElementById("message").setAttribute("maxlength", msgLengthMax.toString())
     const currentDate = new Date();
+    this.remainingMsgChars = config.msgLengthMax
+
+    document.getElementById("name").setAttribute("maxlength", this.config.nameLengthMax.toString())
+    document.getElementById("address1").setAttribute("maxlength", this.config.emailLengthMax.toString())
+    document.getElementById("address2").setAttribute("maxlength", this.config.emailLengthMax.toString())
+    document.getElementById("subject").setAttribute("maxlength", this.config.subjectLengthMax.toString())
+    document.getElementById("message").setAttribute("maxlength", this.config.msgLengthMax.toString())
     document.getElementById("whadyano").setAttribute("value", currentDate.getTime().toString())
+
     const subj = new URLSearchParams(window.location.search).get('subject')
     if (subj && subj.length > 0)
-      this.formData.subject = subj.substr(0, (subjectLengthMax - 1))
+      this.formData.subject = subj.substr(0, (this.config.subjectLengthMax - 1))
   }
 }
 </script>

@@ -1,1 +1,6 @@
-{}
+{
+  "projectId": "vwhed1",
+  "baseUrl": "http://localhost:8080",
+  "integrationFolder": "cypress/tests",
+  "ignoreTestFiles" : ["**/1-getting-started/**", "**/2-advanced-examples/**"]
+}

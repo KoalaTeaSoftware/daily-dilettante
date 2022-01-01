@@ -54,5 +54,25 @@
   },
   "storage": {
     "rules": "storage.rules"
+  },
+  "functions": {
+    "source": "functions"
+  },
+  "emulators": {
+    "functions": {
+      "port": null
+    },
+    "firestore": {
+      "port": null
+    },
+    "hosting": {
+      "port": null
+    },
+    "storage": {
+      "port": null
+    },
+    "ui": {
+      "enabled": true
+    }
   }
 }

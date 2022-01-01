@@ -31,7 +31,20 @@
               <b-navbar-nav fill>
                 <b-nav-item :active='$route.name ==="Welcome"' to="/">Welcome</b-nav-item>
                 <b-nav-item :active='$route.name ==="Novels"' to="/novels">Period Novels & their Films</b-nav-item>
-                <b-nav-item :active='$route.name ==="StoryWorlds"' to="/storyworlds">Storyworlds</b-nav-item>
+
+                <b-nav-item-dropdown
+                    id="my-nav-dropdown"
+                    text="Story Worlds"
+                    toggle-class="nav-link-custom"
+                    right
+                >
+                  <b-dropdown-item :active='$route.name ==="WessexPodcasts"' to="/storyworlds/wessex/podcasts">Hardy's
+                    Wessex Podcasts
+                  </b-dropdown-item>
+                  <b-dropdown-item :active='$route.name ==="WessexFeatures"' to="/storyworlds/wessex/features">Hardy's
+                    Wessex Feature Films
+                  </b-dropdown-item>
+                </b-nav-item-dropdown>
                 <b-nav-item :active='$route.name ==="About"' to="/about">About</b-nav-item>
               </b-navbar-nav>
             </b-collapse>
@@ -89,7 +102,7 @@ body {
 }
 
 #app {
-  padding: 0; /* despite being fluid, it is given some padding */
+  padding: 0; /* despite being fluid, Bootstrap(?) gives it some padding, so it needs to be told not to */
 }
 
 #banner-box {
@@ -137,24 +150,53 @@ body {
       }
     }
 
+    .navbar-toggler {
+      border-color: $colour-page-background;
+
+      .navbar-toggler-icon {
+        background-image: url("/assets/hamburger.svg");
+      }
+    }
+
     nav {
       font-size: 1.5em;
       padding: 0;
       text-align: center;
       line-height: 1em;
 
-      .nav-item > a {
+      .nav-link, .dropdown-item, {
         color: $colour-page-background !important;
+        background-color: $colour-banner-background;
         padding-bottom: 0;
       }
 
-      .nav-item > a.active {
+      .nav-link.active, .dropdown-item.active {
         text-decoration: underline;
         font-style: inherit;
       }
 
+
+      .dropdown-menu {
+        background-color: $colour-banner-background;
+        border-color: $colour-page-background;
+        margin: 0.25rem;
+        padding: 0.25rem;
+      }
+
+      .dropdown-item {
+        font-size: 1.5em; /* matching the rest of the menu */
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem !important;
+      }
+
+      .dropdown-item:hover {
+        color: $colour-banner-background !important;
+        background-color: $colour-page-background !important;
+      }
+
+      /* I don't know why, but the UL making the list is not, of itself, being full width */
       #nav-collapse > ul {
-        width: 100%; /* I don't know why, but the UL making the list is not, of itself, being full width */
+        width: 100%;
       }
     }
   }

@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "daily-dilettante"
-  }
+    "default": "daily-dilettante",
+    "staging": "stage-5675e"
+  },
+  "targets": {}
 }

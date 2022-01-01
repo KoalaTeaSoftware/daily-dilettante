@@ -23,7 +23,7 @@ The markDownPanel that the user sees within the page takes in MarkDown and inter
 * If you don't like ti, just refresh the page
 
 <template>
-  <div :id="this.identity" @click="editMe" class="container-fluid">
+  <div :id="this.identity" @click="editMe" class="container-fluid editableDiv">
     <b-spinner small v-show="busy" class="loadingSpinner"></b-spinner>
     <span class="sr-only" v-show="busy">Loading...</span>
     <!--suppress SpellCheckingInspection taskLists-->
