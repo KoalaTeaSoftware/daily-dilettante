@@ -7,7 +7,8 @@
       <h3>A) Dramatic Podcast Releases in 2022</h3>
       <b-card v-for="data in panels" class="series">
         <img class="mr-3"
-             :src="require('@/assets/wessex/podcasts/' + data.poster)" alt="Generic placeholder image"
+             :src="require('@/assets/wessex/podcasts/' + data.poster)"
+             alt="Poster for the podcast"
              width="128"
         >
         <h4 class="mt-0">{{ data.title }}<span class="dueDate">({{ data.dueDate }})</span></h4>
@@ -15,13 +16,18 @@
         <p v-for="para in data.synopsis">{{ para }}</p>
         <div class="row">
           <audio v-for="episode in data.episodeList" controls class="w-75">
-            <source :src="require('@/assets/wessex/podcasts/' + episode.link)" type="audio/mp3">
+            <source :src="require('@/assets/wessex/podcasts/' + episode.link + '.mp3')" type="audio/mpeg">
+            <source :src="require('@/assets/wessex/podcasts/' + episode.link + '.ogg')" type="audio/ogg">
+            <source :src="require('@/assets/wessex/podcasts/' + episode.link + '.wav')" type="audio/wav">
             There's a surprise, your browser does not support the audio tag
           </audio>
         </div>
         <div class="row">
-          <a class="screenplayLink" target="_blank"
-             :href="data.screenplayLink">Click here to read the feature's screenplay</a>
+          <a :href="data.screenplayLink"
+             target="_blank"
+             class="list-item-additional-data ext-link"
+             title="See the screenplay in a new tab"
+          >Click here to read the feature's screenplay</a>
         </div>
 
       </b-card>
@@ -44,7 +50,7 @@ export default {
           ],
           episodeList: [
             {
-              link: "desperate-remedies/DesperateRemediesEp_1.mp3"
+              link: "desperate-remedies/DesperateRemediesMainTheme"
             }
           ],
           screenplayLink: "https://www.dropbox.com/s/8678tahc96nqulf/Desperate%20remedies%20-%20podcasted%20-%20screenplay.pdf?dl=0"
@@ -58,7 +64,7 @@ export default {
           ],
           episodeList: [
             {
-              link: "desperate-remedies/DesperateRemediesEp_1.mp3"
+              link: "desperate-remedies/DesperateRemediesMainTheme"
             }
           ],
           screenplayLink: "https://www.dropbox.com/s/sx6e2dcc6y7bv3p/The%20Hand%20Of%20Ethelberta.pdf?dl=0"
@@ -72,7 +78,7 @@ export default {
           ],
           episodeList: [
             {
-              link: "desperate-remedies/DesperateRemediesEp_1.mp3"
+              link: "desperate-remedies/DesperateRemediesMainTheme"
             }
           ],
           screenplayLink: "https://www.dropbox.com/s/zbg3snqs8vyn49p/2021-12-28%20A%20Laodicean%20-%20podcasted.pdf?dl=0"
@@ -118,8 +124,7 @@ export default {
           margin: auto
         }
 
-
-        .screenplayLink {
+        .list-item-additional-data {
           padding-top: .75em;
         }
       }
