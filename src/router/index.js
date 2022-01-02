@@ -26,7 +26,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "chapters" */ '../views/StoryWorldsWessexPodcasts')
     }, {
         path: '/storyworlds/wessex/features',
-        name: 'WessexPodcasts',
+        name: 'WessexFeatures',
         component: () => import(/* webpackChunkName: "chapters" */ '../views/StoryWorldsWessexFeatures')
     }, {
         path: '/policies',
@@ -40,28 +40,14 @@ const routes = [
         path: '/:author/:book/:medium?',
         name: 'InfoPage ',
         component: () => import(/* webpackChunkName: "chapters" */ '../views/InfoPage.vue')
-    },
-    // {
-    //     /* make this redirect to /podcast/hardy/... */
-    //     path: '/hardy/desperate-remedies',
-    //     name: 'DesperateRemedies',
-    //     component: () => import(/* webpackChunkName: "chapters" */ '../views/hardy/DesperateRemedies.vue')
-    // }, {
-    //     path: '/hardy/the-hand-of-ethelberta',
-    //     name: 'TheHandOfEthelberta',
-    //     component: () => import(/* webpackChunkName: "chapters" */ '../views/hardy/TheHandOfEthelBerta')
-    // }, {
-    //     path: '/hardy/a-laodicean',
-    //     name: 'ALaodician',
-    //     component: () => import(/* webpackChunkName: "chapters" */ '../views/hardy/ALaodician')
-    // },
-    {
+    }, {
         // deal with a 404 (assuming that ths will be the same as 'unknown' to this set of routes)
         // by sending the user back to the welcome page
+        // NB: the name given could be used by the code to show the user a 'not found' message, as it is known on
+        // arrival, but does not actually affect navigation (the 'component. achieves that)
         path: '*',
         name: 'Not Found',
         component: Welcome
-
     }
 ]
 
