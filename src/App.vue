@@ -243,13 +243,17 @@ body {
     }
   }
 
+  //ToDo: have slight padding to the left of the symbol
   .ext-link::after {
-    content: "\1F5D7";
+    content: "";
     display: inline-block;
     vertical-align: super;
-    width: .75em;
-    height: .75em;
+    width: 1rem;
+    height: 1rem;
     margin-left: 0.5em;
+    //noinspection CssUnknownTarget
+    background: url('/assets/new-tab.svg') 0 0 no-repeat;
+    background-size: contain;
   }
 }
 

@@ -2,5 +2,11 @@
   "projectId": "vwhed1",
   "baseUrl": "http://localhost:8080",
   "integrationFolder": "cypress/tests",
-  "ignoreTestFiles" : ["**/1-getting-started/**", "**/2-advanced-examples/**"]
+  "ignoreTestFiles": [
+    "**/1-getting-started/**",
+    "**/2-advanced-examples/**"
+  ],
+  "env": {
+    "mailHandler": "https://us-central1-daily-dilettante.cloudfunctions.net/sendMail"
+  }
 }
