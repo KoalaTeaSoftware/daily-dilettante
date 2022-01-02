@@ -243,16 +243,13 @@ body {
     }
   }
 
-  //ToDo: have slight padding to the left of the symbol
   .ext-link::after {
-    content: "";
+    content: "\1F5D7";
     display: inline-block;
-    vertical-align: middle;
-    width: 1em;
-    height: 1em;
-    //noinspection CssUnknownTarget
-    background: url('/assets/external-link.svg') 0 0 no-repeat;
-    background-size: contain;
+    vertical-align: super;
+    width: .75em;
+    height: .75em;
+    margin-left: 0.5em;
   }
 }
 
