@@ -38,10 +38,10 @@
                     toggle-class="nav-link-custom"
                     right
                 >
-                  <b-dropdown-item :active='$route.name ==="WessexPodcasts"' to="/storyworlds/wessex/podcasts">Hardy's
+                  <b-dropdown-item :active='$route.name === "WessexPodcasts"' to="/storyworlds/wessex/podcasts">Hardy's
                     Wessex Podcasts
                   </b-dropdown-item>
-                  <b-dropdown-item :active='$route.name ==="WessexFeatures"' to="/storyworlds/wessex/features">Hardy's
+                  <b-dropdown-item :active='$route.name === "WessexFeatures"' to="/storyworlds/wessex/features">Hardy's
                     Wessex Feature Films
                   </b-dropdown-item>
                 </b-nav-item-dropdown>
