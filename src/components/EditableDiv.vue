@@ -85,7 +85,7 @@ export default {
        * It is NOT making the changes permanent
        */
       const editBlock = document.getElementById(this.identity + '-markdown-area')
-      this.displayVersion = editBlock.innerText // remember, this component automatically translates what the user ees into HTML
+      this.displayVersion = editBlock.innerText // remember, this 1-component-tests automatically translates what the user ees into HTML
       this.$bvModal.hide(this.modalId)
     },
     publish() {

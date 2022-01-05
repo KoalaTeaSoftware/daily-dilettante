@@ -1,27 +1,18 @@
-require('chance');
-const mailHandler = require('../../fixtures/contact-mail-handler.config.json');
+import {makeFormData} from "../../support/ContactFormUtilities";
 
 describe('Sending mail is secured by server-side filtering', () => {
     let payload
 
     beforeEach(() => {
         // make up a well-built payload, but which will be recognised as a request to STUB
-        const address = chance.email()
-
-        payload = {
-            name: "Teddy the special tester",
-            address1: address,
-            address2: address,
-            subject: "Pretend that you liked this message",
-            message: chance.sentence()
-        }
+        payload = makeFormData()
     })
 
     it('Responds as expected to a well-formed stub-successfully request', () => {
         cy.request({
             headers: {"content-type": "application/json"},
             method: 'POST',
-            url: mailHandler.url,
+            url: Cypress.env('mailHandler'),
             body: payload,
             failOnStatusCode: false
         })
@@ -37,7 +28,7 @@ describe('Sending mail is secured by server-side filtering', () => {
         cy.request({
             headers: {"content-type": "application/json"},
             method: 'POST',
-            url: mailHandler.url,
+            url: Cypress.env('mailHandler'),
             body: payload,
             failOnStatusCode: false
         })

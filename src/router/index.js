@@ -44,7 +44,7 @@ const routes = [
         // deal with a 404 (assuming that ths will be the same as 'unknown' to this set of routes)
         // by sending the user back to the welcome page
         // NB: the name given could be used by the code to show the user a 'not found' message, as it is known on
-        // arrival, but does not actually affect navigation (the 'component. achieves that)
+        // arrival, but does not actually affect navigation (the '1-component-tests. achieves that)
         path: '*',
         name: 'Not Found',
         component: Welcome

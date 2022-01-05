@@ -28,16 +28,16 @@
             >Read the screenplay</a>
           </li>
           <li>
+            <span class="title">The Withered Arm</span>
+            <span class="list-item-additional-data">Screenplay available end Feb. '22</span>
+          </li>
+          <li>
             <span class="title">The Three Strangers</span>
             <a href="https://www.dropbox.com/s/vbmwyjz74gbwlm0/The%20Three%20Strangers.pdf?dl=0"
                class="list-item-additional-data ext-link"
                target="_blank"
                title="See the screenplay in a new tab"
             >Read the screenplay</a>
-          </li>
-          <li>
-            <span class="title">The Spectre of the Real</span>
-            <span class="list-item-additional-data">Screenplay available end Feb. '22</span>
           </li>
         </ol>
       </div>
@@ -61,11 +61,11 @@
               <span class="list-item-additional-data">Shooting 2 weekends late May</span>
             </li>
             <li>
-              <span class="title">The Three Strangers</span>
+              <span class="title">The Withered Arm</span>
               <span class="list-item-additional-data">Shooting 2 weekends late June</span>
             </li>
             <li>
-              <span class="title">The Spectre of the Real</span>
+              <span class="title">The Three Strangers</span>
               <span class="list-item-additional-data">Shooting 2 weekends late July</span>
             </li>
           </ol>

@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "bootstrap-vue": "^2.21.2",
-    "chance": "^1.1.8",
     "core-js": "^3.12.1",
     "firebase": "^8.6.2",
     "firebaseui": "^4.8.0",
@@ -24,6 +23,7 @@
     "@vue/cli-plugin-e2e-webdriverio": "^4.5.13",
     "@vue/cli-plugin-router": "^4.5.13",
     "@vue/cli-service": "^4.5.13",
+    "chance": "^1.1.8",
     "chromedriver": "89",
     "cypress": "^9.2.0",
     "node-sass": "^4.12.0",

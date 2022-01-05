@@ -40,7 +40,7 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+<!-- Add "scoped" attribute to limit CSS to this 1-component-tests only -->
 <style scoped lang="scss">
 h3 {
   margin: 40px 0 0;

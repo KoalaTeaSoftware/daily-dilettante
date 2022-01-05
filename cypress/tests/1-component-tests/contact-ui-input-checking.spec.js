@@ -1,32 +1,19 @@
 require('chance');
-
-const mailHandler = require('../../fixtures/contact-mail-handler.config.json');
-
-const VALID_POOL = 'abcdefghijklmnopqrtsuvwxyz ABCDERGHIJKLMNONQRSTUVWXYZ1234567890.,-'
-const INVALID_POOL = '<>{}[]^|\\`'
+const {makeFormData, INVALID_CHAR_POOL, VALID_CHAR_POOL} = require("../../support/ContactFormUtilities");
 
 describe("The contact page - behaviour", () => {
-    let name
-    let address1
-    let address2
-    let subject
-    let message
+    let payload
 
     beforeEach(() => {
+        payload = makeFormData()
+
         cy.visit("contact")
 
-        const email = chance.email()
-        name = chance.sentence({words: 2})
-        address1 = email
-        address2 = email
-        subject = chance.sentence({words: 5})
-        message = chance.sentence()
-
-        cy.get('#name').type(name)
-        cy.get('#address1').type(address1)
-        cy.get('#address2').type(address2)
-        cy.get('#subject').type(subject)
-        cy.get('#message').type(message)
+        cy.get('#name').type(payload.name)
+        cy.get('#address1').type(payload.address1)
+        cy.get('#address2').type(payload.address2)
+        cy.get('#subject').type(payload.subject)
+        cy.get('#message').type(payload.message)
     })
 
     // name field
@@ -43,7 +30,7 @@ describe("The contact page - behaviour", () => {
         cy.get('#name-group .invalid-feedback').should('not.be.visible')
 
         // type a bad one
-        cy.get('#name').type('{end}' + chance.string({length: 1, pool: INVALID_POOL}))
+        cy.get('#name').type('{end}' + chance.string({length: 1, pool: INVALID_CHAR_POOL}))
 
         cy.get('#name-group .invalid-feedback').should('be.visible')
         cy.get('#submitButton').should('be.disabled')
@@ -59,12 +46,12 @@ describe("The contact page - behaviour", () => {
     it('does not allow the user to enter too many characters into the name field', () => {
         // prove that it does allow good input
         const niceLen = 10
-        cy.get('#name').clear().type(chance.string({length: niceLen, pool: VALID_POOL}))
+        cy.get('#name').clear().type(chance.string({length: niceLen, pool: VALID_CHAR_POOL}))
         cy.get('#name').invoke('val').should('have.length', niceLen)
 
         // prove that it excessive input
         const invalid = 55
-        cy.get('#name').clear().type(chance.string({length: invalid, pool: VALID_POOL}))
+        cy.get('#name').clear().type(chance.string({length: invalid, pool: VALID_CHAR_POOL}))
 
         cy.get('#name').invoke('val').should('have.length.lessThan', invalid)
         // as the basic data is all valid, and the message data has been prevented from getting too big ...
@@ -117,7 +104,7 @@ describe("The contact page - behaviour", () => {
         cy.get('#subject').clear().type("A valid string of letters")
         cy.get('#subject-group .invalid-feedback').should('not.be.visible')
 
-        cy.get('#subject').type('{end}' + chance.string({length: 1, pool: INVALID_POOL}))
+        cy.get('#subject').type('{end}' + chance.string({length: 1, pool: INVALID_CHAR_POOL}))
 
         cy.get('#subject-group .invalid-feedback').should('be.visible')
         cy.get('#submitButton').should('be.disabled')
@@ -132,11 +119,11 @@ describe("The contact page - behaviour", () => {
 
     it('does not allow the user to enter too many characters into the subject field', () => {
         const niceLen = 10
-        cy.get('#subject').clear().type(chance.string({length: niceLen, pool: VALID_POOL }))
+        cy.get('#subject').clear().type(chance.string({length: niceLen, pool: VALID_CHAR_POOL }))
         cy.get('#subject').invoke('val').should('have.length', niceLen)
 
         const invalid = 55
-        cy.get('#subject').clear().type(chance.string({length: invalid, pool: VALID_POOL}))
+        cy.get('#subject').clear().type(chance.string({length: invalid, pool: VALID_CHAR_POOL}))
 
         cy.get('#subject').invoke('val').should('have.length.lessThan', invalid)
         cy.get('#submitButton').should('not.be.disabled')
@@ -153,7 +140,7 @@ describe("The contact page - behaviour", () => {
     it('shows a prompt when the message field contains an invalid character', () => {
         cy.get('#message').clear().type("A valid string of letters")
         cy.get('#message-group .invalid-feedback').should('not.be.visible')
-        cy.get('#message').type('{end}' + chance.string({length: 1, pool: INVALID_POOL}))
+        cy.get('#message').type('{end}' + chance.string({length: 1, pool: INVALID_CHAR_POOL}))
 
         cy.get('#message-group .invalid-feedback').should('be.visible')
         cy.get('#submitButton').should('be.disabled')
@@ -168,18 +155,18 @@ describe("The contact page - behaviour", () => {
 
     it('does not allow the user to enter too many characters into the message field', () => {
         const niceLen = 15
-        cy.get('#message').clear().type(chance.string({length: niceLen, pool: VALID_POOL}))
+        cy.get('#message').clear().type(chance.string({length: niceLen, pool: VALID_CHAR_POOL}))
         cy.get('#message').invoke('val').should('have.length', niceLen)
 
         const invalid = 1010
-        cy.get('#message').clear().type(chance.string({length: invalid, pool: VALID_POOL}))
+        cy.get('#message').clear().type(chance.string({length: invalid, pool: VALID_CHAR_POOL}))
 
         cy.get('#message').invoke('val').should('have.length.lessThan', invalid)
         cy.get('#submitButton').should('not.be.disabled')
     })
 
     it('clears all fields when the reset button is clicked', () =>{
-        // checking this because the script cleans up the component's variables
+        // checking this because the script cleans up the 1-component-tests's variables
         cy.get('#resetButton').click()
 
         cy.get('#name').invoke('val').should('be.empty')
@@ -197,7 +184,7 @@ describe("The contact page - behaviour", () => {
 
         cy.intercept(
             'POST',
-            mailHandler.url,
+            Cypress.env('mailHandler'),
             realSendPreventer
         ).as('sendMailCall')
 
@@ -206,14 +193,13 @@ describe("The contact page - behaviour", () => {
         cy.get('#submitButton').click()
 
         cy.wait('@sendMailCall')
-        cy.get('#name').should('be.disabled').invoke('val').should('eq', name)
-        cy.get('#address1').should('be.disabled').invoke('val').should('eq', address1)
-        cy.get('#address2').should('be.disabled').invoke('val').should('eq', address2)
-        cy.get('#subject').should('be.disabled').invoke('val').should('eq', subject)
-        cy.get('#message').should('be.disabled').invoke('val').should('eq', message)
+        cy.get('#name').should('be.disabled').invoke('val').should('eq', payload.name)
+        cy.get('#address1').should('be.disabled').invoke('val').should('eq', payload.address1)
+        cy.get('#address2').should('be.disabled').invoke('val').should('eq',payload. address2)
+        cy.get('#subject').should('be.disabled').invoke('val').should('eq',payload. subject)
+        cy.get('#message').should('be.disabled').invoke('val').should('eq', payload.message)
 
         cy.get('#submitButton').should('be.disabled')
         cy.get('#resetButton').should('be.disabled') // force a complete redraw of the page
-
     })
 })

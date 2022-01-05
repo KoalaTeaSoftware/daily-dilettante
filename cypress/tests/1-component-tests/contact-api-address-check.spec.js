@@ -1,20 +1,10 @@
-require('chance')
-const config = require('../../../functions/email.config.json')
-const mailHandler = require('../../fixtures/contact-mail-handler.config.json');
+import {makeFormData} from "../../support/ContactFormUtilities";
 
 describe('the sever-side mail handler checks the email address fields', () => {
     let payload
 
     beforeEach(() => {
-// make up a well-built payload, but which will be recognised as a request to STUB
-        const address = chance.email()
-        payload = {
-            name: "Teddy the special tester",
-            address1: address,
-            address2: address,
-            subject: "Pretend that you liked this message",
-            message: chance.sentence()
-        }
+        payload = makeFormData()
     })
 
     it('Rejects a message missing the first address field', () => {
@@ -23,7 +13,7 @@ describe('the sever-side mail handler checks the email address fields', () => {
         cy.request({
             headers: {"content-type": "application/json"},
             method: 'POST',
-            url: mailHandler.url,
+            url: Cypress.env('mailHandler'),
             body: payload,
             failOnStatusCode: false
         })
@@ -39,7 +29,7 @@ describe('the sever-side mail handler checks the email address fields', () => {
         cy.request({
             headers: {"content-type": "application/json"},
             method: 'POST',
-            url: mailHandler.url,
+            url: Cypress.env('mailHandler'),
             body: payload,
             failOnStatusCode: false
         })
@@ -56,7 +46,7 @@ describe('the sever-side mail handler checks the email address fields', () => {
         cy.request({
             headers: {"content-type": "application/json"},
             method: 'POST',
-            url: mailHandler.url,
+            url: Cypress.env('mailHandler'),
             body: payload,
             failOnStatusCode: false
         })
@@ -73,7 +63,7 @@ describe('the sever-side mail handler checks the email address fields', () => {
         cy.request({
             headers: {"content-type": "application/json"},
             method: 'POST',
-            url: mailHandler.url,
+            url: Cypress.env('mailHandler'),
             body: payload,
             failOnStatusCode: false
         })
@@ -89,7 +79,7 @@ describe('the sever-side mail handler checks the email address fields', () => {
         cy.request({
             headers: {"content-type": "application/json"},
             method: 'POST',
-            url: mailHandler.url,
+            url: Cypress.env('mailHandler'),
             body: payload,
             failOnStatusCode: false
         })
@@ -107,7 +97,7 @@ describe('the sever-side mail handler checks the email address fields', () => {
         cy.request({
             headers: {"content-type": "application/json"},
             method: 'POST',
-            url: mailHandler.url,
+            url: Cypress.env('mailHandler'),
             body: payload,
             failOnStatusCode: false
         })
@@ -125,7 +115,7 @@ describe('the sever-side mail handler checks the email address fields', () => {
         cy.request({
             headers: {"content-type": "application/json"},
             method: 'POST',
-            url: mailHandler.url,
+            url: Cypress.env('mailHandler'),
             body: payload,
             failOnStatusCode: false
         })

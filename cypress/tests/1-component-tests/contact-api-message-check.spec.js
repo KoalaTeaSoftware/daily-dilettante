@@ -1,96 +1,94 @@
-require('chance')
+import {INVALID_CHAR_POOL, makeFormData} from "../../support/ContactFormUtilities";
 const config = require('../../../functions/email.config.json')
-const mailHandler = require('../../fixtures/contact-mail-handler.config.json');
 
-describe('the sever-side mail handler checks the name', () => {
+describe('the sever-side mail handler checks the message', () => {
     let payload
 
     beforeEach(() => {
         // make up a well-built payload, but which will be recognised as a request to STUB
-        const address = chance.email()
-
-        payload = {
-            name:  "Teddy the special tester",
-            address1: address,
-            address2: address,
-            subject: "Pretend that you liked this message",
-            message:  chance.sentence()
-        }
+        payload = makeFormData()
     })
 
-    it('Rejects a message missing the name', () => {
-        delete payload.name
+    it('Rejects a message missing the message', () => {
+        delete payload.message
 
         cy.request({
             headers: {"content-type": "application/json"},
             method: 'POST',
-            url: mailHandler.url,
+            url: Cypress.env('mailHandler'),
             body: payload,
             failOnStatusCode: false
         })
             .then(response => {
                 expect(response.status).to.be.eq(400)
-                expect(response.body).to.contain('Name')
+                expect(response.body).to.contain('Message')
             })
     })
 
-    it('Rejects a message with an empty name field', () => {
-        payload.name = ''
+    it('Rejects a message with an empty message field', () => {
+        payload.message = ''
+
         cy.request({
             headers: {"content-type": "application/json"},
             method: 'POST',
-            url: mailHandler.url,
+            url: Cypress.env('mailHandler'),
             body: payload,
             failOnStatusCode: false
         })
             .then(response => {
                 expect(response.status).to.be.eq(400)
-                expect(response.body).to.contain('Name')
+                expect(response.body).to.contain('Message')
             })
     })
 
-    it('Rejects a message with a too-short name', () => {
-        payload.name = chance.word({length: (config.nameLengthMin - 1)})
+    it('Rejects a message with a too-short message', () => {
+        payload.message = chance.word({length: (config.msgLengthMin - 1)})
+
         cy.request({
             headers: {"content-type": "application/json"},
             method: 'POST',
-            url: mailHandler.url,
+            url: Cypress.env('mailHandler'),
             body: payload,
             failOnStatusCode: false
         })
             .then(response => {
                 expect(response.status).to.be.eq(400)
-                expect(response.body).to.contain('Name')
+                expect(response.body).to.contain('Message')
             })
     })
 
-    it('Rejects a message with a too-long name', () => {
-        payload.name = chance.word({length: (config.nameLengthMax + 1)})
+    it('Rejects a message with a too-long Message', () => {
+        payload.message = chance.word({length: (config.msgLengthMax + 1)})
+
         cy.request({
             headers: {"content-type": "application/json"},
             method: 'POST',
-            url: mailHandler.url,
+            url: Cypress.env('mailHandler'),
             body: payload,
             failOnStatusCode: false
         })
             .then(response => {
                 expect(response.status).to.be.eq(400)
-                expect(response.body).to.contain('Name')
+                expect(response.body).to.contain('Message')
             })
     })
 
-    it('Rejects a message with a name containing illegal characters', () => {
-        payload.name = chance.word({length: (config.nameLengthMin + 1)}) + chance.string({length: 1, pool: mailHandler.invalid_pool})
+    it('Rejects a message with a containing illegal characters', () => {
+        payload.message = chance.word({length: (config.msgLengthMin + 1)})
+        payload.message += chance.string({length: 1, pool: INVALID_CHAR_POOL})
+
+        console.log(`Message:[${payload.message}]`)
+
         cy.request({
             headers: {"content-type": "application/json"},
             method: 'POST',
-            url: mailHandler.url,
+            url: Cypress.env('mailHandler'),
             body: payload,
             failOnStatusCode: false
         })
             .then(response => {
                 expect(response.status).to.be.eq(400)
-                expect(response.body).to.contain('Name')
+                expect(response.body).to.contain('Message')
             })
     })
 })
