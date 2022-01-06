@@ -169,7 +169,7 @@
 
 const config = require('../../functions/email.config.json')
 
-const mailService =  "https://us-central1-daily-dilettante.cloudfunctions.net/sendMail"
+const mailService = "https://us-central1-daily-dilettante.cloudfunctions.net/sendMail"
 
 export default {
   name: "Contact",
@@ -190,16 +190,16 @@ export default {
   methods: {
     onSubmit: function (event) {
       event.preventDefault()
-      const fields = document.getElementById("contactForm").getElementsByTagName('*');
       if (this.checkAll) {
 
-        fields.forEach(item => {
-          item.disabled = true
-        })
+        const fields = document.getElementById("contactForm").getElementsByTagName('*');
+        for (const elem of fields) {
+          elem.disabled = true
+        }
 
         const formData = this.formData
-        console.log(`form data ${JSON.stringify(formData)}`)
-        console.log(`Sending to ${mailService}`)
+        // console.log(`form data ${JSON.stringify(formData)}`)
+        // console.log(`Sending to ${mailService}`)
 
         fetch(
             mailService,
@@ -226,18 +226,15 @@ export default {
       } else {
         console.log("There is some sort of validation failure")
       }
-    }
-    ,
+    },
     onReset: function (event) {
       console.log("Resetting")
       event.preventDefault()
       this.formData.name = this.formData.address1 = this.formData.address2 = this.formData.subject = this.formData.message = ""
-    }
-    ,
+    },
     setFieldHighlight: function (element) {
       element.classList.add("erroneousField");
-    }
-    ,
+    },
     showCount: function () {
       const len = document.getElementById('message').value.length
       this.remainingMsgChars = (this.config.msgLengthMax - len).toLocaleString()
@@ -290,6 +287,7 @@ export default {
     document.getElementById("address2").setAttribute("maxlength", this.config.emailLengthMax.toString())
     document.getElementById("subject").setAttribute("maxlength", this.config.subjectLengthMax.toString())
     document.getElementById("message").setAttribute("maxlength", this.config.msgLengthMax.toString())
+
     document.getElementById("whadyano").setAttribute("value", currentDate.getTime().toString())
 
     const subj = new URLSearchParams(window.location.search).get('subject')
