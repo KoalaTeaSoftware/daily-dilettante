@@ -6,14 +6,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        
+      - name: force node version to match home version
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.17.4'
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
-          node-version: 14.17.4
+          working-directory: dist
           build: npm run build
-          start: npm start  --prefix dist
+          start: npm start
           
 #   cypress-run:
 #     runs-on: windows-latest
