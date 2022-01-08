@@ -8,9 +8,14 @@ jobs:
   firebase-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - uses: actions/setup-node@master
+      - name: get SUT
+        uses: actions/checkout@master
+        
+      - name: get node
+        uses: actions/setup-node@master
+        
       - name: Installing project dependencies
-      - run: npm install
+        run: npm install
+        
       - name: Building the project
-      - run: npm run serve
+        run: npm run serve
