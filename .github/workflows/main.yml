@@ -15,19 +15,19 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14.17.4'
-          
-      - name: build for production
-        run: npm run build
-        
+
       - name: where am I
         run: pwd
       - name: what can I see
         run: ls -a
       - name: what else
         run: tree
-        
+
+      - name: build it
+        run: npm run build
+
       - name: get a server
-        run: npm install -g serve
+        run: npm install serve
         
       - name: serve it up
         run: serve -s dist
