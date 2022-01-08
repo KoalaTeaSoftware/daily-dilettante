@@ -25,6 +25,9 @@ jobs:
 
       - name: get the vue cli
         run: npm install -g @vue/cli
+        
+      - name: generally instal
+        run: npm install
 
       - name: build it
         run: npm run build
