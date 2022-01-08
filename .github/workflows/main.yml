@@ -11,17 +11,27 @@ jobs:
       - name: get SUT
         uses: actions/checkout@master
 
-#       - name: get node
-#         uses: actions/setup-node@v2
-#         with:
-#           node-version: '14.17.4'
-
-      - name: Cypress run
-        uses: cypress-io/github-action@v2
+      - name: get node
+        uses: actions/setup-node@v2
         with:
           node-version: '14.17.4'
+        
+      - name: Run integration tests with cypress.
+        uses: cypress-io/github-action@master
+        with:
           build: npm run build
-          start: npm start
+          start: npm --prefix ./dist run dev
+          wait-on: http://localhost:8000
+          working-directory: ./dist
+
+# (cd /path/to/your/app && npm start && cd -)
+
+#       - name: Cypress run
+#         uses: cypress-io/github-action@v2
+#         with:
+#           working-directory: '/dist'
+#           build: npm run build
+#           start: npm start
           
 #      - name: Installing project dependencies
 #        run: npm install
