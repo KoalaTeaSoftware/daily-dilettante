@@ -1,19 +1,21 @@
-name: Cypress Tests
+name: CI/CD gateway
 
 on:
   push:
   workflow_dispatch:
 
 jobs:
-  cypress-run:
+  run-cypress-tests:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      # Install NPM dependencies, cache them correctly
-      # and run all Cypress tests
-      - name: Cypress run
-        uses: cypress-io/github-action@v2
-        with:
-          build: npm run build
-          start: npm start
+      - name: get SUT
+        uses: actions/checkout@master
+
+      - name: get node
+        uses: actions/setup-node@master
+
+      - name: Installing project dependencies
+        run: npm install
+
+      - name: Building the project
+        run: npm run build
