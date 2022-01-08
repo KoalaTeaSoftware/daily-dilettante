@@ -18,9 +18,6 @@ jobs:
       - name: Building the project
         run: npm run build
     
-      - name: see what there is
-        run: tree -L 3
-    
       - name: get a server
         run: |
           npm install serve
