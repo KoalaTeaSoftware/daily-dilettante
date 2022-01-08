@@ -23,7 +23,7 @@ jobs:
     
       - name: get a server
         run: |
-          npm install -g serve
+          npm install serve
           npm install
           npm run serve -s dist
 #       - name: Checkout
