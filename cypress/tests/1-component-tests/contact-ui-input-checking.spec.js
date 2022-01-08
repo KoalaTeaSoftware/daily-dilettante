@@ -119,7 +119,7 @@ describe("The contact page - behaviour", () => {
 
     it('does not allow the user to enter too many characters into the subject field', () => {
         const niceLen = 10
-        cy.get('#subject').clear().type(chance.string({length: niceLen, pool: VALID_CHAR_POOL }))
+        cy.get('#subject').clear().type(chance.string({length: niceLen, pool: VALID_CHAR_POOL}))
         cy.get('#subject').invoke('val').should('have.length', niceLen)
 
         const invalid = 55
@@ -159,13 +159,17 @@ describe("The contact page - behaviour", () => {
         cy.get('#message').invoke('val').should('have.length', niceLen)
 
         const excessiveLength = 1010
-        cy.get('#message').clear().type(chance.string({length: excessiveLength, pool: VALID_CHAR_POOL}))
+        cy.get('#message').clear()
+        cy.get('#message').type(chance.string({length: excessiveLength, pool: VALID_CHAR_POOL}))
+        // click away and back to force the field entry to be completed
+        cy.get('#subject').click()
+        cy.get('#message').click()
 
-        cy.get('#message', { timeout: 10000 }).invoke('val').should('have.length.lessThan', excessiveLength)
+        cy.get('#message', {timeout: 30000}).invoke('val').should('have.length.lessThan', excessiveLength)
         cy.get('#submitButton').should('not.be.disabled')
     })
 
-    it('clears all fields when the reset button is clicked', () =>{
+    it('clears all fields when the reset button is clicked', () => {
         // checking this because the script cleans up the 1-component-tests's variables
         cy.get('#resetButton').click()
 
@@ -176,7 +180,7 @@ describe("The contact page - behaviour", () => {
         cy.get('#message').invoke('val').should('be.empty')
     })
 
-    it('locks all fields when the send button is clicked', () =>{
+    it('locks all fields when the send button is clicked', () => {
         const realSendPreventer = {
             statusCode: 200,
             body: "Something that is irrelevant, but might as well be specified"
@@ -195,8 +199,8 @@ describe("The contact page - behaviour", () => {
         cy.wait('@sendMailCall')
         cy.get('#name').should('be.disabled').invoke('val').should('eq', payload.name)
         cy.get('#address1').should('be.disabled').invoke('val').should('eq', payload.address1)
-        cy.get('#address2').should('be.disabled').invoke('val').should('eq',payload. address2)
-        cy.get('#subject').should('be.disabled').invoke('val').should('eq',payload. subject)
+        cy.get('#address2').should('be.disabled').invoke('val').should('eq', payload.address2)
+        cy.get('#subject').should('be.disabled').invoke('val').should('eq', payload.subject)
         cy.get('#message').should('be.disabled').invoke('val').should('eq', payload.message)
 
         cy.get('#submitButton').should('be.disabled')
