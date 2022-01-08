@@ -11,30 +11,19 @@ jobs:
       - name: get SUT
         uses: actions/checkout@master
 
-      - name: get node
+      - name: node version at home is 14, so get it here as well
         uses: actions/setup-node@v2
         with:
           node-version: '14.17.4'
 
-      - name: where am I
-        run: pwd
-      - name: what can I see
-        run: ls -a
-#      - name: what else
-#        run: tree
-
       - name: get the vue cli
-        run: npm install -g @vue/cli
-        
-      - name: generally instal
-        run: npm install
-
-      - name: build it
-        run: npm run build
-
-      - name: get a server
-        run: npm install serve && serve -s dist
-        
+        run: |
+          npm install
+          npm install -g @vue/cli
+          npm run build
+          npm install serve
+          serve -s dist
+                
 #       - name: Run integration tests with cypress.
 #         uses: cypress-io/github-action@master
 #         with:
