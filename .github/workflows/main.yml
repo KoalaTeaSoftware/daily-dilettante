@@ -2,23 +2,36 @@ name: End-to-end tests
 on: [push]
 jobs:
   cypress-run:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout SUT
-        uses: actions/checkout@v1
-
-      - name: Run backend
-        uses: actions/setup-node@v1
-        with:
-          node-version: 14.17.4
-#           run: npm run start
-
+      - name: Checkout
+        uses: actions/checkout@v2
+      # Install NPM dependencies, cache them correctly
+      # and run all Cypress tests
       - name: Cypress run
-        uses: cypress-io/github-action@v1
+        uses: cypress-io/github-action@v2
         with:
-          record: true
-          start: npm run serve --prefix dist
-          wait-on: http://localhost:8080
-        env:
-          # pass the Dashboard record key as an environment variable
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          build: npm run build
+          start: npm start  --prefix dist
+          
+#   cypress-run:
+#     runs-on: windows-latest
+#     steps:
+#       - name: Checkout SUT
+#         uses: actions/checkout@v1
+
+#       - name: Run backend
+#         uses: actions/setup-node@v1
+#         with:
+#           node-version: 14.17.4
+# #           run: npm run start
+
+#       - name: Cypress run
+#         uses: cypress-io/github-action@v1
+#         with:
+#           record: true
+#           start: npm run serve --prefix dist
+#           wait-on: http://localhost:8080
+#         env:
+#           # pass the Dashboard record key as an environment variable
+#           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
