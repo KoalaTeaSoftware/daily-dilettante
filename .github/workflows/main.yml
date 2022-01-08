@@ -18,7 +18,13 @@ jobs:
       - name: Building the project
         run: npm run build
     
+      - name: see what there is
+        run: tree
     
+      - name: get a server
+        run: |
+          npm intall -g serve
+          npm run serve -s dist
 #       - name: Checkout
 #         uses: actions/checkout@v2
         
