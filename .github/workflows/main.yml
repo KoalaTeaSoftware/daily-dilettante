@@ -10,15 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - uses: actions/setup-node@master
-      
       - name: Installing project dependencies
       - run: npm install
-      
       - name: Building the project
       - run: npm run serve
-
-      - name: Cypress run
-        uses: cypress-io/github-action@v2
-        with:
-          build: npm run build
-          start: npm start
