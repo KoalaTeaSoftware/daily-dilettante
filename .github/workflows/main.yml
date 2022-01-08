@@ -16,7 +16,10 @@ jobs:
         run: npm install
       
       - name: Building the project
-        run: npm run serve
+        run: npm run serve &
+        
+      - name: test
+        run: npx cypress run --record
     
 #       - name: Checkout
 #         uses: actions/checkout@v2
