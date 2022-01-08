@@ -1,50 +1,24 @@
-name: CI/CD gateway
-
-on:
-  push:
-  workflow_dispatch:
-
+name: End-to-end tests
+on: [push]
 jobs:
-  run-cypress-tests:
-    runs-on: ubuntu-latest
+  cypress-run:
+    runs-on: windows-latest
     steps:
-      - name: get SUT
-        uses: actions/checkout@master
+      - name: Checkout SUT
+        uses: actions/checkout@v1
 
-      - name: node version at home is 14, so get it here as well
-        uses: actions/setup-node@v2
+      - name: Run backend
+        uses: actions/setup-node@v1
         with:
-          node-version: '14.17.4'
+          node-version: 14.17.4
+#           run: npm run start
 
-      - name: get the vue cli
-        run: |
-          npm install
-          npm install -g @vue/cli
-          npm run build
-          npm install serve
-          serve -s dist
-                
-#       - name: Run integration tests with cypress.
-#         uses: cypress-io/github-action@master
-#         with:
-#           build: npm run build
-#           start: (cd /dist && npm start && cd -)
-#           start: npm --prefix ./dist run dev
-#           wait-on: http://localhost:8000
-#           working-directory: ./dist
-
-        
-# (cd /path/to/your/app && npm start && cd -)
-
-#       - name: Cypress run
-#         uses: cypress-io/github-action@v2
-#         with:
-#           working-directory: '/dist'
-#           build: npm run build
-#           start: npm start
-          
-#      - name: Installing project dependencies
-#        run: npm install
-
-#      - name: Building the project
-#        run: npm run build
+      - name: Cypress run
+        uses: cypress-io/github-action@v1
+        with:
+          record: true
+          start: npm run serve --prefix dist
+          wait-on: http://localhost:8080
+        env:
+          # pass the Dashboard record key as an environment variable
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
