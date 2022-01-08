@@ -16,13 +16,8 @@ jobs:
         run: npm install
       
       - name: Building the project
-        run: npm run build
+        run: npm run serve
     
-      - name: get a server
-        run: |
-          npm install serve
-          npm install
-          npm run serve -s dist
 #       - name: Checkout
 #         uses: actions/checkout@v2
         
