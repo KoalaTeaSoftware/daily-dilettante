@@ -20,8 +20,11 @@ jobs:
         run: pwd
       - name: what can I see
         run: ls -a
-      - name: what else
-        run: tree
+#      - name: what else
+#        run: tree
+
+      - name: get the vue cli
+        run: npm install -g @vue/cli
 
       - name: build it
         run: npm run build
