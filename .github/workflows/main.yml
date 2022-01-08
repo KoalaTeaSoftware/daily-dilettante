@@ -13,10 +13,10 @@ jobs:
           node-version: '14.17.4'
           
       - name: Installing project dependencies
-      - run: npm install
+        run: npm install
       
       - name: Building the project
-      - run: npm run build
+        run: npm run build
     
     
 #       - name: Checkout
