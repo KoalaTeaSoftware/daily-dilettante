@@ -33,10 +33,7 @@ jobs:
         run: npm run build
 
       - name: get a server
-        run: npm install serve
-        
-      - name: serve it up
-        run: serve -s dist
+        run: npm install serve && serve -s dist
         
 #       - name: Run integration tests with cypress.
 #         uses: cypress-io/github-action@master
