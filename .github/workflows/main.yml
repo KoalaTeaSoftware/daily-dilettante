@@ -20,6 +20,7 @@ jobs:
         uses: cypress-io/github-action@master
         with:
           build: npm run build
+          start: (cd /dist && npm start && cd -)
 #           start: npm --prefix ./dist run dev
 #           wait-on: http://localhost:8000
 #           working-directory: ./dist
