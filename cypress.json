@@ -3,6 +3,7 @@
   "baseUrl": "http://localhost:8080",
   "integrationFolder": "cypress/tests",
   "ignoreTestFiles": [
+    "*.md",
     "**/1-getting-started/**",
     "**/2-advanced-examples/**"
   ],
