@@ -5,19 +5,20 @@ on:
   workflow_dispatch:
 
 jobs:
-  cypress-run:
+  firebase-deploy:
     runs-on: ubuntu-latest
     steps:
-        - name: get my stuff
-          uses: actions/checkout@v2 
-          
-        - name: get node
-          uses: actions/setup-node@master
-          
-        - name: install it all and make a localhost
-        - run: npm install
-        - run: npm run serve
-        
-        - name: Cypress run
-          uses: cypress-io/github-action@v2
- 
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@master
+      
+      - name: Installing project dependencies
+      - run: npm install
+      
+      - name: Building the project
+      - run: npm run serve
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          build: npm run build
+          start: npm start
