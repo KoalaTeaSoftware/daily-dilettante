@@ -23,7 +23,7 @@ jobs:
     
       - name: get a server
         run: |
-          npm intall -g serve
+          npm install -g serve
           npm run serve -s dist
 #       - name: Checkout
 #         uses: actions/checkout@v2
