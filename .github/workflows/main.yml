@@ -19,4 +19,4 @@ jobs:
         run: npm run serve &
         
       - name: test it
-        run: npx cypress run  --record --key  ${{ secrets.CYPRESS_RECORD_KEY }} --browser chrome --ignoreTestFiles "**/not-ci/**"
+        run: npx cypress run  --record --key  ${{ secrets.CYPRESS_RECORD_KEY }} --browser chrome --spec "**/ci-gateway/**"
