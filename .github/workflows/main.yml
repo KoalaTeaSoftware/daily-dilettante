@@ -7,18 +7,24 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         
-#       - name: force node version to match home version
-#         uses: actions/setup-node@v2
-#         with:
-#           node-version: '14.17.4'
-          
-      # Install NPM dependencies, cache them correctly
-      # and run all Cypress tests
-      - name: Cypress run
-        uses: cypress-io/github-action@v2
+      - name: force node version to match home version
+        uses: actions/setup-node@v2
         with:
-          build: npm run build && tree
-          start: npm start
+          node-version: '14.17.4'
+          
+      - name: make it build
+        run: npm run build
+        
+      - name: see what we have
+        run: tree
+        
+#       # Install NPM dependencies, cache them correctly
+#       # and run all Cypress tests
+#       - name: Cypress run
+#         uses: cypress-io/github-action@v2
+#         with:
+#           build: npm run build && tree
+#           start: npm start
           
 #   cypress-run:
 #     runs-on: windows-latest
