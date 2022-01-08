@@ -19,11 +19,12 @@ jobs:
         run: npm run build
     
       - name: see what there is
-        run: tree
+        run: tree -L 3
     
       - name: get a server
         run: |
           npm install -g serve
+          npm install
           npm run serve -s dist
 #       - name: Checkout
 #         uses: actions/checkout@v2
