@@ -4,7 +4,7 @@
  * This checks that filling in the form, and hitting the Send button will generate the expected results
  * Eliminating the possibility that each end of the channel is reading their specs from different pages
  */
-import {makeFormData} from "../../support/ContactFormUtilities";
+import {makeFormData} from "../../../support/ContactFormUtilities";
 
 const successContains = 'Thank you'
 const failureContains = 'could not'

@@ -1,7 +1,7 @@
-import {INVALID_CHAR_POOL, makeFormData} from "../../support/ContactFormUtilities";
-const config = require('../../../functions/email.config.json')
+import {INVALID_CHAR_POOL, makeFormData} from "../../../support/ContactFormUtilities";
+const config = require('../../../../functions/email.config.json')
 
-describe('the sever-side mail handler checks the message', () => {
+describe('the sever-side mail handler checks the name', () => {
     let payload
 
     beforeEach(() => {
@@ -9,8 +9,8 @@ describe('the sever-side mail handler checks the message', () => {
         payload = makeFormData()
     })
 
-    it('Rejects a message missing the message', () => {
-        delete payload.message
+    it('Rejects a message missing the name', () => {
+        delete payload.name
 
         cy.request({
             headers: {"content-type": "application/json"},
@@ -21,13 +21,12 @@ describe('the sever-side mail handler checks the message', () => {
         })
             .then(response => {
                 expect(response.status).to.be.eq(400)
-                expect(response.body).to.contain('Message')
+                expect(response.body).to.contain('Name')
             })
     })
 
-    it('Rejects a message with an empty message field', () => {
-        payload.message = ''
-
+    it('Rejects a message with an empty name field', () => {
+        payload.name = ''
         cy.request({
             headers: {"content-type": "application/json"},
             method: 'POST',
@@ -37,13 +36,12 @@ describe('the sever-side mail handler checks the message', () => {
         })
             .then(response => {
                 expect(response.status).to.be.eq(400)
-                expect(response.body).to.contain('Message')
+                expect(response.body).to.contain('Name')
             })
     })
 
-    it('Rejects a message with a too-short message', () => {
-        payload.message = chance.word({length: (config.msgLengthMin - 1)})
-
+    it('Rejects a message with a too-short name', () => {
+        payload.name = chance.word({length: (config.nameLengthMin - 1)})
         cy.request({
             headers: {"content-type": "application/json"},
             method: 'POST',
@@ -53,13 +51,12 @@ describe('the sever-side mail handler checks the message', () => {
         })
             .then(response => {
                 expect(response.status).to.be.eq(400)
-                expect(response.body).to.contain('Message')
+                expect(response.body).to.contain('Name')
             })
     })
 
-    it('Rejects a message with a too-long Message', () => {
-        payload.message = chance.word({length: (config.msgLengthMax + 1)})
-
+    it('Rejects a message with a too-long name', () => {
+        payload.name = chance.word({length: (config.nameLengthMax + 1)})
         cy.request({
             headers: {"content-type": "application/json"},
             method: 'POST',
@@ -69,16 +66,12 @@ describe('the sever-side mail handler checks the message', () => {
         })
             .then(response => {
                 expect(response.status).to.be.eq(400)
-                expect(response.body).to.contain('Message')
+                expect(response.body).to.contain('Name')
             })
     })
 
-    it('Rejects a message with a containing illegal characters', () => {
-        payload.message = chance.word({length: (config.msgLengthMin + 1)})
-        payload.message += chance.string({length: 1, pool: INVALID_CHAR_POOL})
-
-        console.log(`Message:[${payload.message}]`)
-
+    it('Rejects a message with a name containing illegal characters', () => {
+        payload.name = chance.word({length: (config.nameLengthMin + 1)}) + chance.string({length: 1, pool: INVALID_CHAR_POOL})
         cy.request({
             headers: {"content-type": "application/json"},
             method: 'POST',
@@ -88,7 +81,7 @@ describe('the sever-side mail handler checks the message', () => {
         })
             .then(response => {
                 expect(response.status).to.be.eq(400)
-                expect(response.body).to.contain('Message')
+                expect(response.body).to.contain('Name')
             })
     })
 })

@@ -1,4 +1,4 @@
-import {makeFormData} from "../../support/ContactFormUtilities";
+import {makeFormData} from "../../../support/ContactFormUtilities";
 
 describe('Sending mail is secured by server-side filtering', () => {
     let payload

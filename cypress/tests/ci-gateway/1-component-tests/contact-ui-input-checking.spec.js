@@ -1,5 +1,5 @@
 require('chance');
-const {makeFormData, INVALID_CHAR_POOL, VALID_CHAR_POOL} = require("../../support/ContactFormUtilities");
+const {makeFormData, INVALID_CHAR_POOL, VALID_CHAR_POOL} = require("../../../support/ContactFormUtilities");
 
 describe("The contact page - behaviour", () => {
     let payload

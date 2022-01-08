@@ -4,8 +4,7 @@
   "integrationFolder": "cypress/tests",
   "ignoreTestFiles": [
     "*.md",
-    "**/1-getting-started/**",
-    "**/2-advanced-examples/**"
+    "**/samples/**"
   ],
   "env": {
     "mailHandler": "https://us-central1-daily-dilettante.cloudfunctions.net/sendMail"
