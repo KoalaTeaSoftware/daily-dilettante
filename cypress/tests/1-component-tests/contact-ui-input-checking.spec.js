@@ -158,10 +158,10 @@ describe("The contact page - behaviour", () => {
         cy.get('#message').clear().type(chance.string({length: niceLen, pool: VALID_CHAR_POOL}))
         cy.get('#message').invoke('val').should('have.length', niceLen)
 
-        const invalid = 1010
-        cy.get('#message').clear().type(chance.string({length: invalid, pool: VALID_CHAR_POOL}))
+        const excessiveLength = 1010
+        cy.get('#message').clear().type(chance.string({length: excessiveLength, pool: VALID_CHAR_POOL}))
 
-        cy.get('#message').invoke('val').should('have.length.lessThan', invalid)
+        cy.get('#message', { timeout: 10000 }).invoke('val').should('have.length.lessThan', excessiveLength)
         cy.get('#submitButton').should('not.be.disabled')
     })
 

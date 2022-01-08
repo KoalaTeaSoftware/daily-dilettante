@@ -15,52 +15,8 @@ jobs:
       - name: Installing project dependencies
         run: npm install
       
-      - name: Building the project
+      - name: Run the thing using the debuggeing server
         run: npm run serve &
         
-      - name: test
+      - name: test it
         run: npx cypress run  --record --key  ${{ secrets.CYPRESS_RECORD_KEY }}
-    
-#       - name: Checkout
-#         uses: actions/checkout@v2
-        
-#       - name: force node version to match home version
-#         uses: actions/setup-node@v2
-#         with:
-#           node-version: '14.17.4'
-          
-#       - name: make it build
-#         run: npm run build
-        
-#       - name: see what we have
-#         run: tree
-        
-#       # Install NPM dependencies, cache them correctly
-#       # and run all Cypress tests
-#       - name: Cypress run
-#         uses: cypress-io/github-action@v2
-#         with:
-#           build: npm run build && tree
-#           start: npm start
-          
-#   cypress-run:
-#     runs-on: windows-latest
-#     steps:
-#       - name: Checkout SUT
-#         uses: actions/checkout@v1
-
-#       - name: Run backend
-#         uses: actions/setup-node@v1
-#         with:
-#           node-version: 14.17.4
-# #           run: npm run start
-
-#       - name: Cypress run
-#         uses: cypress-io/github-action@v1
-#         with:
-#           record: true
-#           start: npm run serve --prefix dist
-#           wait-on: http://localhost:8080
-#         env:
-#           # pass the Dashboard record key as an environment variable
-#           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
