@@ -16,8 +16,14 @@ jobs:
         with:
           node-version: '14.17.4'
 
-      - name: Installing project dependencies
-        run: npm install
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          build: npm run build
+          start: npm start
+          
+#      - name: Installing project dependencies
+#        run: npm install
 
-      - name: Building the project
-        run: npm run build
+#      - name: Building the project
+#        run: npm run build
