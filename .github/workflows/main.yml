@@ -19,7 +19,7 @@ jobs:
         run: npm run serve &
         
       - name: test
-        run: npx cypress run --record
+        run: npx cypress run --record ${{ secrets.CYPRESS_RECORD_KEY }}
     
 #       - name: Checkout
 #         uses: actions/checkout@v2
