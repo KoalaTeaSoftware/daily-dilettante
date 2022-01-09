@@ -6,12 +6,16 @@ jobs:
     steps:
       - name: Checkout SUT
         uses: actions/checkout@v2
+        
+      - name: force node version to match home version
+        uses: actions/setup-node@master
+        with:
+          node-version: '14.17.4'
 
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
           record: true
-          node-version: '14.17.4'
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
