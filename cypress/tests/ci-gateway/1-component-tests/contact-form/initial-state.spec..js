@@ -1,3 +1,5 @@
+require("../contactFormUtilities");
+
 describe("The contact page - initial state", () => {
     beforeEach(() => {
         cy.visit("contact")

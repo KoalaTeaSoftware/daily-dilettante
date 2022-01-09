@@ -1,3 +1,4 @@
+require("../contactFormUtilities");
 const {INVALID_CHAR_POOL} = require("../contactFormUtilities");
 
 describe('the robustness of the message field on the contact form', () => {

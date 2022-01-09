@@ -1,4 +1,5 @@
-import {makeFormData} from "../contactFormUtilities";
+require("../contactFormUtilities");
+const {makeFormData} = require("../contactFormUtilities");
 
 const successContains = 'Thank you'
 const failureContains = 'could not'

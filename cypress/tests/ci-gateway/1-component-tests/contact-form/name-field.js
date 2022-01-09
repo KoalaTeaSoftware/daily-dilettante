@@ -1,4 +1,5 @@
-const {INVALID_CHAR_POOL, VALID_CHAR_POOL} = require("../contactFormUtilities");
+require("../contactFormUtilities");
+const {VALID_CHAR_POOL, INVALID_CHAR_POOL} = require("../contactFormUtilities");
 
 describe('the robustness of the name field on the contact form', () => {
     const niceName = 'Teddy the special '
