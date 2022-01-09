@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="about">
     <EditableDiv identity="about-editor-title"></EditableDiv>
     <!--suppress HtmlUnknownBooleanAttribute -->
     <b-container fluid class="bio">
@@ -11,7 +11,7 @@
           <EditableDiv identity="rose-bio"></EditableDiv>
         </b-col>
       </b-row>
-      <b-row>
+      <b-row id="rose-as">
         <b-col v-for="data in caroDataList" :key="data.link" sm="12" md="6" lg="3">
           <h2>{{ data.caption }}</h2>
           <b-img v-if="data.img" fluid :src="require('@/assets/about/' + data.img)"></b-img>

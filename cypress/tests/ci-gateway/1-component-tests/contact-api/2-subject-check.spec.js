@@ -1,4 +1,4 @@
-import {INVALID_CHAR_POOL, makeFormData} from "../contactFormUtilities";
+import {INVALID_CHAR_POOL, makeFormData} from "../../contactFormUtilities";
 
 const config = require('../../../../../functions/email.config.json')
 

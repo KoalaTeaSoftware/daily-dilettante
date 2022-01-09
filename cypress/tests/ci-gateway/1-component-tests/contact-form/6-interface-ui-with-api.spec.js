@@ -1,10 +1,10 @@
-require("../contactFormUtilities");
-const {makeFormData} = require("../contactFormUtilities");
+require("../../contactFormUtilities");
+const {makeFormData} = require("../../contactFormUtilities");
 
 const successContains = 'Thank you'
 const failureContains = 'could not'
 
-describe("The contact page - interface to the mail handler", () => {
+describe("The contact page - interface with the mail handler stub", () => {
     let payload
     let stubData
 

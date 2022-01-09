@@ -1,5 +1,5 @@
-require("../contactFormUtilities");
-const {INVALID_CHAR_POOL, VALID_CHAR_POOL} = require("../contactFormUtilities");
+require("../../contactFormUtilities");
+const {INVALID_CHAR_POOL, VALID_CHAR_POOL} = require("../../contactFormUtilities");
 
 describe('the robustness of the subject field on the contact form', () => {
     const niceString = 'My subject is '

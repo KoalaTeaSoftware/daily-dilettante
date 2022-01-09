@@ -1,21 +1,18 @@
-/*
- * The contact page interacts with the contact API.
- * The component tests verify that each end of this channel behave as expected, but in vitro
- * This checks that filling in the form, and hitting the Send button will generate the expected results
- * Eliminating the possibility that each end of the channel is reading their specs from different pages
- */
-import {makeFormData} from "../1-component-tests/contactFormUtilities";
+import {makeFormData} from "../contactFormUtilities";
 
 const successContains = 'Thank you'
 const failureContains = 'could not'
 
-describe("The contact page - 2-integration-tests with the mail handler", () => {
+describe("The contact page - Integration with the real mail handler", () => {
+    /*
+     * The component tests verify, in vitro, that each end of this channel behave as expected.
+     * This checks that filling in the form, and hitting the Send button will generate the expected results
+     * Eliminating the possibility that each end of the channel is reading their specs from different pages
+     */
     let payload
 
     beforeEach(() => {
-        // The data-maker should generate a message that the mailHandler will recognise
-        // It should send a success message back, and not send a real email out
-        // so will want to do that as UAT
+        // The data-maker generates a message that the mailHandler will recognise, and handle in a special way
         payload = makeFormData()
 
         cy.visit("contact")
@@ -35,6 +32,7 @@ describe("The contact page - 2-integration-tests with the mail handler", () => {
     it('provides on-screen feedback from a successful sending to the API', () => {
         cy.get('#server-feedback').should('not.be.visible')
 
+        // Send the special message to the API, and see what it gives back
         cy.get('#submitButton').click()
 
         cy.wait('@sendMailCall')

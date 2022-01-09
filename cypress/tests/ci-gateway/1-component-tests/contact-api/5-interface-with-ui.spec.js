@@ -1,4 +1,4 @@
-require("../contactFormUtilities")
+require("../../contactFormUtilities")
 
 describe('Sending mail is secured by server-side filtering', () => {
     let payload

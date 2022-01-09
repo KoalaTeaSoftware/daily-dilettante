@@ -1,4 +1,4 @@
-require("../contactFormUtilities");
+require("../../contactFormUtilities");
 
 describe('the robustness of the first email field on the contact form', () => {
     let sampleAddress = ''

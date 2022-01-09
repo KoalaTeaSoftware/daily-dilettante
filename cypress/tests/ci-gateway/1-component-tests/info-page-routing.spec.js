@@ -1,6 +1,9 @@
 require('chance');
 
-describe("the router's control of access to the info page", () => {
+describe("special info pages", () => {
+    /*
+    The pages are simple pages that allow for a wiki-style listing of information that is thought to be useful to actors, and crew
+     */
     let auth
     let book
     let medium
@@ -16,20 +19,23 @@ describe("the router's control of access to the info page", () => {
         medium = 'movie' // the other allowed value is 'podcast'
     })
 
-    it('grabs elements of the route', () => {
+    it('displays the right page determined by the path of the location', () => {
+        // notice that all paths are constructed using hyphens in the words
         const testAddress = `/${auth}/${book}/${medium}`.replace(/\s+/g, '-')
 
-        cy.visit(testAddress)
-
-        // 'should() would be easier, but it is case sensitive. The only way I have found it to use a regexp
+        // should() could be easier, but it is case sensitive. The only way I have found it to use a regexp
         const authTest = new RegExp('^' + auth + '$', 'i')
         const bookTest = new RegExp('^' + book + '$', 'i')
         const mediumTest = new RegExp('^' + medium + '$', 'i')
+
+
+        cy.visit(testAddress)
 
         cy.get('#author').contains(authTest)
         cy.get('#book').contains(bookTest)
         cy.get('#medium').contains(mediumTest)
     })
+
 
     it('manufactures the name of the editable div', () => {
         const testAddress = `/${auth}/${book}/${medium}`.replace(/\s+/g, '-')
@@ -48,7 +54,7 @@ describe("the router's control of access to the info page", () => {
             })
     })
 
-    it('Shows the podcast page when the final route component is omitted totally', () => {
+    it('defaults to the podcast page of when the final component of the path is totally omitted', () => {
         const testAddress = `/${auth}/${book}`.replace(/\s+/g, '-')
 
         cy.visit(testAddress)
@@ -62,7 +68,7 @@ describe("the router's control of access to the info page", () => {
         cy.get('#medium').contains(mediumTest)
     })
 
-    it('Shows the podcast page when the final route component is omitted a bit', () => {
+    it('defaults the podcast page when the final component of the path is partially omitted', () => {
         const testAddress = `/${auth}/${book}/`.replace(/\s+/g, '-')
 
         cy.visit(testAddress)
@@ -76,22 +82,32 @@ describe("the router's control of access to the info page", () => {
         cy.get('#medium').contains(mediumTest)
     })
 
-    it('goes Home for any but the approved media', () => {
+    it('Shows the podcast page when the final final component of the path specifies that', () => {
+        const testAddress = `/${auth}/${book}/podcast`.replace(/\s+/g, '-')
+
+        cy.visit(testAddress)
+
+        const authTest = new RegExp('^' + auth + '$', 'i')
+        const bookTest = new RegExp('^' + book + '$', 'i')
+        const mediumTest = new RegExp('^podcast$', 'i')
+
+        cy.get('#author').contains(authTest)
+        cy.get('#book').contains(bookTest)
+        cy.get('#medium').contains(mediumTest)
+    })
+
+    it('goes Home for any medium other than podcast, or movie', () => {
         // for most of the other tests, we have been using kosher medium elements (movie), so
         // adequate coverage is got from just putting some random guff in
         // a word 6 chars long is not going to be one of the approved words
 
-        medium = chance.word({ length: 6 })
+        medium = chance.word({length: 6}).replace(/\./, '')
 
         const testAddress = `/${auth}/${book}/${medium}`.replace(/\s+/g, '-')
 
         cy.visit(testAddress)
 
         cy.location('pathname').should('eq', '/')
-        // cy.location().should( loc =>{
-        //     expect(loc.pathname).to.eq('/')
-        // })
-
         cy.get('h1').contains('Welcome')
     })
 

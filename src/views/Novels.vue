@@ -2,7 +2,7 @@ Notice that the v-html attribute of the article text does not start with a colon
 
 <template>
   <!--suppress HtmlUnknownBooleanAttribute -->
-  <b-container fluid>
+  <b-container fluid id="novels">
     <b-row>
       <b-col>
         <EditableDiv identity="novels-1"></EditableDiv>

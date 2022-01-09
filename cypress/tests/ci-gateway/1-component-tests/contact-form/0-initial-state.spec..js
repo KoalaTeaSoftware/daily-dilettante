@@ -1,4 +1,4 @@
-require("../contactFormUtilities");
+require("../../contactFormUtilities");
 
 describe("The contact page - initial state", () => {
     beforeEach(() => {

@@ -1,5 +1,5 @@
-require("../contactFormUtilities");
-const {VALID_CHAR_POOL, INVALID_CHAR_POOL} = require("../contactFormUtilities");
+require("../../contactFormUtilities");
+const {VALID_CHAR_POOL, INVALID_CHAR_POOL} = require("../../contactFormUtilities");
 
 describe('the submit button is enabled when the form data looks valid', () => {
     beforeEach(() => {
