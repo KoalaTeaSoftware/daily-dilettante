@@ -7,6 +7,7 @@
 require('chance');
 export const VALID_CHAR_POOL = "abcdefghijklmnopqrtsuvwxyz ABCDERGHIJKLMNONQRSTUVWXYZ1234567890.,-"
 export const INVALID_CHAR_POOL = "<>{}[]^|\\"
+
 export const makeFormData = function () {
     console.log('contactFormUtilities')
 

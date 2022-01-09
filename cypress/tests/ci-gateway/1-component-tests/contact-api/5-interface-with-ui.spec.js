@@ -1,11 +1,23 @@
-import {makeFormData} from "../../../support/ContactFormUtilities";
+require("../contactFormUtilities")
 
 describe('Sending mail is secured by server-side filtering', () => {
     let payload
 
+    const address = chance.email()
+
+    // The API recognises some of these values and will not actually send the message to the world
+    // Testing that is reserved to a manual UAT
+    const sampleRequest = {
+        name: "Teddy the special tester",
+        address1: address,
+        address2: address,
+        subject: "Pretend that you liked this message",
+        message: chance.sentence()
+    }
+
     beforeEach(() => {
         // make up a well-built payload, but which will be recognised as a request to STUB
-        payload = makeFormData()
+        payload = sampleRequest
     })
 
     it('Responds as expected to a well-formed stub-successfully request', () => {

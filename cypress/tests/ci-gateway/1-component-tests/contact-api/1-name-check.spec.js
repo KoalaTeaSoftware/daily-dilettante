@@ -1,5 +1,6 @@
-import {INVALID_CHAR_POOL, makeFormData} from "../../../support/ContactFormUtilities";
-const config = require('../../../../functions/email.config.json')
+import {INVALID_CHAR_POOL, makeFormData} from "../contactFormUtilities";
+
+const config = require('../../../../../functions/email.config.json')
 
 describe('the sever-side mail handler checks the name', () => {
     let payload

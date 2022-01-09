@@ -1,4 +1,4 @@
-import {makeFormData} from "../../../support/ContactFormUtilities";
+import {makeFormData} from "../contactFormUtilities";
 
 const successContains = 'Thank you'
 const failureContains = 'could not'

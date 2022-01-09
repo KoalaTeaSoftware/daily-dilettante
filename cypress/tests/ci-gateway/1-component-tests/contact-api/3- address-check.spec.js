@@ -1,4 +1,4 @@
-import {makeFormData} from "../../../support/ContactFormUtilities";
+import {makeFormData} from "../contactFormUtilities";
 
 describe('the sever-side mail handler checks the email address fields', () => {
     let payload
