@@ -20,6 +20,14 @@
                target="_blank">Read the screenplay</a>
           </li>
           <li>
+            <span class="title">The Withered Arm</span>
+            <a href="https://www.dropbox.com/s/qhmzdgs81vu6tzs/The%20Withered%20Arm.pdf?dl=0"
+               class="list-item-additional-data ext-link"
+               target="_blank"
+               title="See the screenplay in a new tab"
+            >Read the screenplay</a>
+          </li>
+          <li>
             <span class="title">What The Shepherd Saw</span>
             <a href="https://www.dropbox.com/s/s2n68bwo8ykgj8r/What%20The%20Shepherd%20Saw.pdf?dl=0"
                class="list-item-additional-data ext-link"
@@ -27,10 +35,7 @@
                title="See the screenplay in a new tab"
             >Read the screenplay</a>
           </li>
-          <li>
-            <span class="title">The Withered Arm</span>
-            <span class="list-item-additional-data">Screenplay available end Feb. '22</span>
-          </li>
+
           <li>
             <span class="title">The Three Strangers</span>
             <a href="https://www.dropbox.com/s/vbmwyjz74gbwlm0/The%20Three%20Strangers.pdf?dl=0"
@@ -57,11 +62,11 @@
               <span class="list-item-additional-data">Shooting 2 weekends late April</span>
             </li>
             <li>
-              <span class="title">What The Shepherd Saw</span>
+              <span class="title">The Withered Arm</span>
               <span class="list-item-additional-data">Shooting 2 weekends late May</span>
             </li>
             <li>
-              <span class="title">The Withered Arm</span>
+              <span class="title">What The Shepherd Saw</span>
               <span class="list-item-additional-data">Shooting 2 weekends late June</span>
             </li>
             <li>
