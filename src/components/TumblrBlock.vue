@@ -84,10 +84,6 @@ export default {
     }
   },
   mounted: function () {
-    // console.log("--------- A tumblr blog is mounted --------------------------")
-    // console.log("The type of blog is going to be determined by:" + this.blogType + ":")
-    // console.log("The length of blog is going to be determined by:" + this.trimLength + ":")
-    // console.log("The type of redirect (if trimmed) locations is:" + this.redirectLocation + ":")
     if (this.maxNumPosts > 0)
       this.mutableMax = this.maxNumPosts
     else
@@ -96,7 +92,7 @@ export default {
     let tumblrProxy = "https://us-central1-daily-dilettante.cloudfunctions.net/readTumblr"
     if (this.blogType)
       tumblrProxy += `?tag=${this.blogType}`
-    // console.log("This is the query:" + tumblrProxy + ":")
+      console.log("This is the query:" + tumblrProxy + ":")
 
     let dummyText =
         "'<tumblr version=\"1.0\">\\n' +\n" +

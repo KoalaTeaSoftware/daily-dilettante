@@ -302,10 +302,8 @@ body {
 <script>
 import firebase from "firebase/app"; // needed by the immediately following items
 import UserIdentity from "@/components/UserIdentity"; // The stuff that allow a user to log in
-
 // import {BootstrapVue, IconsPlugin} from 'bootstrap-vue' // so as to be able to use the bootstrap-vue stuff
 import {BootstrapVue} from 'bootstrap-vue' // so as to be able to use the bootstrap-vue stuff
-
 import Vue from "vue"; // so that the following statement means something to someone
 Vue.use(BootstrapVue) // hast be used, otherwise the b-... objects don't get defined properly
 
@@ -318,19 +316,19 @@ export default {
   },
   computed: {
     amLoggedIn() {
-      console.log(`[amLoggedIn?]: ${this.userData !== null}`)
+      // console.log(`[amLoggedIn?]: ${this.userData !== null}`)
       return (this.userData !== null)
     }
   },
   mounted() {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        console.log(`User is now ${JSON.stringify(user)}`)
+        // console.log(`User is now ${JSON.stringify(user)}`)
         this.userData = user
         // use this if there were any different pages when the user is logged in
         // this.$router.push('/success')
       } else {
-        console.log(`User is now undefined`)
+        // console.log(`User is now undefined`)
         this.userData = null
         // this.$router.push('/auth')
       }

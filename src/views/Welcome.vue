@@ -22,9 +22,9 @@
       </b-col>
       <b-col md="12" lg="4" id="blog-role">
         <TumblrBlock
-            trimLength=500
+            trimLength=0
             redirect-location=""
-            blogType="video"
+            blogType="notice"
             maxNumPosts="1"
         ></TumblrBlock>
         <!--suppress HtmlUnknownTarget -->

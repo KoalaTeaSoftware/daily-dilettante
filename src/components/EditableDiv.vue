@@ -96,20 +96,18 @@ export default {
       this.busy = true
       if (this.docId) {
         // this is indicative of it having read an existing document at load-time
-        console.log(`Updating a document with pageName:${this.identity} (id:${this.docId})`)
         firebase.firestore()
             .collection("pages")
             .doc(this.docId)
             .set({"pageName": this.identity, "contents": this.displayVersion})
             .then(() => {
               this.busy = false
-              console.log("Document Saved")
               this.$bvModal.hide(this.modalId)
             })
             .catch(e => {
               this.busy = false
               this.serverError = e.message
-              console.log("Unable to update the data for page " + this.identity + ":" + e.message + ".");
+              console.error("Unable to update the data for page " + this.identity + ":" + e.message + ".");
             })
       } else {
         // therefore it failed to read a doc at load time. So it has to make one
@@ -124,12 +122,12 @@ export default {
             .catch(e => {
               this.busy = false
               this.serverError = e.message
-              console.log("Unable to store the data for page " + this.identity + ":" + e.message + ".");
+              console.error("Unable to store the data for page " + this.identity + ":" + e.message + ".");
             })
       }
     },
     editMe() {
-      console.log("Detected a double-click")
+      // console.log("Detected a double-click")
       if (firebase.auth().currentUser && firebase.auth().currentUser.email === eddie) {
         this.trialVersion = this.displayVersion.slice(0) // deep copy from shown to the editor
         this.$bvModal.show(this.modalId)
@@ -140,17 +138,13 @@ export default {
     // register a callback for if the auth state changes
     // thus the editability of the div will be up-to-date with the user state
     firebase.auth().onAuthStateChanged((user) => {
-      console.log(`An editable div (${this.identity}) has detected that the user-state has changed`)
       if (user && (user.email === eddie)) {
-        console.log(`Element ${this.identity} is editable by user ${user.email}`)
         document.getElementById(this.identity).classList.add('isEditable')
       } else {
-        console.log(`Element ${this.identity} is NOT editable by the anonymous user `)
         document.getElementById(this.identity).classList.remove('isEditable')
       }
     })
     // try to read the required document
-    console.log(`Going to try to get page ${this.identity}`)
     firebase.firestore()
         .collection("pages")
         .where("pageName", "==", this.identity)
@@ -163,7 +157,7 @@ export default {
         })
         .catch(function (e) {
           // If it fails, it doesn't really matter - a doc will be created at publish-time
-          console.log(`Unable to get, or show the page: ${e.message}.`);
+          console.error(`Unable to get, or show the page: ${e.message}.`);
         })
   }
 }
