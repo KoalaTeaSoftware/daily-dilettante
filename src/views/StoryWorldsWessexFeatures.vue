@@ -15,13 +15,13 @@
         <ol>
           <li>
             <span class="title">The Superstitious Man</span>
-            <a href="https://www.dropbox.com/s/s66v9yxl56wqz9c/Superstitious.pdf?dl=0"
+            <a href="https://www.dropbox.com/s/ibk5dxtjp5gyimp/the-superstitious-man.pdf?dl=0"
                class="list-item-additional-data ext-link"
                target="_blank">Read the screenplay</a>
           </li>
           <li>
             <span class="title">The Withered Arm</span>
-            <a href="https://www.dropbox.com/s/qhmzdgs81vu6tzs/The%20Withered%20Arm.pdf?dl=0"
+            <a href="https://www.dropbox.com/s/4wrr1n3ve10p0jl/The-Withered-Arm.pdf?dl=0"
                class="list-item-additional-data ext-link"
                target="_blank"
                title="See the screenplay in a new tab"

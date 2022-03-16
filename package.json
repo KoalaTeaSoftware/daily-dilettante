@@ -25,7 +25,7 @@
     "@vue/cli-service": "^4.5.15",
     "chance": "^1.1.8",
     "chromedriver": "89",
-    "cypress": "^9.2.0",
+    "cypress": "^9.3.1",
     "sass": "^1.46.0",
     "sass-loader": "^8.0.2",
     "vue-template-compiler": "^2.6.14",
