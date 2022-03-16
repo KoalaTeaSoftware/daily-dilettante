@@ -29,8 +29,6 @@ describe("The home page", () => {
     })
 
     it('Get the blog entry from Tumblr', () => {
-        // can't guarantee that Tumblr gives it 1, or 2, so accept either
-        cy.get('.tumblrBlogRoll .post h1,.tumblrBlogRoll .post h2').should('be.visible')
         cy.get('.tumblrBlogRoll .post').should('not.contain', 'Loading')
         cy.get('.tumblrBlogRoll .loadingSpinner ').should('not.be.visible')
     })
