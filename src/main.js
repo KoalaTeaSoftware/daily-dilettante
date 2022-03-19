@@ -2,6 +2,8 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 
+// import VueCookies from 'vue-cookies'
+// Vue.use(VueCookies)
 import firebase from "firebase/app"; // so that the next statement works
 import "firebase/analytics" // so that we can initiate the analytics
 // Import Bootstrap an BootstrapVue CSS files (order is important) at this point so that everyone gets it
