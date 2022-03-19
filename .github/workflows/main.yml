@@ -6,17 +6,23 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@master
-
-      - name: force node version to match home version
-        uses: actions/setup-node@master
+        
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
         with:
-          node-version: '14.17.4'
+          build: npm run build
+          start: npm start
 
-      - name: Installing project dependencies
-        run: npm install
+#       - name: force node version to match home version
+#         uses: actions/setup-node@master
+#         with:
+#           node-version: '14.17.4'
 
-      - name: Run the thing using the debuggeing server
-        run: npm run serve &
+#       - name: Installing project dependencies
+#         run: npm install
 
-      - name: test it
-        run: npx cypress run  --record --key  ${{ secrets.CYPRESS_RECORD_KEY }} --browser chrome --spec "**/ci-gateway/**"
+#       - name: Run the thing using the debuggeing server
+#         run: npm run serve &
+
+#       - name: test it
+#         run: npx cypress run  --record --key  ${{ secrets.CYPRESS_RECORD_KEY }} --browser chrome --spec "**/ci-gateway/**"
