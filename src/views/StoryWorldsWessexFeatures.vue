@@ -3,11 +3,13 @@
     <b-container id="wessex-features">
       <h1>Storyworlds</h1>
       <h2>Thomas Hardy's Wessex Dramas</h2>
-      <p>Two Anthology Feature films, each comprising four of Hardy's short stories:</p>
+      <p>The Wessex Dramas' feature films comprise a Hardy duo of anthologies, and then two Hardy trilogies: A Seaside
+        Trilogy from
+        Hardy's "Romances", and Hardy's "Novels of Ingenuity" Trilogy </p>
       <div class="row">
         <div v-for="movie in movies" class="col" :id="movie.id">
           <div class="row">
-            <h3>{{ movie.title }}</h3>
+            <h3 v-html="movie.title"></h3>
             <p>Everyone in Dorset is welcome to audition for this feature's, cast and crew roles. Please drop us a line
               using <!--suppress HtmlUnknownTarget -->
               <a href="/contact?subject=Audition for Hardy's Regrets" title="Go to the contact form">our contact
@@ -72,7 +74,7 @@ export default {
       "movies": [
         {
           "id": "regrets",
-          "title": "Hardy's Regrets",
+          "title": "Hardy's Regrets:&#160;2022",
           "poster": "regrets-poster.jpg",
           "components": [
             {
@@ -99,7 +101,7 @@ export default {
         },
         {
           "id": "hand-of-fate",
-          "title": "Hardy's Hand of Fate",
+          "title": "Hardy's Hand of Fate:&#160;2023",
           "poster": "hand-of-fate-poster.jpg",
           "components": [
             {
@@ -110,17 +112,17 @@ export default {
             {
               "title": "Netty Sargent's Copyhold",
               "screenplay": "https://www.dropbox.com/s/hr18jmd1730aet5/Netty%20Sergeant%27s%20Copyhold%20D1.pdf?dl=0",
-              "shooting": "2 weekends late April '23"
+              "shooting": "2 weekends late May '23"
             },
             {
               "title": "The History of the Hardcombes",
               "screenplay": "https://www.dropbox.com/s/v4w85a49ntvn09h/the%20history%20of%20the%20hardcomes%20D1.pdf?dl=0",
-              "shooting": "2 weekends late April '23"
+              "shooting": "2 weekends late June '23"
             },
             {
               "title": "Tony Kyte, the Arch Deceiver",
               "screenplay": "https://www.dropbox.com/s/7f1cj9jh62pvszk/Tony%20Kytes%2C%20The%20Arch-Deceiver%20D1.pdf?dl=0",
-              "shooting": "2 weekends late April '23"
+              "shooting": "2 weekends late July '23"
             }
           ]
         }
