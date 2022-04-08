@@ -3,9 +3,7 @@
     <b-container id="wessex-features">
       <h1>Storyworlds</h1>
       <h2>Thomas Hardy's Wessex Dramas</h2>
-      <p>The Wessex Dramas' feature films comprise a Hardy duo of anthologies, and then two Hardy trilogies: A Seaside
-        Trilogy from
-        Hardy's "Romances", and Hardy's "Novels of Ingenuity" Trilogy </p>
+      <h3>B) A duo of Anthology Features, 2022:</h3>
       <div class="row">
         <div v-for="movie in movies" class="col" :id="movie.id">
           <div class="row">
@@ -138,10 +136,6 @@ export default {
 #storyWorlds {
   .poster {
     margin: auto;
-  }
-
-  h3 {
-    font-size: 2.75rem; // experiment suggests that this is a good size
   }
 
   h4 {
