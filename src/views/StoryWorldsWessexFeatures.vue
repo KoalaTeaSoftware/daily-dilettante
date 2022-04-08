@@ -3,79 +3,54 @@
     <b-container id="wessex-features">
       <h1>Storyworlds</h1>
       <h2>Thomas Hardy's Wessex Dramas</h2>
-      <h3>B) An Anthology Feature comprising four of Hardy's short stories, 2022:</h3>
+      <p>Two Anthology Feature films, each comprising four of Hardy's short stories:</p>
       <div class="row">
-        <div class="display-4">"Hardy's Regrets"</div>
+        <div v-for="movie in movies" class="col" :id="movie.id">
+          <div class="row">
+            <h3>{{ movie.title }}</h3>
+            <p>Everyone in Dorset is welcome to audition for this feature's, cast and crew roles. Please drop us a line
+              using <!--suppress HtmlUnknownTarget -->
+              <a href="/contact?subject=Audition for Hardy's Regrets" title="Go to the contact form">our contact
+                form</a></p>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <img class="poster img-fluid"
+                   :src="require('@/assets/wessex/features/'  + movie.poster)"
+                   alt="Poster for the film">
+            </div>
+            <div class="col">
+              <ol>
+                <li v-for="component in movie.components">
+                  <div class="row">
+                    <div class="col"><span class="title">{{ component.title }}</span></div>
+                    <div class="col>">
+                      <a :href="component.screenplay"
+                         class="list-item-additional-data ext-link"
+                         target="_blank">Screenplay</a>
+                    </div>
+                  </div>
+                </li>
+              </ol>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <h4>Shooting Dates</h4>
+              <ol>
+                <li v-for="component in movie.components">
+                  <div class="row">
+                    <div class="col"><span class="title">{{ component.title }}</span></div>
+                    <div class="col>"><span class="list-item-additional-data">Shooting {{ component.shooting }}</span>
+                    </div>
+                  </div>
+                </li>
+              </ol>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="row">
-        <img id="poster" class="mr-3"
-             :src="require('@/assets/wessex/features/hardys-regrets/poster.jpg')"
-             alt="Poster for the film"
-        >
-        <ol>
-          <li>
-            <span class="title">The Superstitious Man</span>
-            <a href="https://www.dropbox.com/s/ibk5dxtjp5gyimp/the-superstitious-man.pdf?dl=0"
-               class="list-item-additional-data ext-link"
-               target="_blank">Read the screenplay</a>
-          </li>
-          <li>
-            <span class="title">The Withered Arm</span>
-            <a href="https://www.dropbox.com/s/4wrr1n3ve10p0jl/The-Withered-Arm.pdf?dl=0"
-               class="list-item-additional-data ext-link"
-               target="_blank"
-               title="See the screenplay in a new tab"
-            >Read the screenplay</a>
-          </li>
-          <li>
-            <span class="title">What The Shepherd Saw</span>
-            <a href="https://www.dropbox.com/s/s2n68bwo8ykgj8r/What%20The%20Shepherd%20Saw.pdf?dl=0"
-               class="list-item-additional-data ext-link"
-               target="_blank"
-               title="See the screenplay in a new tab"
-            >Read the screenplay</a>
-          </li>
 
-          <li>
-            <span class="title">The Three Strangers</span>
-            <a href="https://www.dropbox.com/s/vbmwyjz74gbwlm0/The%20Three%20Strangers.pdf?dl=0"
-               class="list-item-additional-data ext-link"
-               target="_blank"
-               title="See the screenplay in a new tab"
-            >Read the screenplay</a>
-          </li>
-        </ol>
-      </div>
-      <div class="row mt-3">
-        <div class="col">
-          <p>Everyone in Dorset is welcome to audition for this feature's, cast and crew roles. Please drop us a line
-            using <!--suppress HtmlUnknownTarget -->
-            <a href="/contact" title="Go to the contact form">our contact form</a></p>
-        </div>
-      </div>
-      <div class="row text-center">
-        <div class="col">
-          <h4>Shooting Dates</h4>
-          <ol>
-            <li>
-              <span class="title">The Superstitious Man</span>
-              <span class="list-item-additional-data">Shooting 2 weekends late April</span>
-            </li>
-            <li>
-              <span class="title">The Withered Arm</span>
-              <span class="list-item-additional-data">Shooting 2 weekends late May</span>
-            </li>
-            <li>
-              <span class="title">What The Shepherd Saw</span>
-              <span class="list-item-additional-data">Shooting 2 weekends late June</span>
-            </li>
-            <li>
-              <span class="title">The Three Strangers</span>
-              <span class="list-item-additional-data">Shooting 2 weekends late July</span>
-            </li>
-          </ol>
-        </div>
-      </div>
       <div class="row text-center">
         <div class="col">
           <h4>Locations</h4>
@@ -93,7 +68,64 @@
 export default {
   name: "WessexFeatures",
   data() {
-    return {}
+    return {
+      "movies": [
+        {
+          "id": "regrets",
+          "title": "Hardy's Regrets",
+          "poster": "regrets-poster.jpg",
+          "components": [
+            {
+              "title": "The Superstitious Man",
+              "screenplay": "https://www.dropbox.com/s/84fyxi7g2273rn4/The%20Superstitious%20Man%20D1%20R3.pdf?dl=0",
+              "shooting": "2 weekends late April '22"
+            },
+            {
+              "title": "The Withered Arm:",
+              "screenplay": "https://www.dropbox.com/s/mc71pgg068p0tmz/The%20Withered%20Arm%20D1%20R3.pdf?dl=0",
+              "shooting": "2 weekends late May '22"
+            },
+            {
+              "title": "What the Shepherd Saw",
+              "screenplay": "https://www.dropbox.com/s/bvxpq7bj76dywkd/What%20The%20Shepherd%20Saw%20D1%20R3.pdf?dl=0",
+              "shooting": "2 weekends late June '22"
+            },
+            {
+              "title": "The Three Strangers",
+              "screenplay": "https://www.dropbox.com/s/vbmwyjz74gbwlm0/The%20Three%20Strangers%20D1.pdf?dl=0",
+              "shooting": "2 weekends late July '22"
+            }
+          ]
+        },
+        {
+          "id": "hand-of-fate",
+          "title": "Hardy's Hand of Fate",
+          "poster": "hand-of-fate-poster.jpg",
+          "components": [
+            {
+              "title": "Interlopers at the Knap",
+              "screenplay": "https://www.dropbox.com/s/pa7rb75yxg6y1ln/Interlopers%20At%20The%20Knap%20D1%20R1.pdf?dl=0",
+              "shooting": "2 weekends late April '23"
+            },
+            {
+              "title": "Netty Sargent's Copyhold",
+              "screenplay": "https://www.dropbox.com/s/hr18jmd1730aet5/Netty%20Sergeant%27s%20Copyhold%20D1.pdf?dl=0",
+              "shooting": "2 weekends late April '23"
+            },
+            {
+              "title": "The History of the Hardcombes",
+              "screenplay": "https://www.dropbox.com/s/v4w85a49ntvn09h/the%20history%20of%20the%20hardcomes%20D1.pdf?dl=0",
+              "shooting": "2 weekends late April '23"
+            },
+            {
+              "title": "Tony Kyte, the Arch Deceiver",
+              "screenplay": "https://www.dropbox.com/s/7f1cj9jh62pvszk/Tony%20Kytes%2C%20The%20Arch-Deceiver%20D1.pdf?dl=0",
+              "shooting": "2 weekends late April '23"
+            }
+          ]
+        }
+      ]
+    }
   }
 }
 </script>
@@ -102,34 +134,30 @@ export default {
 @import "src/assets/livery";
 
 #storyWorlds {
-  #poster {
-    float: left;
-    width: 128px;
-    //height: fit-content;
+  .poster {
+    margin: auto;
   }
 
-  .display-4, h4 {
-    margin: auto;
-    text-align: unset;
+  h3 {
+    font-size: 2.75rem; // experiment suggests that this is a good size
+  }
+
+  h4 {
+    text-align: unset; // remove the default left alignment
   }
 
   ol {
     list-style-type: lower-roman;
     text-align: left;
+    padding-left: 0.5em; // list do not need to have their normal indenting
 
     li {
       margin-top: .5rem;
 
-      /*
-      Sadly this does not look that good on phones, but still not bad
-      Splitting it with Bootstrap cols give a problem with vertical alignment
-      Maybe think about media queries, of something else?
-       */
-      .title {
-        font-weight: bold;
-        display: inline-block;
-        width: 12em;
+      .list-item-additional-data {
+        float: right;
       }
+
     }
   }
 }

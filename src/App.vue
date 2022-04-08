@@ -214,6 +214,7 @@ body {
   h1, h2, h3, h4 {
     font-family: branded-font, "Times New Roman", Times, serif;
     text-align: center;
+    margin: auto;
   }
 
   h4 {
